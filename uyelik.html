@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)file:///Users/emrahbay/Downloads/uyelik.html -->
+<!-- saved from url=(0046)file:///Users/emrahbay/Downloads/uyelik_1.html -->
 <html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Üye Ol — Montessori Okulu</title>
 <meta name="description" content="Türkiye&#39;nin Montessori topluluğuna katıl. Ücretsiz üyelik ile tüm içeriklere eriş.">
 <link href="./uyelik_files/css2" rel="stylesheet">
-<script src="./uyelik_files/supabase-js@2"></script>
+<script src="./uyelik_files/supabase.min.js"></script>
 <style>
 :root{
   --salmon:#F4857A;--salmon-d:#D9655A;--salmon-m:#F9A89F;--salmon-p:#FDF0EE;
@@ -314,7 +314,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
           <div class="form-group" style="margin-top:4px;">
             <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--ink-m);line-height:1.5;">
               <input type="checkbox" id="kvkkOnay" style="margin-top:2px;accent-color:var(--salmon);flex-shrink:0;">
-              <span><a href="file:///Users/emrahbay/Downloads/uyelik.html#" style="color:var(--salmon);font-weight:700;">Gizlilik Politikası</a>'nı ve <a href="file:///Users/emrahbay/Downloads/uyelik.html#" style="color:var(--salmon);font-weight:700;">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
+              <span><a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" style="color:var(--salmon);font-weight:700;">Gizlilik Politikası</a>'nı ve <a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" style="color:var(--salmon);font-weight:700;">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
             </label>
           </div>
 
@@ -334,7 +334,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
             <input class="form-input" id="girisSifre" type="password" placeholder="Şifreniz">
           </div>
           <div style="text-align:right;margin-bottom:16px;">
-            <a href="file:///Users/emrahbay/Downloads/uyelik.html#" onclick="sifreSifirla()" style="font-size:12px;color:var(--blue);">Şifremi Unuttum</a>
+            <a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" onclick="sifreSifirla()" style="font-size:12px;color:var(--blue);">Şifremi Unuttum</a>
           </div>
           <button class="btn btn-salmon" onclick="emailGiris()">
             Giriş Yap →
@@ -363,9 +363,11 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
 <script>
 // ── Supabase Başlat ──
 const SUPABASE_URL = 'https://ihjrjfbtvciqpoxmepqv.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Q4yLLTNU9g48Sji4v17p-w_1DcLnFD0';
+// Supabase Dashboard > Settings > API > anon public key
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanJqZmJ0dmNpcXBveG1lcHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzczMzcsImV4cCI6MjA4OTU1MzMzN30.JCzLpDq-ib6D7p6oDBSdTS6FAR--JecI6InllH-p-Kc';
 const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+let sb;
+try { sb = createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.error('Supabase init error:', e); }
 
 let seciliTip = 'merakli';
 
@@ -411,14 +413,24 @@ function showSuccess(user) {
 
 // ── Google ile Giriş ──
 async function googleIleGiris() {
-  const { error } = await sb.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin + '/uyelik.html',
-      queryParams: { uyelik_tipi: seciliTip }
+  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı. Lütfen sayfayı yenileyin.'); return; }
+  try {
+    showAlert('success', 'Google sayfasına yönlendiriliyorsunuz...');
+    const { data, error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + '/uyelik.html',
+        queryParams: { uyelik_tipi: seciliTip }
+      }
+    });
+    if (error) {
+      console.error('Google OAuth hatası:', error);
+      showAlert('error', 'Google girişi başarısız: ' + error.message + ' — Supabase Dashboard > Authentication > Providers > Google aktif edildi mi?');
     }
-  });
-  if (error) showAlert('error', 'Google girişi başarısız: ' + error.message);
+  } catch(e) {
+    console.error('Google login exception:', e);
+    showAlert('error', 'Bağlantı hatası: ' + e.message);
+  }
 }
 
 // ── E-posta Kayıt ──
@@ -440,6 +452,7 @@ async function emailKayit() {
   btn.disabled = true;
   btn.textContent = 'Kaydediliyor...';
 
+  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı.'); return; }
   const { data, error } = await sb.auth.signUp({
     email,
     password: sifre,
