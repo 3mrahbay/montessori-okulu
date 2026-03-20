@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Montessori Okulu — Türkçe Montessori Kaynağı ve Topluluğu</title>
+<meta name="description" content="Türkiye'nin Türkçe Montessori kaynağı ve topluluğu. Ebeveynler ve öğretmenler için içerik, seminer ve Bir Çiçek Koleji Anaokulu.">
+<meta property="og:title" content="Montessori Okulu — Türkçe Montessori Kaynağı">
+<meta property="og:description" content="Türkiye'nin Türkçe Montessori kaynağı ve topluluğu. Ebeveynler ve öğretmenler için.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+/* ══ TOKENS ══ */
+:root{
+  --salmon:#F4857A; --salmon-d:#D9655A; --salmon-m:#F9A89F; --salmon-p:#FDF0EE;
+  --blue:#4A90C4; --blue-d:#2E6FA0; --blue-m:#72AADB; --blue-p:#EAF4FC;
+  --ink:#1A1A2E; --ink-m:#3A3A52; --ink-s:#7878A0;
+  --bg-dark:#1A1A2E; --bg-navy:#222240;
+  --bg-cream:#FAF9F6; --bg-salmon:#FDF0EE; --bg-blue:#EAF4FC;
+  --border:rgba(26,26,46,.10); --r:12px; --r-lg:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;color:var(--ink);background:var(--bg-cream);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;}
+
+/* ── UTILS ── */
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+.sec{padding:56px 0 52px;}
+.stag{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-s);margin-bottom:8px;}
+.stag::before{content:'';width:16px;height:2px;background:var(--salmon);border-radius:1px;}
+.stag-w{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;}
+.stag-w::before{content:'';width:16px;height:2px;background:var(--salmon-m);border-radius:1px;}
+.h2{font-family:'Lora',serif;font-size:32px;font-weight:600;line-height:1.18;letter-spacing:-.015em;color:var(--ink);margin-bottom:8px;}
+.h2w{font-family:'Lora',serif;font-size:32px;font-weight:600;line-height:1.18;letter-spacing:-.015em;color:#fff;margin-bottom:8px;}
+.lead{font-size:14px;color:var(--ink-m);line-height:1.72;max-width:500px;margin-bottom:28px;}
+.leadw{font-size:14px;color:rgba(255,255,255,.48);line-height:1.72;max-width:500px;margin-bottom:28px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;border-radius:8px;font-size:13px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;border:none;transition:all .2s;text-decoration:none;}
+.btn-s{background:var(--salmon);color:#fff;}
+.btn-s:hover{background:var(--salmon-d);transform:translateY(-1px);}
+.btn-b{background:var(--blue);color:#fff;}
+.btn-b:hover{background:var(--blue-d);transform:translateY(-1px);}
+.btn-gw{background:transparent;color:rgba(255,255,255,.75);border:1.5px solid rgba(255,255,255,.2);}
+.btn-gw:hover{border-color:var(--salmon-m);color:var(--salmon-m);}
+.btn-sm{padding:8px 15px;font-size:12px;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:300;background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);}
+.nav-in{max-width:1160px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;}
+.logo{display:inline-flex;align-items:center;gap:9px;text-decoration:none;}
+.logo-tiles{display:flex;gap:3px;}
+.lt{width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;font-family:'Nunito',sans-serif;}
+.lt-s{background:var(--salmon);}
+.lt-b{background:var(--blue);}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.lt-top{font-size:13px;font-weight:800;color:#fff;letter-spacing:.02em;}
+.lt-bot{font-size:10px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.08em;}
+.lt-dot{color:var(--salmon);}
+.nav-links{display:flex;gap:20px;list-style:none;flex:1;margin-left:28px;}
+.nav-links a{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.42);transition:color .2s;}
+.nav-links a:hover{color:var(--salmon-m);}
+.nav-cta{margin-left:auto;flex-shrink:0;}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;margin-left:auto;}
+.ham span{width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;transition:all .3s;}
+.mob-menu{display:none;position:fixed;inset:58px 0 0 0;background:var(--bg-dark);z-index:299;padding:20px 28px;flex-direction:column;overflow-y:auto;}
+.mob-menu.open{display:flex;}
+.mob-a{display:block;font-size:14px;font-weight:700;color:rgba(255,255,255,.6);padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.mob-a:hover{color:var(--salmon-m);}
+
+/* ── HERO ── */
+.hero{background:var(--bg-dark);padding:40px 0 44px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 60% at 5% 60%,rgba(74,144,196,.15) 0%,transparent 55%),radial-gradient(ellipse 35% 50% at 95% 20%,rgba(244,133,122,.1) 0%,transparent 55%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--salmon-m);opacity:.8;margin-bottom:14px;}
+.hero-eyebrow::before{content:'';width:18px;height:2px;background:var(--salmon);border-radius:1px;}
+.hero-card{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-lg);overflow:hidden;}
+.hero-l{padding:40px 36px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.06);}
+.hero-title{font-family:'Lora',serif;font-size:44px;font-weight:600;line-height:1.1;color:#fff;letter-spacing:-.02em;margin-bottom:14px;}
+.hero-title em{font-style:italic;color:var(--salmon-m);}
+.hero-desc{font-size:14px;line-height:1.75;color:rgba(255,255,255,.46);margin-bottom:24px;max-width:340px;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+.hero-stats{display:flex;gap:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);}
+.stat-n{font-family:'Lora',serif;font-size:24px;color:var(--salmon-m);display:block;}
+.stat-l{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.06em;font-weight:700;}
+.hero-r{background:rgba(0,0,0,.18);display:flex;flex-direction:column;min-height:260px;align-items:center;justify-content:center;gap:14px;padding:32px;}
+.hero-r-logo{width:140px;height:140px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.12);box-shadow:0 0 40px rgba(244,133,122,.15);}
+.hero-r-logo img{width:100%;height:100%;object-fit:cover;}
+.hero-r-tagline{font-size:13px;color:rgba(255,255,255,.4);text-align:center;line-height:1.6;}
+
+/* ── KİTLE SEÇİCİ ── */
+.aud-sec{background:var(--bg-cream);padding:40px 0 36px;}
+.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;}
+.aud-card{border-radius:var(--r);border:2px solid var(--border);background:#fff;padding:20px 18px;cursor:pointer;transition:all .3s;display:flex;align-items:flex-start;gap:13px;}
+.aud-card:hover,.aud-card.active{border-color:var(--salmon);box-shadow:0 6px 20px rgba(244,133,122,.15);}
+.aud-card.active .aud-icon{background:var(--salmon);color:#fff;}
+.aud-card.active-b{border-color:var(--blue)!important;box-shadow:0 6px 20px rgba(74,144,196,.15)!important;}
+.aud-card.active-b .aud-icon{background:var(--blue)!important;color:#fff!important;}
+.aud-icon{width:38px;height:38px;border-radius:9px;background:var(--bg-salmon);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .3s;}
+.aud-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.aud-sub{font-size:11px;color:var(--ink-s);line-height:1.5;}
+.aud-panel{display:none;margin-top:4px;}
+.aud-panel.active{display:block;}
+.hub-tabs{display:flex;background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px;}
+.hub-tab{flex:1;padding:10px 14px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;transition:all .2s;color:var(--ink-s);border:none;background:none;font-family:'Nunito',sans-serif;}
+.hub-tab.on-s{background:var(--salmon);color:#fff;}
+.hub-tab.on-b{background:var(--blue);color:#fff;}
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.hc{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:#fff;cursor:pointer;transition:transform .3s,box-shadow .3s;}
+.hc:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(26,26,46,.09);}
+.hc-thumb{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.hc-t1{background:linear-gradient(135deg,#fad8d4,#f5b8b0);}
+.hc-t2{background:linear-gradient(135deg,#d4e8f8,#b8d8f2);}
+.hc-t3{background:linear-gradient(135deg,#ddf8d4,#bce8b0);}
+.hc-t4{background:linear-gradient(135deg,#f8f0d4,#f0e0b0);}
+.hc-t5{background:linear-gradient(135deg,#e8d4f8,#d4b8f0);}
+.hc-t6{background:linear-gradient(135deg,#d4f8f0,#b0ead8);}
+.hc-body{padding:10px 12px 12px;}
+.hc-cat{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--salmon);margin-bottom:3px;}
+.hc-cat-b{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:3px;}
+.hc-title{font-size:12px;font-weight:600;color:var(--ink);line-height:1.45;margin-bottom:4px;}
+.hc-meta{font-size:10px;color:var(--ink-s);}
+
+/* ── BLOG (DİNAMİK) ── */
+.blog-sec{background:#fff;}
+.blog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.bc{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--bg-cream);cursor:pointer;transition:transform .3s,box-shadow .3s;text-decoration:none;display:block;}
+.bc:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(26,26,46,.09);}
+.bc-img{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;}
+.bc-img.c0{background:linear-gradient(135deg,#fad8d4,#f5b8b0);}
+.bc-img.c1{background:linear-gradient(135deg,#d4e8f8,#b8d8f2);}
+.bc-img.c2{background:linear-gradient(135deg,#ddf8d4,#bce8b0);}
+.bc-img.c3{background:linear-gradient(135deg,#f8f0d4,#f0e0b0);}
+.bc-img.c4{background:linear-gradient(135deg,#e8d4f8,#d4b8f0);}
+.bc-img.c5{background:linear-gradient(135deg,#d4f8f0,#b0ead8);}
+.bc-img.c6{background:linear-gradient(135deg,#fcd8f8,#f4b0f0);}
+.bc-img.c7{background:linear-gradient(135deg,#d8f0fc,#b0dcf4);}
+.bc-body{padding:12px 13px 14px;}
+.bc-cat{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--salmon);margin-bottom:3px;}
+.bc-title{font-size:12px;font-weight:600;color:var(--ink);line-height:1.45;margin-bottom:7px;}
+.bc-lnk{font-size:11px;font-weight:700;color:var(--blue);display:inline-flex;align-items:center;gap:3px;}
+.bc-loading{text-align:center;padding:40px;color:var(--ink-s);grid-column:1/-1;}
+.bc-spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--salmon);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.blog-icons{display:none;}
+
+/* ── PODCAST + REELS ── */
+.media-sec{background:var(--bg-blue);}
+.media-two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+/* Podcast */
+.pod-glow{position:relative;}
+.pod-glow::before{content:'';position:absolute;inset:-2px;border-radius:20px;background:linear-gradient(135deg,var(--salmon),var(--blue));z-index:0;}
+.pod-glow::after{content:'';position:absolute;inset:0;border-radius:var(--r-lg);background:var(--bg-dark);z-index:1;}
+.pod-inner{position:relative;z-index:2;border-radius:var(--r-lg);overflow:hidden;background:var(--bg-dark);}
+.pod-top{padding:18px 18px 14px;}
+.pod-now{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--salmon-m);margin-bottom:6px;}
+.pod-cur-title{font-family:'Lora',serif;font-size:14px;color:#fff;line-height:1.4;margin-bottom:12px;}
+.pod-ctrl{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;}
+.pod-btn{background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;padding:2px;transition:color .15s;}
+.pod-btn:hover{color:var(--salmon-m);}
+.pod-play{width:32px;height:32px;border-radius:50%;background:var(--salmon);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;border:none;transition:background .2s;flex-shrink:0;}
+.pod-play:hover{background:var(--salmon-d);}
+.pod-prog{width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;cursor:pointer;position:relative;}
+.pod-fill{height:100%;width:34%;background:var(--salmon);border-radius:2px;position:relative;}
+.pod-fill::after{content:'';position:absolute;right:-4px;top:-3px;width:9px;height:9px;background:var(--salmon);border-radius:50%;}
+.pod-times{display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.28);margin-top:4px;}
+.pod-list{border-top:1px solid rgba(255,255,255,.07);}
+.pod-item{display:flex;align-items:center;gap:12px;padding:11px 16px;cursor:pointer;transition:background .2s;border-bottom:1px solid rgba(255,255,255,.04);}
+.pod-item:hover,.pod-item.playing{background:rgba(244,133,122,.08);}
+.pod-num{font-size:10px;font-weight:800;color:rgba(255,255,255,.25);width:18px;text-align:center;flex-shrink:0;}
+.pod-item.playing .pod-num{color:var(--salmon-m);}
+.pod-info{flex:1;min-width:0;}
+.pod-ep-title{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pod-item.playing .pod-ep-title{color:#fff;}
+.pod-dur{font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;}
+.pod-ep-play{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.06);border:none;color:rgba(255,255,255,.4);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.pod-item:hover .pod-ep-play,.pod-item.playing .pod-ep-play{background:var(--salmon);color:#fff;}
+/* Reels */
+.reels-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.ig-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(212,83,126,.12);color:#D4537E;border:1px solid rgba(212,83,126,.2);font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;}
+.reels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.reel{border-radius:10px;overflow:hidden;cursor:pointer;position:relative;background:linear-gradient(160deg,#10101e,#0a0a16);transition:transform .3s;aspect-ratio:9/16;}
+.reel:hover{transform:scale(1.03);}
+.reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px;opacity:.08;}
+.reel-ov{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.8) 100%);}
+.reel-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(244,133,122,.15);border:1.5px solid rgba(244,133,122,.35);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.reel:hover .reel-play{background:var(--salmon);border-color:var(--salmon);}
+.reel-tri{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid rgba(255,255,255,.9);margin-left:2px;}
+.reel-info{position:absolute;bottom:0;left:0;right:0;padding:12px 10px 10px;}
+.reel-handle{font-size:9px;font-weight:700;color:rgba(255,255,255,.55);margin-bottom:2px;}
+.reel-lbl{font-size:11px;font-weight:600;color:#fff;line-height:1.3;}
+.reel-views{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;color:rgba(255,255,255,.6);background:rgba(0,0,0,.4);padding:2px 6px;border-radius:10px;}
+
+/* ── OKUL ── */
+.okul-sec{background:var(--bg-navy);}
+.okul-hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:32px;}
+.okul-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(244,133,122,.12);color:var(--salmon-m);border:1px solid rgba(244,133,122,.22);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:14px;}
+.okul-title{font-family:'Lora',serif;font-size:34px;font-weight:600;color:#fff;line-height:1.15;letter-spacing:-.02em;margin-bottom:12px;}
+.okul-title em{font-style:italic;color:var(--salmon-m);}
+.okul-desc{font-size:14px;color:rgba(255,255,255,.46);line-height:1.75;margin-bottom:20px;}
+.okul-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.okul-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,.58);line-height:1.5;}
+.okul-feat-dot{width:7px;height:7px;border-radius:50%;background:var(--salmon);flex-shrink:0;margin-top:5px;}
+.okul-feat strong{color:#fff;}
+.okul-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.okul-visual{border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(255,255,255,.08);}
+.okul-vis-inner{background:linear-gradient(145deg,#1a2e1a,#2a4a2a);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;gap:16px;position:relative;overflow:hidden;}
+.okul-vis-inner::before,.okul-vis-inner::after{content:'';position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.04);}
+.okul-vis-inner::before{width:260px;height:260px;top:50%;left:50%;transform:translate(-50%,-50%);}
+.okul-vis-inner::after{width:340px;height:340px;top:50%;left:50%;transform:translate(-50%,-50%);}
+.okul-logo-wrap{width:180px;height:180px;border-radius:50%;overflow:hidden;box-shadow:0 0 48px rgba(0,0,0,.4),0 0 0 3px rgba(255,255,255,.08);position:relative;z-index:1;}
+.okul-logo-wrap img{width:100%;height:100%;object-fit:cover;}
+.orman-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 14px;border-radius:20px;position:relative;z-index:1;}
+.orman-badge span{font-size:11px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.04em;}
+.okul-vis-note{font-size:11px;color:rgba(255,255,255,.25);position:relative;z-index:1;}
+.okul-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.okul-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:18px 16px;transition:border-color .25s,background .25s;}
+.okul-card:hover{background:rgba(244,133,122,.08);border-color:rgba(244,133,122,.25);}
+.okul-card-icon{font-size:24px;margin-bottom:9px;}
+.okul-card-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
+.okul-card-txt{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6;}
+.orman-band{margin-top:14px;background:rgba(100,180,100,.08);border:1px solid rgba(100,180,100,.2);border-radius:var(--r);padding:16px 22px;display:flex;align-items:center;gap:14px;}
+.orman-title{font-size:13px;font-weight:700;color:#8FDFA0;margin-bottom:2px;}
+.orman-txt{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5;}
+.okul-kayit{margin-top:28px;background:rgba(244,133,122,.1);border:1px solid rgba(244,133,122,.22);border-radius:var(--r-lg);padding:24px 28px;display:flex;align-items:center;gap:18px;}
+.okul-kayit-icon{width:46px;height:46px;border-radius:11px;background:var(--salmon);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.okul-kayit-txt{flex:1;}
+.okul-kayit-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;}
+.okul-kayit-sub{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5;}
+.okul-kayit-btns{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0;}
+
+/* ── ÜYELİK ── */
+.uyelik-sec{background:var(--bg-dark);}
+.mem-badge-tag{display:inline-block;background:rgba(244,133,122,.12);color:var(--salmon-m);border:1px solid rgba(244,133,122,.22);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 15px;border-radius:20px;margin-bottom:14px;}
+.mem-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.mem-cat{border-radius:var(--r-lg);overflow:hidden;border:2px solid rgba(255,255,255,.07);cursor:pointer;transition:all .3s;position:relative;}
+.mem-cat:hover{border-color:var(--salmon);transform:translateY(-3px);}
+.mem-cat-top{padding:22px 18px 16px;background:rgba(255,255,255,.03);}
+.mem-cat-icon{font-size:30px;margin-bottom:9px;}
+.mem-cat-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;}
+.mem-cat-sub{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5;}
+.mem-cat-badge{position:absolute;top:12px;right:12px;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;background:rgba(74,144,196,.15);color:var(--blue-m);}
+.mem-cat-btm{padding:10px 18px 16px;border-top:1px solid rgba(255,255,255,.06);}
+.mem-feat{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.5);margin-bottom:5px;}
+.mem-feat-dot{width:4px;height:4px;border-radius:50%;background:var(--salmon);flex-shrink:0;}
+.mem-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+.mem-ben{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:18px 16px;transition:border-color .2s;}
+.mem-ben:hover{border-color:rgba(244,133,122,.25);}
+.mem-ben-icon{font-size:22px;margin-bottom:8px;}
+.mem-ben-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;}
+.mem-ben-txt{font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;}
+.mem-cta{background:linear-gradient(135deg,rgba(244,133,122,.12),rgba(74,144,196,.08));border:1px solid rgba(244,133,122,.2);border-radius:var(--r-lg);padding:28px 32px;display:flex;align-items:center;gap:20px;}
+.mem-cta-txt{flex:1;}
+.mem-cta-title{font-family:'Lora',serif;font-size:22px;color:#fff;margin-bottom:5px;}
+.mem-cta-sub{font-size:13px;color:rgba(255,255,255,.42);line-height:1.6;}
+.mem-cta-btns{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0;}
+.mem-profil{text-align:center;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:28px;margin-top:8px;}
+.mem-profil-icon{font-size:28px;margin-bottom:10px;}
+.mem-profil-title{font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:6px;}
+.mem-profil-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:440px;margin:0 auto 18px;}
+
+/* ── SOSYAL ── */
+.sosyal-sec{background:var(--bg-blue);}
+.sosyal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.soc-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px 13px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.soc-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(26,26,46,.08);}
+.soc-ico{width:40px;height:40px;border-radius:10px;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;}
+.soc-name{font-size:12px;font-weight:700;color:var(--ink);}
+.soc-act{font-size:10px;color:var(--ink-s);margin-top:1px;}
+.topluluk-cta{background:var(--bg-dark);border-radius:var(--r-lg);padding:24px 28px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;border:1px solid rgba(244,133,122,.15);}
+.tc-title{font-family:'Lora',serif;font-size:20px;color:#fff;margin-bottom:4px;}
+.tc-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;}
+
+/* ── LEAD MAGNET ── */
+.mag-sec{background:var(--bg-dark);}
+.mag-in{text-align:center;max-width:520px;margin:0 auto;}
+.mag-bdg{display:inline-block;background:rgba(244,133,122,.12);color:var(--salmon-m);border:1px solid rgba(244,133,122,.22);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 15px;border-radius:20px;margin-bottom:14px;}
+.mag-title{font-family:'Lora',serif;font-size:34px;font-weight:600;color:#fff;line-height:1.15;margin-bottom:10px;letter-spacing:-.02em;}
+.mag-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:20px;}
+.mag-form{display:flex;gap:8px;}
+.mag-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:12px 14px;font-size:14px;font-family:'Nunito',sans-serif;color:#fff;outline:none;transition:border-color .2s;}
+.mag-inp::placeholder{color:rgba(255,255,255,.22);}
+.mag-inp:focus{border-color:var(--salmon-m);}
+.mag-note{font-size:10px;color:rgba(255,255,255,.18);margin-top:8px;}
+
+/* ── FOOTER ── */
+footer{background:#0E0E1C;border-top:1px solid rgba(255,255,255,.04);padding:38px 0 20px;}
+.ft-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:32px;margin-bottom:24px;}
+.ft-tagline{font-size:12px;color:rgba(255,255,255,.28);line-height:1.7;margin-top:8px;}
+.ft-site{display:block;font-size:11px;font-weight:700;color:var(--salmon-m);line-height:2.1;transition:color .2s;}
+.ft-site:hover{color:var(--salmon);}
+.ft-head{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--salmon-m);margin-bottom:11px;}
+.ft-lnk{display:block;font-size:12px;color:rgba(255,255,255,.36);line-height:2.1;transition:color .2s;}
+.ft-lnk:hover{color:rgba(255,255,255,.72);}
+.ft-btm{border-top:1px solid rgba(255,255,255,.04);padding-top:14px;display:flex;justify-content:space-between;align-items:center;}
+.ft-copy{font-size:11px;color:rgba(255,255,255,.16);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero-l>*{animation:fadeUp .6s ease both;}
+.hero-l>*:nth-child(1){animation-delay:.05s;}
+.hero-l>*:nth-child(2){animation-delay:.12s;}
+.hero-l>*:nth-child(3){animation-delay:.20s;}
+.hero-l>*:nth-child(4){animation-delay:.28s;}
+.hero-l>*:nth-child(5){animation-delay:.36s;}
+.hero-r{animation:fadeUp .7s .15s ease both;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .blog-grid{grid-template-columns:repeat(2,1fr);}
+  .okul-cards{grid-template-columns:repeat(2,1fr);}
+  .mem-cats{grid-template-columns:repeat(2,1fr) !important;}
+  .mem-benefits{grid-template-columns:repeat(2,1fr);}
+  .ft-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .ham{display:flex;}
+  .nav-in{padding:0 20px;}
+  .wrap{padding:0 20px;}
+  .sec{padding:38px 0 34px;}
+  .hero{padding:24px 0 30px;}
+  .hero-card{grid-template-columns:1fr;}
+  .hero-l{padding:24px 20px;border-right:none;border-bottom:1px solid rgba(255,255,255,.06);}
+  .hero-title{font-size:28px;}
+  .hero-desc{margin-bottom:16px;}
+  .hero-stats{gap:14px;}
+  .hero-r{min-height:200px;}
+  .aud-grid{grid-template-columns:1fr;}
+  .hub-grid{grid-template-columns:1fr;}
+  .blog-grid{grid-template-columns:1fr;}
+  .h2,.h2w{font-size:24px;}
+  .media-two{grid-template-columns:1fr;}
+  .okul-hero{grid-template-columns:1fr;}
+  .okul-cards{grid-template-columns:1fr 1fr;}
+  .okul-kayit{flex-direction:column;text-align:center;}
+  .okul-kayit-btns{justify-content:center;}
+  .okul-title{font-size:24px;}
+  .mem-cats{grid-template-columns:1fr !important;}
+  .mem-benefits{grid-template-columns:1fr;}
+  .mem-cta{flex-direction:column;text-align:center;}
+  .mem-cta-btns{justify-content:center;}
+  .sosyal-grid{grid-template-columns:repeat(2,1fr);}
+  .topluluk-cta{grid-template-columns:1fr;text-align:center;}
+  .mag-title{font-size:24px;}
+  .mag-form{flex-direction:column;}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:20px;}
+  .ft-btm{flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:480px){
+  .hero-title{font-size:24px;}
+  .okul-cards{grid-template-columns:1fr;}
+  .ft-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="#" class="logo">
+      <div class="logo-tiles">
+        <div class="lt lt-s">M</div>
+        <div class="lt lt-b">O</div>
+        <div class="lt lt-s">C</div>
+      </div>
+      <div class="logo-text">
+        <span class="lt-top">MONTESSORİ</span>
+        <span class="lt-bot">OKULU<span class="lt-dot">•</span>COM</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#icerik">İçerik</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#okul">Bir Çiçek Koleji</a></li>
+      <li><a href="#uyelik">Üyelik</a></li>
+    </ul>
+    <a href="#uyelik" class="btn btn-s btn-sm nav-cta">Ücretsiz Üye Ol →</a>
+    <div class="ham" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a class="mob-a" href="#icerik" onclick="closeMob()">İçerik</a>
+  <a class="mob-a" href="#blog" onclick="closeMob()">Blog</a>
+  <a class="mob-a" href="#podcast" onclick="closeMob()">Podcast & Reels</a>
+  <a class="mob-a" href="#okul" onclick="closeMob()">Bir Çiçek Koleji</a>
+  <a class="mob-a" href="#uyelik" onclick="closeMob()">Üyelik</a>
+  <a href="#uyelik" class="btn btn-s" style="margin-top:20px;align-self:flex-start;" onclick="closeMob()">Ücretsiz Üye Ol →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">Türkçe Montessori Kaynağı &amp; Topluluğu</div>
+    <div class="hero-card">
+      <div class="hero-l">
+        <h1 class="hero-title">Çocuğunuz<br>Zaten <em>Öğrenmek</em><br>İçin Doğdu.</h1>
+        <p class="hero-desc">Ebeveynler ve öğretmenler için Türkçe Montessori içerikleri, ücretsiz topluluk üyeliği ve Bir Çiçek Koleji Anaokulu deneyimi.</p>
+        <div class="hero-btns">
+          <a href="#uyelik" class="btn btn-s">Ücretsiz Üye Ol</a>
+          <a href="#okul" class="btn btn-gw">Okulu Keşfet</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="stat-n">8+</span><span class="stat-l">Blog Yazısı</span></div>
+          <div><span class="stat-n">4</span><span class="stat-l">Podcast Bölümü</span></div>
+          <div><span class="stat-n">Ücretsiz</span><span class="stat-l">Topluluk</span></div>
+        </div>
+      </div>
+      <div class="hero-r">
+        <div class="hero-r-logo">
+          <img src="logo.png" alt="Bir Çiçek Koleji Montessori Orman Okulu">
+        </div>
+        <div class="hero-r-tagline">Montessori &amp; Orman Okulu<br><strong style="color:rgba(255,255,255,.7);">Bir Çiçek Koleji Anaokulu</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KİTLE SEÇİCİ -->
+<section class="aud-sec sec" id="icerik">
+  <div class="wrap">
+    <div class="stag">Kime Hitap Ediyoruz?</div>
+    <h2 class="h2">Seni Tanıyalım</h2>
+    <p class="lead" style="margin-bottom:18px;">Ebeveynler ve öğretmenler için özel içerikler hazırladık.</p>
+    <div class="aud-grid">
+      <div class="aud-card active" onclick="switchAud('ebeveyn',this,'s')">
+        <div class="aud-icon">👨‍👩‍👧</div>
+        <div><div class="aud-title">Ebeveynler için</div><div class="aud-sub">Evde Montessori, doğru okul seçimi</div></div>
+      </div>
+      <div class="aud-card" onclick="switchAud('ogretmen',this,'b')">
+        <div class="aud-icon" style="background:var(--bg-blue);">🍎</div>
+        <div><div class="aud-title">Öğretmenler için</div><div class="aud-sub">Pedagojiyi derinleştir, sınıfı geliştir</div></div>
+      </div>
+      <div class="aud-card" onclick="switchAud('yeni',this,'s')">
+        <div class="aud-icon">🌱</div>
+        <div><div class="aud-title">Yeni Başlayanlar için</div><div class="aud-sub">Montessori'yi sıfırdan keşfet</div></div>
+      </div>
+    </div>
+    <!-- Ebeveyn paneli -->
+    <div class="aud-panel active" id="panel-ebeveyn">
+      <div class="hub-tabs">
+        <button class="hub-tab on-s" onclick="switchTab(this,'ve-v','s')">🎬 Videolar</button>
+        <button class="hub-tab" onclick="switchTab(this,'ve-p','s')">🎙 Podcast</button>
+        <button class="hub-tab" onclick="switchTab(this,'ve-b','s')">📝 Blog</button>
+      </div>
+      <div id="ve-v" class="hub-grid">
+        <div class="hc"><div class="hc-thumb hc-t1">🏠</div><div class="hc-body"><div class="hc-cat">Video · Ebeveyn</div><div class="hc-title">Evde Hazırlanmış Ortam Nasıl Kurulur?</div><div class="hc-meta">12 dk · Başlangıç</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t2">🧒</div><div class="hc-body"><div class="hc-cat">Video · Ebeveyn</div><div class="hc-title">0–3 Yaş: Bebek Odasını Montessori'ye Uyarlamak</div><div class="hc-meta">8 dk · Pratik</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t3">🍳</div><div class="hc-body"><div class="hc-cat">Video · Ebeveyn</div><div class="hc-title">Çocuğunuzu Mutfağa Dahil Edin</div><div class="hc-meta">10 dk · Günlük Yaşam</div></div></div>
+      </div>
+      <div id="ve-p" class="hub-grid" style="display:none">
+        <div class="hc"><div class="hc-thumb hc-t4">🎙</div><div class="hc-body"><div class="hc-cat">Podcast · Ebeveyn</div><div class="hc-title">Hassas Dönemler: Öğrenme Pencerelerini Yakalamak</div><div class="hc-meta">25 dk · Bölüm 3</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t5">🎙</div><div class="hc-body"><div class="hc-cat">Podcast · Ebeveyn</div><div class="hc-title">Motivasyonun Kaynağı: İçsel mi, Dışsal mı?</div><div class="hc-meta">20 dk · Bölüm 4</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t6">🎙</div><div class="hc-body"><div class="hc-cat">Podcast · Ebeveyn</div><div class="hc-title">En Sık Sorulan 10 Soru</div><div class="hc-meta">18 dk · Bölüm 1</div></div></div>
+      </div>
+      <div id="ve-b" class="hub-grid" style="display:none">
+        <div class="hc"><div class="hc-thumb hc-t1">📝</div><div class="hc-body"><div class="hc-cat">Blog · Ebeveyn</div><div class="hc-title">Hassas Dönemler: Çocuğunuzun Öğrenme Pencereleri</div><div class="hc-meta">7 dk okuma</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t2">📝</div><div class="hc-body"><div class="hc-cat">Blog · Ebeveyn</div><div class="hc-title">Bağımsızlık Nasıl Kazanılır?</div><div class="hc-meta">6 dk okuma</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t3">📝</div><div class="hc-body"><div class="hc-cat">Blog · Ebeveyn</div><div class="hc-title">Montessori Sadece Ahşap Oyuncak Rafı Değil</div><div class="hc-meta">4 dk okuma</div></div></div>
+      </div>
+    </div>
+    <!-- Öğretmen paneli -->
+    <div class="aud-panel" id="panel-ogretmen">
+      <div class="hub-tabs">
+        <button class="hub-tab on-b" onclick="switchTab(this,'vo-v','b')">🎬 Videolar</button>
+        <button class="hub-tab" onclick="switchTab(this,'vo-p','b')">🎙 Podcast</button>
+        <button class="hub-tab" onclick="switchTab(this,'vo-b','b')">📝 Blog</button>
+      </div>
+      <div id="vo-v" class="hub-grid">
+        <div class="hc"><div class="hc-thumb hc-t2">🎨</div><div class="hc-body"><div class="hc-cat-b">Video · Öğretmen</div><div class="hc-title">Sınıf Ortamı: Raf Organizasyonu İpuçları</div><div class="hc-meta">15 dk · Sınıf</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t3">📊</div><div class="hc-body"><div class="hc-cat-b">Video · Öğretmen</div><div class="hc-title">3 Saatlik Çalışma Bloğunu Korumak</div><div class="hc-meta">12 dk · Pedagoji</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t4">🔢</div><div class="hc-body"><div class="hc-cat-b">Video · Öğretmen</div><div class="hc-title">Montessori Matematik Materyallerine Giriş</div><div class="hc-meta">20 dk · Materyal</div></div></div>
+      </div>
+      <div id="vo-p" class="hub-grid" style="display:none">
+        <div class="hc"><div class="hc-thumb hc-t5">🎙</div><div class="hc-body"><div class="hc-cat-b">Podcast · Öğretmen</div><div class="hc-title">Hazırlanmış Ortam: Beyin ve Mekan Arasındaki Bağ</div><div class="hc-meta">22 dk · Bölüm 2</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t6">🎙</div><div class="hc-body"><div class="hc-cat-b">Podcast · Öğretmen</div><div class="hc-title">Karma Yaş Grupları: Fırsatlar ve Zorluklar</div><div class="hc-meta">28 dk</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t1">🎙</div><div class="hc-body"><div class="hc-cat-b">Podcast · Öğretmen</div><div class="hc-title">Veli İletişimi: Montessori'yi Anlatan Öğretmen</div><div class="hc-meta">24 dk</div></div></div>
+      </div>
+      <div id="vo-b" class="hub-grid" style="display:none">
+        <div class="hc"><div class="hc-thumb hc-t2">📝</div><div class="hc-body"><div class="hc-cat-b">Blog · Öğretmen</div><div class="hc-title">Montessori Matematikle Arkadaş Olur</div><div class="hc-meta">8 dk okuma</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t3">📝</div><div class="hc-body"><div class="hc-cat-b">Blog · Öğretmen</div><div class="hc-title">Orman Okulu Nedir? Doğanın İçinde Büyümek</div><div class="hc-meta">6 dk okuma</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t4">📝</div><div class="hc-body"><div class="hc-cat-b">Blog · Öğretmen</div><div class="hc-title">Hazırlanmış Ortam: Çocuğun Dünyası Nasıl Tasarlanır?</div><div class="hc-meta">5 dk okuma</div></div></div>
+      </div>
+    </div>
+    <!-- Yeni Başlayan paneli -->
+    <div class="aud-panel" id="panel-yeni">
+      <div class="hub-grid">
+        <div class="hc"><div class="hc-thumb hc-t1">🌱</div><div class="hc-body"><div class="hc-cat">Başlangıç · Video</div><div class="hc-title">Montessori Nedir? 5 Dakikada Temel Kavramlar</div><div class="hc-meta">5 dk</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t2">📖</div><div class="hc-body"><div class="hc-cat">Başlangıç · Blog</div><div class="hc-title">Bir Doktordan Devrime: Maria Montessori'nin Hikayesi</div><div class="hc-meta">5 dk okuma</div></div></div>
+        <div class="hc"><div class="hc-thumb hc-t3">🎙</div><div class="hc-body"><div class="hc-cat">Başlangıç · Podcast</div><div class="hc-title">Montessori Hakkında En Sık Sorulan 10 Soru</div><div class="hc-meta">18 dk · Bölüm 1</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG (DİNAMİK) -->
+<section class="blog-sec sec" id="blog">
+  <div class="wrap">
+    <div class="stag">Son Yazılar</div>
+    <h2 class="h2">Blog</h2>
+    <p class="lead">Montessori eğitimi hakkında derinlemesine yazılar.</p>
+    <div class="blog-grid" id="blogGrid">
+      <div class="bc-loading">
+        <div class="bc-spinner"></div>
+        <div>Yazılar yükleniyor...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST + REELS -->
+<section class="media-sec sec" id="podcast">
+  <div class="wrap">
+    <div class="stag">Medya</div>
+    <h2 class="h2">Podcast &amp; Reels</h2>
+    <p class="lead">Dinle, izle, paylaş — her hafta yeni içerik.</p>
+    <div class="media-two">
+      <!-- Podcast -->
+      <div class="pod-glow">
+        <div class="pod-inner">
+          <div class="pod-top">
+            <div class="pod-now" id="podNow">▶ Şu An Çalıyor</div>
+            <div class="pod-cur-title" id="podTitle">Motivasyonun Kaynağı: İçsel mi, Dışsal mı?</div>
+            <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:11px 12px;">
+              <div class="pod-ctrl">
+                <button class="pod-btn">⏮</button>
+                <button class="pod-btn">↺</button>
+                <button class="pod-play" id="podPlayBtn" onclick="togglePod()">▶</button>
+                <button class="pod-btn">↻</button>
+                <button class="pod-btn">⏭</button>
+              </div>
+              <div class="pod-prog" onclick="seekPod(event)"><div class="pod-fill" id="podFill"></div></div>
+              <div class="pod-times"><span id="podCur">1:47</span><span id="podDurDisplay">20:00</span></div>
+            </div>
+          </div>
+          <div class="pod-list">
+            <div class="pod-item playing" onclick="playEp(this,0)" data-title="Motivasyonun Kaynağı: İçsel mi, Dışsal mı?" data-dur="20:00" data-secs="1200">
+              <div class="pod-num">4</div>
+              <div class="pod-info"><div class="pod-ep-title">Motivasyonun Kaynağı: İçsel mi, Dışsal mı?</div></div>
+              <div class="pod-dur">20 dk</div>
+              <button class="pod-ep-play">⏸</button>
+            </div>
+            <div class="pod-item" onclick="playEp(this,1)" data-title="Hassas Dönemler: Öğrenme Pencerelerini Yakalamak" data-dur="25:00" data-secs="1500">
+              <div class="pod-num">3</div>
+              <div class="pod-info"><div class="pod-ep-title">Hassas Dönemler: Öğrenme Pencerelerini Yakalamak</div></div>
+              <div class="pod-dur">25 dk</div>
+              <button class="pod-ep-play">▶</button>
+            </div>
+            <div class="pod-item" onclick="playEp(this,2)" data-title="Hazırlanmış Ortam: Beyin ve Mekan Arasındaki Bağ" data-dur="22:00" data-secs="1320">
+              <div class="pod-num">2</div>
+              <div class="pod-info"><div class="pod-ep-title">Hazırlanmış Ortam: Beyin ve Mekan Arasındaki Bağ</div></div>
+              <div class="pod-dur">22 dk</div>
+              <button class="pod-ep-play">▶</button>
+            </div>
+            <div class="pod-item" onclick="playEp(this,3)" data-title="Montessori Hakkında En Sık Sorulan 10 Soru" data-dur="18:00" data-secs="1080">
+              <div class="pod-num">1</div>
+              <div class="pod-info"><div class="pod-ep-title">Montessori Hakkında En Sık Sorulan 10 Soru</div></div>
+              <div class="pod-dur">18 dk</div>
+              <button class="pod-ep-play">▶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Reels -->
+      <div>
+        <div class="reels-head">
+          <div>
+            <div class="stag" style="margin-bottom:4px;">Instagram Reels</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">@bircicekkoleji'den Son Reels</div>
+          </div>
+          <span class="ig-badge">📱 Instagram</span>
+        </div>
+        <div class="reels-grid">
+          <div class="reel"><div class="reel-bg">🌿</div><div class="reel-ov"></div><div class="reel-play"><div class="reel-tri"></div></div><div class="reel-views">1.2K</div><div class="reel-info"><div class="reel-handle">@bircicekkoleji</div><div class="reel-lbl">Hazırlanmış ortam nedir? 🏡</div></div></div>
+          <div class="reel"><div class="reel-bg">📚</div><div class="reel-ov"></div><div class="reel-play"><div class="reel-tri"></div></div><div class="reel-views">980</div><div class="reel-info"><div class="reel-handle">@bircicekkoleji</div><div class="reel-lbl">Hata öğrenmenin parçasıdır ✨</div></div></div>
+          <div class="reel"><div class="reel-bg">🧒</div><div class="reel-ov"></div><div class="reel-play"><div class="reel-tri"></div></div><div class="reel-views">2.1K</div><div class="reel-info"><div class="reel-handle">@bircicekkoleji</div><div class="reel-lbl">3 Saatlik çalışma döngüsü ⏱</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BİR ÇİÇEK KOLEJİ -->
+<section class="okul-sec sec" id="okul">
+  <div class="wrap">
+    <div class="okul-hero">
+      <div>
+        <div class="okul-badge">🌸 Bir Çiçek Koleji Anaokulu</div>
+        <h2 class="okul-title">Montessori Eğitimini<br><em>Gerçek Ortamda</em><br>Keşfedin</h2>
+        <p class="okul-desc">Uluslararası Montessori standartlarında hazırlanmış sınıflar, özel eğitim almış rehber öğretmenler ve her çocuğun kendi hızında gelişeceği bir ortam.</p>
+        <div class="okul-feats">
+          <div class="okul-feat"><div class="okul-feat-dot"></div><div><strong>Uluslararası Müfredat:</strong> AMI/AMS standartlarında Montessori programı</div></div>
+          <div class="okul-feat"><div class="okul-feat-dot"></div><div><strong>Karma Yaş Grupları:</strong> 2,5–6 yaş arası çocuklar birlikte öğreniyor</div></div>
+          <div class="okul-feat"><div class="okul-feat-dot"></div><div><strong>Orman Okulu:</strong> Orman Okulları Derneği akrediteli doğa programı</div></div>
+          <div class="okul-feat"><div class="okul-feat-dot"></div><div><strong>Aile Katılımı:</strong> Düzenli veli toplantıları ve gözlem günleri</div></div>
+        </div>
+        <div class="okul-btns">
+          <a href="https://bircicekkoleji.com" target="_blank" class="btn btn-s">Okul Websitesi →</a>
+          <button class="btn btn-gw">Tanıtım Videosu</button>
+        </div>
+      </div>
+      <div class="okul-visual">
+        <div class="okul-vis-inner">
+          <div class="okul-logo-wrap">
+            <img src="logo.png" alt="Bir Çiçek Koleji Anaokulu Logosu">
+          </div>
+          <div class="orman-badge"><span>🌲 Orman Okulları Derneği Akrediteli</span></div>
+          <div class="okul-vis-note">Okul fotoğrafları burada görünecek</div>
+        </div>
+      </div>
+    </div>
+    <div class="okul-cards">
+      <div class="okul-card"><div class="okul-card-icon">🏫</div><div class="okul-card-title">Hazırlanmış Sınıflar</div><div class="okul-card-txt">Her raf, her materyal çocuğun bağımsız çalışmasına göre tasarlandı</div></div>
+      <div class="okul-card"><div class="okul-card-icon">👩‍🏫</div><div class="okul-card-title">Sertifikalı Rehberler</div><div class="okul-card-txt">Montessori pedagojisinde özel eğitim almış deneyimli kadro</div></div>
+      <div class="okul-card" style="border-color:rgba(100,180,100,.25);background:rgba(100,180,100,.06);">
+        <div class="okul-card-icon">🌲</div>
+        <div class="okul-card-title" style="color:#8FDFA0;">Orman Okulu</div>
+        <div class="okul-card-txt">Orman Okulları Derneği akrediteli — doğada öğrenme programı</div>
+      </div>
+      <div class="okul-card"><div class="okul-card-icon">🤝</div><div class="okul-card-title">Topluluk Ruhu</div><div class="okul-card-txt">Aileler, öğretmenler ve çocuklar birlikte öğreniyor</div></div>
+    </div>
+    <div class="orman-band">
+      <span style="font-size:26px;">🌲</span>
+      <div style="flex:1;">
+        <div class="orman-title">Orman Okulları Derneği Akrediteli Orman Okulu</div>
+        <div class="orman-txt">Bir Çiçek Koleji, Türkiye'de Orman Okulları Derneği tarafından akredite edilmiş sayılı okullardan biridir. Doğa temelli öğrenme, açık hava aktiviteleri ve çevre farkındalığı müfredatımızın ayrılmaz parçasıdır.</div>
+      </div>
+      <a href="https://bircicekkoleji.com" target="_blank" style="flex-shrink:0;background:rgba(100,180,100,.15);border:1px solid rgba(100,180,100,.3);color:#8FDFA0;padding:8px 14px;border-radius:7px;font-size:11px;font-weight:700;white-space:nowrap;text-decoration:none;transition:all .2s;">Daha Fazlası →</a>
+    </div>
+    <div class="okul-kayit">
+      <div class="okul-kayit-icon">📋</div>
+      <div class="okul-kayit-txt">
+        <div class="okul-kayit-title">2025–2026 Kayıt Dönemi Açık</div>
+        <div class="okul-kayit-sub">Sınırlı kontenjan. Çocuğunuzun yerine bugün başvurun. Ön kayıt ücretsizdir.</div>
+      </div>
+      <div class="okul-kayit-btns">
+        <a href="https://bircicekkoleji.com" target="_blank" class="btn btn-s">Hemen Başvur →</a>
+        <button class="btn btn-gw btn-sm">Bilgi Formu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÜYELİK -->
+<section class="uyelik-sec sec" id="uyelik">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:36px;">
+      <span class="mem-badge-tag">Ücretsiz Üyelik</span>
+      <h2 class="h2w">Türkiye'nin Montessori<br>Topluluğuna Katıl</h2>
+      <p class="leadw" style="margin:0 auto;max-width:520px;">Ebeveynler, öğretmenler ve Montessori meraklıları için ücretsiz üyelik. Kendi profilin, kişisel panelin ve topluluk erişimin seni bekliyor.</p>
+    </div>
+    <div class="mem-cats">
+      <div class="mem-cat">
+        <span class="mem-cat-badge">Ücretsiz</span>
+        <div class="mem-cat-top">
+          <div class="mem-cat-icon">👨‍👩‍👧</div>
+          <div class="mem-cat-title">Ebeveyn Üyesi</div>
+          <div class="mem-cat-sub">Çocuğunuz için en iyi Montessori deneyimini evde ve okulda yaşatın</div>
+        </div>
+        <div class="mem-cat-btm">
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Tüm blog ve içeriklere erişim</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Podcast bölümleri</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Ücretsiz seminerlere kayıt</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Kişisel profil paneli</div>
+        </div>
+      </div>
+      <div class="mem-cat">
+        <span class="mem-cat-badge">Ücretsiz</span>
+        <div class="mem-cat-top">
+          <div class="mem-cat-icon">🍎</div>
+          <div class="mem-cat-title">Öğretmen Üyesi</div>
+          <div class="mem-cat-sub">Pedagojik gelişiminizi destekleyin, meslektaşlarınızla bağlantı kurun</div>
+        </div>
+        <div class="mem-cat-btm">
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Öğretmen içerik kitaplığı</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Profesyonel gelişim seminerleri</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Meslektaş forumu erişimi</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Sertifika program bilgileri</div>
+        </div>
+      </div>
+      <div class="mem-cat">
+        <span class="mem-cat-badge">Ücretsiz</span>
+        <div class="mem-cat-top">
+          <div class="mem-cat-icon">🌱</div>
+          <div class="mem-cat-title">Montessori Meraklısı</div>
+          <div class="mem-cat-sub">Montessori'yi keşfedin, topluluğu tanıyın, adım adım ilerleyin</div>
+        </div>
+        <div class="mem-cat-btm">
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Başlangıç içerik paketi</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Bülten ve etkinlik duyuruları</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Ücretsiz etkinliklere katılım</div>
+          <div class="mem-feat"><div class="mem-feat-dot"></div>Okul arama rehberi</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-bottom:20px;">
+      <div class="stag-w" style="justify-content:center;">Neden Üye Olmalısın?</div>
+      <h3 style="font-family:'Lora',serif;font-size:26px;color:#fff;margin-bottom:6px;">Üyeliğin Faydaları</h3>
+    </div>
+    <div class="mem-benefits">
+      <div class="mem-ben"><div class="mem-ben-icon">🎬</div><div class="mem-ben-title">Tüm İçeriklere Erişim</div><div class="mem-ben-txt">Blog, podcast ve videolara sınırsız erişim. Haftalık yeni içerikler ekleniyor.</div></div>
+      <div class="mem-ben"><div class="mem-ben-icon">📅</div><div class="mem-ben-title">Seminer ve Etkinlik Kaydı</div><div class="mem-ben-txt">Canlı seminerler ve atölyelere profil üzerinden kolayca kayıt ol.</div></div>
+      <div class="mem-ben"><div class="mem-ben-icon">👤</div><div class="mem-ben-title">Kişisel Profil Sayfası</div><div class="mem-ben-txt">Montessori yolculuğunu takip et, katıldığın etkinlikleri gör.</div></div>
+      <div class="mem-ben"><div class="mem-ben-icon">💬</div><div class="mem-ben-title">Topluluk Forumu</div><div class="mem-ben-txt">Diğer ebeveynler ve öğretmenlerle fikir alışverişi yap.</div></div>
+      <div class="mem-ben"><div class="mem-ben-icon">🎁</div><div class="mem-ben-title">Üye Özel İndirimler</div><div class="mem-ben-txt">evdemontessori.com materyallerinde özel üye indirimleri.</div></div>
+      <div class="mem-ben"><div class="mem-ben-icon">🔔</div><div class="mem-ben-title">Kişisel Öneriler</div><div class="mem-ben-txt">Profiline göre sana özel içerik ve seminer önerileri al.</div></div>
+    </div>
+    <div class="mem-cta">
+      <div class="mem-cta-txt">
+        <div class="mem-cta-title">Hemen Üye Ol — Tamamen Ücretsiz</div>
+        <div class="mem-cta-sub">Kredi kartı gerekmez. 2 dakikada kayıt tamamlanır.</div>
+      </div>
+      <div class="mem-cta-btns">
+        <button class="btn btn-s">Ebeveyn Olarak Üye Ol</button>
+        <button class="btn btn-b">Öğretmen Olarak Üye Ol</button>
+        <button class="btn btn-gw btn-sm">Meraklı Üye</button>
+      </div>
+    </div>
+    <div class="mem-profil" style="margin-top:20px;">
+      <div class="mem-profil-icon">👤</div>
+      <div class="mem-profil-title">Kişisel Profilin Seni Bekliyor</div>
+      <div class="mem-profil-sub">Üye olduktan sonra kendi profil paneline erişirsin. İzleme listeleri, seminer kayıtları ve topluluk rozetleri hep orada.</div>
+      <a href="profil.html" class="btn btn-gw btn-sm" style="display:inline-flex;">Profil Sayfası Önizlemesi →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOSYAL -->
+<section class="sosyal-sec sec">
+  <div class="wrap">
+    <div class="stag">Topluluk</div>
+    <h2 class="h2">Her Platform'da Yanınızdayız</h2>
+    <p class="lead">Türkiye'nin büyüyen Montessori topluluğuna katılın.</p>
+    <div class="sosyal-grid">
+      <div class="soc-card" onclick="window.open('https://instagram.com/bircicekkoleji','_blank')">
+        <div class="soc-ico" style="background:#FBEAF0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4537E" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="#D4537E" stroke="none"/></svg></div>
+        <div class="soc-name">Instagram</div><div class="soc-act">@bircicekkoleji</div>
+      </div>
+      <div class="soc-card">
+        <div class="soc-ico" style="background:#FCEBEB;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#E24B4A"><path d="M23 7s-.3-2-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.3 3 12 3 12 3s-4.3 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.2v2c0 2 .3 4.2.3 4.2s.3 2 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.3 21.4 12 21.5 12 21.5s4.3 0 6.8-.3c.6-.1 1.9-.1 3-1.3.9-.7 1.2-2.7 1.2-2.7s.3-2.1.3-4.2v-2C23.3 9 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg></div>
+        <div class="soc-name">YouTube</div><div class="soc-act">Abone ol</div>
+      </div>
+      <div class="soc-card">
+        <div class="soc-ico" style="background:#EEF3EE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#5C7A5E"><circle cx="12" cy="12" r="10"/><path d="M7 14.5c3.3-1 7-.9 10 .5M7 11.5c4-1.2 8.5-1 12 .7M8 8.5c3.7-1 7.8-.8 11 .6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="soc-name">Podcast</div><div class="soc-act">Spotify / Apple</div>
+      </div>
+      <div class="soc-card">
+        <div class="soc-ico" style="background:#E6F1FB;"><svg width="20" height="20" viewBox="0 0 24 24" fill="#185FA5"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg></div>
+        <div class="soc-name">Facebook</div><div class="soc-act">Grup ve Sayfa</div>
+      </div>
+    </div>
+    <div class="topluluk-cta">
+      <div><div class="tc-title">Ücretsiz Bültenimize Abone Ol</div><div class="tc-sub">Her hafta yeni içerik, etkinlik duyurusu ve ebeveyn buluşmaları.</div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0;">
+        <button class="btn btn-s">Bültene Abone Ol</button>
+        <button class="btn btn-gw btn-sm">WhatsApp Grubu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="mag-sec sec">
+  <div class="wrap">
+    <div class="mag-in">
+      <span class="mag-bdg">Ücretsiz İndir</span>
+      <h2 class="mag-title">Evde Montessori<br>Başlangıç Rehberi</h2>
+      <p class="mag-sub">E-posta adresini bırak, PDF rehber anında gelsin. 30 sayfa, pratik aktiviteler ve ortam kurulum rehberi.</p>
+      <div class="mag-form">
+        <input class="mag-inp" type="email" placeholder="e-posta adresin..." id="magEmail">
+        <button class="btn btn-s" onclick="submitMag()">İndir →</button>
+      </div>
+      <p class="mag-note">Spam göndermiyoruz. İstediğin zaman çıkabilirsin.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div>
+        <a href="#" class="logo">
+          <div class="logo-tiles"><div class="lt lt-s" style="width:18px;height:18px;font-size:9px;border-radius:3px;">M</div><div class="lt lt-b" style="width:18px;height:18px;font-size:9px;border-radius:3px;">O</div><div class="lt lt-s" style="width:18px;height:18px;font-size:9px;border-radius:3px;">C</div></div>
+          <div class="logo-text"><span style="font-size:12px;font-weight:800;color:#fff;">MONTESSORİ</span><span style="font-size:9px;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.08em;">OKULU<span style="color:var(--salmon);">•</span>COM</span></div>
+        </a>
+        <p class="ft-tagline">Türkçe Montessori kaynağı ve topluluğu.<br>Ebeveynler ve öğretmenler için.</p>
+        <a class="ft-site" href="https://bircicekkoleji.com" target="_blank">🌸 bircicekkoleji.com</a>
+        <a class="ft-site" href="https://evdemontessori.com" target="_blank">🌿 evdemontessori.com</a>
+      </div>
+      <div><div class="ft-head">İçerik</div><a class="ft-lnk" href="#blog">Blog</a><a class="ft-lnk" href="#podcast">Podcast</a><a class="ft-lnk" href="#icerik">Videolar</a></div>
+      <div><div class="ft-head">Bir Çiçek Koleji</div><a class="ft-lnk" href="https://bircicekkoleji.com" target="_blank">Hakkımızda</a><a class="ft-lnk" href="https://bircicekkoleji.com" target="_blank">Montessori Programı</a><a class="ft-lnk" href="https://bircicekkoleji.com" target="_blank">Kayıt 2025–2026</a></div>
+      <div><div class="ft-head">Evde Montessori</div><a class="ft-lnk" href="https://evdemontessori.com" target="_blank">Materyal Mağazası</a><a class="ft-lnk" href="https://evdemontessori.com" target="_blank">Danışmanlık</a><a class="ft-lnk" href="#uyelik">Üyelik</a></div>
+    </div>
+    <div class="ft-btm">
+      <span class="ft-copy">© 2026 montessoriokulu.com · Tüm hakları saklıdır</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Nav ──
+function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');}
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+
+// ── Kitle Seçici ──
+function switchAud(id, el, color) {
+  document.querySelectorAll('.aud-card').forEach(c => c.classList.remove('active','active-b'));
+  document.querySelectorAll('.aud-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add(color === 'b' ? 'active-b' : 'active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+function switchTab(btn, id, color) {
+  const panel = btn.closest('.aud-panel');
+  panel.querySelectorAll('.hub-tab').forEach(t => t.classList.remove('on-s','on-b'));
+  panel.querySelectorAll('.hub-grid').forEach(g => g.style.display = 'none');
+  btn.classList.add(color === 'b' ? 'on-b' : 'on-s');
+  document.getElementById(id).style.display = 'grid';
+}
+
+// ── Blog (Wix API'sinden Dinamik) ──
+const BLOG_ICONS = ['🌱','📖','🏡','⚖️','🌳','🧒','📐','🌿'];
+const SITE_ID = '0cf5fccc-62f1-45bf-b7ac-52215f7f04f0';
+
+async function loadBlog() {
+  const grid = document.getElementById('blogGrid');
+  try {
+    const res = await fetch(
+      `https://www.wixapis.com/blog/v3/posts/query`,
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({paging: {limit: 8}, sort: [{fieldName: 'firstPublishedDate', order: 'DESC'}]})
+      }
+    );
+    // Wix public API CORS'u blokladığı için fallback
+    throw new Error('use-fallback');
+  } catch(e) {
+    // Statik içerik ile göster (Wix API CORS izni gerektirir)
+    renderStaticBlog();
+  }
+}
+
+function renderStaticBlog() {
+  const posts = [
+    {title:"Orman Okulu Nedir? Doğanın İçinde Büyümek", slug:"orman-okulu-nedir", cat:"Orman Okulu", icon:"🌲"},
+    {title:"Bağımsızlık Nasıl Kazanılır? "Yapıyorum!" Diyen Bir Çocuk Yetiştirmek", slug:"bagımsızlık-nasıl-kazanılır", cat:"Ebeveyn Rehberi", icon:"🧒"},
+    {title:"Hassas Dönemler: Çocuğunuzun Öğrenme Pencereleri", slug:"hassas-donemler", cat:"Çocuk Gelişimi", icon:"🌱"},
+    {title:"Montessori Matematikle Arkadaş Olur: Sayıları Somutlaştırmak", slug:"montessori-matematik", cat:"Öğretmen Kaynakları", icon:"📐"},
+    {title:"Montessori mi, Geleneksel mi? Adil Bir Karşılaştırma", slug:"montessori-vs-geleneksel", cat:"Montessori Nedir?", icon:"⚖️"},
+    {title:"Hazırlanmış Ortam: Bir Çocuğun Dünyası Nasıl Tasarlanır?", slug:"hazirlanmis-ortam", cat:"Ebeveyn Rehberi", icon:"🏡"},
+    {title:"Bir Doktordan Devrime: Maria Montessori'nin Hikayesi", slug:"maria-montessori", cat:"Montessori Nedir?", icon:"📖"},
+    {title:"Montessori Sadece Ahşap Oyuncak Rafı Değil", slug:"montessori-nedir", cat:"Montessori Nedir?", icon:"🌿"},
+  ];
+  const colors = ['c0','c1','c2','c3','c4','c5','c6','c7'];
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = posts.map((p, i) => `
+    <div class="bc">
+      <div class="bc-img ${colors[i % colors.length]}">${p.icon}</div>
+      <div class="bc-body">
+        <div class="bc-cat">${p.cat}</div>
+        <div class="bc-title">${p.title}</div>
+        <span class="bc-lnk">Devamını Oku →</span>
+      </div>
+    </div>
+  `).join('');
+}
+loadBlog();
+
+// ── Podcast ──
+let podPlaying = false, podTime = 107, podTotal = 1200, podInterval = null;
+function togglePod() {
+  podPlaying = !podPlaying;
+  document.getElementById('podPlayBtn').textContent = podPlaying ? '⏸' : '▶';
+  if (podPlaying) {
+    podInterval = setInterval(() => {
+      podTime = Math.min(podTime + 1, podTotal);
+      updatePod();
+      if (podTime >= podTotal) { podPlaying = false; clearInterval(podInterval); document.getElementById('podPlayBtn').textContent = '▶'; }
+    }, 1000);
+  } else clearInterval(podInterval);
+}
+function playEp(el, idx) {
+  document.querySelectorAll('.pod-item').forEach(e => { e.classList.remove('playing'); e.querySelector('.pod-ep-play').textContent = '▶'; });
+  el.classList.add('playing');
+  el.querySelector('.pod-ep-play').textContent = '⏸';
+  podTotal = parseInt(el.dataset.secs);
+  podTime = 0;
+  document.getElementById('podTitle').textContent = el.dataset.title;
+  document.getElementById('podDurDisplay').textContent = el.dataset.dur;
+  podPlaying = true;
+  document.getElementById('podPlayBtn').textContent = '⏸';
+  clearInterval(podInterval);
+  podInterval = setInterval(() => {
+    podTime = Math.min(podTime + 1, podTotal);
+    updatePod();
+    if (podTime >= podTotal) { podPlaying = false; clearInterval(podInterval); document.getElementById('podPlayBtn').textContent = '▶'; }
+  }, 1000);
+}
+function seekPod(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  podTime = Math.floor(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * podTotal);
+  updatePod();
+}
+function updatePod() {
+  document.getElementById('podFill').style.width = (podTime / podTotal * 100) + '%';
+  const m = Math.floor(podTime / 60), s = podTime % 60;
+  document.getElementById('podCur').textContent = m + ':' + String(s).padStart(2, '0');
+}
+
+// ── Smooth scroll ──
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) { e.preventDefault(); el.scrollIntoView({behavior: 'smooth'}); }
+}));
+
+// ── Lead Magnet ──
+function submitMag() {
+  const email = document.getElementById('magEmail').value;
+  if (!email) return;
+  alert('Teşekkürler! PDF rehberiniz kısa sürede ' + email + ' adresinize gönderilecek. 🌿');
+  document.getElementById('magEmail').value = '';
+}
+</script>
+</body>
+</html>
