@@ -1046,7 +1046,7 @@ let mediaFiles = JSON.parse(localStorage.getItem('moc_media') || '[]');
 
 // ── Google OAuth ──
 function googleLogin() {
-  const clientId = localStorage.getItem('moc_google_client_id');
+  const clientId = localStorage.getItem('moc_google_client_id') || '411946618394-22q4jokadv0s6ts646h2jmcunfk5a868.apps.googleusercontent.com';
 
   // Demo mod: Client ID yoksa demo admin girişi
   if (!clientId || clientId === 'DEMO') {
@@ -1495,7 +1495,7 @@ window.onload = () => {
   // Kayıtlı ayarları yükle
   const cn = localStorage.getItem('moc_cloudinary_name');
   const cp = localStorage.getItem('moc_cloudinary_preset');
-  const gc = localStorage.getItem('moc_google_client_id');
+  const gc = localStorage.getItem('moc_google_client_id') || '411946618394-22q4jokadv0s6ts646h2jmcunfk5a868.apps.googleusercontent.com';
   const ae = localStorage.getItem('moc_allowed_emails');
   if (cn) document.getElementById('cloudinaryName').value = cn;
   if (cp) document.getElementById('cloudinaryPreset').value = cp;
