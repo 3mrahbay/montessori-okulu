@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)file:///Users/emrahbay/Downloads/uyelik.html -->
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Üye Ol — Montessori Okulu</title>
+<meta name="description" content="Türkiye&#39;nin Montessori topluluğuna katıl. Ücretsiz üyelik ile tüm içeriklere eriş.">
+<link href="./uyelik_files/css2" rel="stylesheet">
+<script src="./uyelik_files/supabase-js@2"></script>
+<style>
+:root{
+  --salmon:#F4857A;--salmon-d:#D9655A;--salmon-m:#F9A89F;--salmon-p:#FDF0EE;
+  --blue:#4A90C4;--blue-d:#2E6FA0;--blue-m:#72AADB;--blue-p:#EAF4FC;
+  --ink:#1A1A2E;--ink-m:#3A3A52;--ink-s:#7878A0;
+  --bg-dark:#1A1A2E;--bg-cream:#FAF9F6;--bg-white:#fff;
+  --border:rgba(26,26,46,.10);--r:12px;--r-lg:18px;
+  --green:#2ECC71;--red:#E74C3C;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;color:var(--ink);background:var(--bg-cream);min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);position:sticky;top:0;z-index:100;}
+.nav-in{max-width:1160px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:inline-flex;align-items:center;gap:9px;}
+.lt{width:22px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;}
+.lt-s{background:var(--salmon);}
+.lt-b{background:var(--blue);}
+.logo-text{line-height:1;}
+.lt-top{font-size:13px;font-weight:800;color:#fff;display:block;}
+.lt-bot{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.08em;display:block;}
+.lt-dot{color:var(--salmon);}
+.nav-back{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;transition:color .2s;}
+.nav-back:hover{color:var(--salmon-m);}
+
+/* HERO */
+.hero{background:var(--bg-dark);padding:52px 0 48px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 10% 50%,rgba(74,144,196,.12),transparent 55%),radial-gradient(ellipse 40% 50% at 90% 30%,rgba(244,133,122,.1),transparent 55%);pointer-events:none;}
+.hero-in{max-width:1160px;margin:0 auto;padding:0 32px;position:relative;z-index:1;text-align:center;}
+.hero-badge{display:inline-block;background:rgba(244,133,122,.12);color:var(--salmon-m);border:1px solid rgba(244,133,122,.22);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 15px;border-radius:20px;margin-bottom:16px;}
+.hero-title{font-family:'Lora',serif;font-size:42px;font-weight:600;color:#fff;line-height:1.12;letter-spacing:-.02em;margin-bottom:12px;}
+.hero-title em{font-style:italic;color:var(--salmon-m);}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.46);line-height:1.72;max-width:480px;margin:0 auto 28px;}
+.hero-stats{display:flex;gap:32px;justify-content:center;}
+.hs{text-align:center;}
+.hs-n{font-family:'Lora',serif;font-size:22px;color:var(--salmon-m);display:block;}
+.hs-l{font-size:10px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;font-weight:700;}
+
+/* MAIN */
+.main{max-width:1000px;margin:0 auto;padding:40px 32px 60px;}
+
+/* TİP SEÇİCİ */
+.tip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.tip-card{border-radius:var(--r-lg);border:2px solid var(--border);background:var(--bg-white);padding:22px 18px;cursor:pointer;transition:all .3s;text-align:center;}
+.tip-card:hover{border-color:var(--salmon);transform:translateY(-2px);box-shadow:0 8px 20px rgba(244,133,122,.1);}
+.tip-card.selected{border-color:var(--salmon);background:var(--salmon-p);box-shadow:0 8px 24px rgba(244,133,122,.15);}
+.tip-card.selected-b{border-color:var(--blue);background:var(--blue-p);box-shadow:0 8px 24px rgba(74,144,196,.15);}
+.tip-icon{font-size:32px;margin-bottom:10px;}
+.tip-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.tip-sub{font-size:11px;color:var(--ink-s);line-height:1.5;}
+.tip-feats{display:flex;flex-direction:column;gap:4px;margin-top:12px;text-align:left;}
+.tip-feat{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-m);}
+.tip-feat::before{content:'✓';color:var(--salmon);font-weight:700;flex-shrink:0;}
+.selected .tip-feat::before{color:var(--salmon-d);}
+.selected-b .tip-feat::before{color:var(--blue-d);}
+
+/* FORM */
+.form-card{background:var(--bg-white);border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;margin-bottom:20px;}
+.form-head{padding:20px 28px;border-bottom:1px solid var(--border);background:var(--bg-cream);}
+.form-head-title{font-family:'Lora',serif;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.form-head-step{width:26px;height:26px;border-radius:50%;background:var(--salmon);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.form-body{padding:24px 28px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:16px;}
+.form-group:last-child{margin-bottom:0;}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--ink-m);margin-bottom:6px;}
+.form-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--ink);background:#fff;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--salmon);}
+.form-hint{font-size:11px;color:var(--ink-s);margin-top:4px;}
+.form-optional{font-size:10px;color:var(--ink-s);font-weight:400;margin-left:4px;}
+
+/* SOSYAL GİRİŞ */
+.social-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.social-btn{width:100%;padding:13px 20px;border-radius:10px;font-size:14px;font-weight:600;font-family:'Nunito',sans-serif;cursor:pointer;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;color:var(--ink);}
+.social-btn:hover{border-color:var(--salmon);background:var(--salmon-p);}
+.social-btn svg{flex-shrink:0;}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--ink-s);font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* BUTONLAR */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;border:none;transition:all .2s;width:100%;}
+.btn-salmon{background:var(--salmon);color:#fff;}
+.btn-salmon:hover{background:var(--salmon-d);transform:translateY(-1px);}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-blue:hover{background:var(--blue-d);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--ink-m);border:1.5px solid var(--border);}
+.btn-ghost:hover{border-color:var(--salmon);color:var(--salmon);}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
+
+/* FAYDALAR */
+.faydalar{background:var(--bg-white);border-radius:var(--r-lg);border:1px solid var(--border);padding:24px 28px;margin-bottom:20px;}
+.faydalar-title{font-family:'Lora',serif;font-size:16px;color:var(--ink);margin-bottom:16px;}
+.fayda-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fayda{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:8px;background:var(--bg-cream);}
+.fayda-icon{font-size:20px;flex-shrink:0;}
+.fayda-title{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.fayda-txt{font-size:11px;color:var(--ink-s);line-height:1.5;}
+
+/* BAŞARILI EKRAN */
+.success-screen{display:none;text-align:center;padding:48px 32px;}
+.success-icon{font-size:52px;margin-bottom:16px;}
+.success-title{font-family:'Lora',serif;font-size:28px;color:var(--ink);margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--ink-m);line-height:1.7;max-width:420px;margin:0 auto 28px;}
+.success-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.success-btn{padding:12px 22px;border-radius:9px;font-size:13px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;border:none;transition:all .2s;}
+
+/* HATA/BİLDİRİM */
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:16px;display:none;}
+.alert.show{display:block;}
+.alert-error{background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.2);color:var(--red);}
+.alert-success{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.2);color:#27AE60;}
+
+/* TAB */
+.auth-tabs{display:flex;background:var(--bg-cream);border-radius:8px;padding:3px;margin-bottom:20px;}
+.auth-tab{flex:1;padding:9px 12px;font-size:13px;font-weight:700;text-align:center;cursor:pointer;border-radius:6px;transition:all .2s;color:var(--ink-s);border:none;background:none;font-family:'Nunito',sans-serif;}
+.auth-tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-in{padding:0 20px;}
+  .hero{padding:36px 0 32px;}
+  .hero-title{font-size:28px;}
+  .hero-stats{gap:20px;}
+  .main{padding:28px 20px 48px;}
+  .tip-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .fayda-grid{grid-template-columns:1fr;}
+  .form-body{padding:20px;}
+  .form-head{padding:16px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="file:///Users/emrahbay/Downloads/index.html" class="logo">
+      <div style="display:flex;gap:3px;">
+        <div class="lt lt-s">M</div>
+        <div class="lt lt-b">O</div>
+        <div class="lt lt-s">C</div>
+      </div>
+      <div class="logo-text">
+        <span class="lt-top">MONTESSORİ</span>
+        <span class="lt-bot">OKULU<span class="lt-dot">•</span>COM</span>
+      </div>
+    </a>
+    <a href="file:///Users/emrahbay/Downloads/index.html" class="nav-back">← Ana Sayfaya Dön</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-badge">Ücretsiz Üyelik</div>
+    <h1 class="hero-title">Türkiye'nin <em>Montessori</em><br>Topluluğuna Katıl</h1>
+    <p class="hero-sub">Ebeveynler ve öğretmenler için Türkçe içerikler, seminerler ve topluluk. Tamamen ücretsiz.</p>
+    <div class="hero-stats">
+      <div class="hs"><span class="hs-n">8+</span><span class="hs-l">İçerik</span></div>
+      <div class="hs"><span class="hs-n">4</span><span class="hs-l">Podcast</span></div>
+      <div class="hs"><span class="hs-n">4</span><span class="hs-l">Seminer</span></div>
+      <div class="hs"><span class="hs-n">Ücretsiz</span><span class="hs-l">Daima</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- BAŞARILI EKRAN (gizli) -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🌿</div>
+    <h2 class="success-title">Hoş Geldin!</h2>
+    <p class="success-sub" id="successMsg">Montessori Okulu topluluğuna başarıyla katıldın. Profilini tamamla ve içeriklere göz atmaya başla.</p>
+    <div class="success-btns">
+      <button class="success-btn" style="background:var(--salmon);color:#fff;" onclick="window.location.href=&#39;profil.html&#39;">👤 Profilimi Görüntüle</button>
+      <button class="success-btn" style="background:var(--bg-cream);color:var(--ink);border:1.5px solid var(--border);" onclick="window.location.href=&#39;index.html&#39;">🏠 Ana Sayfaya Git</button>
+    </div>
+  </div>
+
+  <!-- KAYIT FORMU -->
+  <div id="formArea">
+
+    <!-- ADIM 1: Üyelik Tipi -->
+    <div class="form-card" id="step1Card">
+      <div class="form-head">
+        <div class="form-head-title">
+          <span class="form-head-step">1</span>
+          Üyelik Tipini Seç
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="tip-grid">
+          <div class="tip-card selected" id="tip-ebeveyn" onclick="secTip(&#39;ebeveyn&#39;)">
+            <div class="tip-icon">👨‍👩‍👧</div>
+            <div class="tip-title">Ebeveyn</div>
+            <div class="tip-sub">Çocuğum için Montessori öğrenmek istiyorum</div>
+            <div class="tip-feats">
+              <div class="tip-feat">Ebeveyn rehberleri</div>
+              <div class="tip-feat">Ev ortamı tavsiyeleri</div>
+              <div class="tip-feat">Okul seçimi rehberi</div>
+            </div>
+          </div>
+          <div class="tip-card" id="tip-ogretmen" onclick="secTip(&#39;ogretmen&#39;)">
+            <div class="tip-icon">🍎</div>
+            <div class="tip-title">Öğretmen</div>
+            <div class="tip-sub">Montessori pedagojimi geliştirmek istiyorum</div>
+            <div class="tip-feats">
+              <div class="tip-feat">Öğretmen kaynakları</div>
+              <div class="tip-feat">Sınıf ortamı ipuçları</div>
+              <div class="tip-feat">Mesleki gelişim</div>
+            </div>
+          </div>
+          <div class="tip-card" id="tip-merakli" onclick="secTip(&#39;merakli&#39;)">
+            <div class="tip-icon">🌱</div>
+            <div class="tip-title">Meraklı</div>
+            <div class="tip-sub">Montessori'yi keşfetmek istiyorum</div>
+            <div class="tip-feats">
+              <div class="tip-feat">Başlangıç içerikleri</div>
+              <div class="tip-feat">Temel kavramlar</div>
+              <div class="tip-feat">Topluluk erişimi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADIM 2: Hesap Oluştur -->
+    <div class="form-card" id="step2Card">
+      <div class="form-head">
+        <div class="form-head-title">
+          <span class="form-head-step">2</span>
+          Hesap Oluştur
+        </div>
+      </div>
+      <div class="form-body">
+
+        <!-- Hata/Başarı bildirimi -->
+        <div class="alert alert-error" id="alertError"></div>
+        <div class="alert alert-success" id="alertSuccess"></div>
+
+        <!-- Auth Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabKayit" onclick="switchTab(&#39;kayit&#39;)">Yeni Hesap</button>
+          <button class="auth-tab" id="tabGiris" onclick="switchTab(&#39;giris&#39;)">Giriş Yap</button>
+        </div>
+
+        <!-- Google ile giriş -->
+        <div class="social-btns">
+          <button class="social-btn" onclick="googleIleGiris()">
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"></path></svg>
+            Google ile <span id="socialBtnText">Kayıt Ol</span>
+          </button>
+        </div>
+
+        <div class="divider">veya e-posta ile devam et</div>
+
+        <!-- Kayıt Formu -->
+        <div id="kayitForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Adınız *</label>
+              <input class="form-input" id="kayitAd" type="text" placeholder="Adınız">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Soyadınız *</label>
+              <input class="form-input" id="kayitSoyad" type="text" placeholder="Soyadınız">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-posta *</label>
+            <input class="form-input" id="kayitEmail" type="email" placeholder="ornek@email.com">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Şifre *</label>
+              <input class="form-input" id="kayitSifre" type="password" placeholder="En az 6 karakter">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Şifre Tekrar *</label>
+              <input class="form-input" id="kayitSifreTekrar" type="password" placeholder="Şifreyi tekrarla">
+            </div>
+          </div>
+
+          <!-- Ebeveyn özel alanları -->
+          <div id="ebeveynAlanlari" style="display: block;">
+            <div class="form-group">
+              <label class="form-label">Çocuğunuzun Yaşı <span class="form-optional">(isteğe bağlı)</span></label>
+              <input class="form-input" id="cocukYasi" type="text" placeholder="örn: 3, 5 yaş">
+              <div class="form-hint">Birden fazla çocuk varsa virgülle ayırın</div>
+            </div>
+          </div>
+
+          <!-- Öğretmen özel alanları -->
+          <div id="ogretmenAlanlari" style="display:none;">
+            <div class="form-group">
+              <label class="form-label">Okul/Kurum Adı <span class="form-optional">(isteğe bağlı)</span></label>
+              <input class="form-input" id="okulAdi" type="text" placeholder="Çalıştığınız kurum">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:4px;">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--ink-m);line-height:1.5;">
+              <input type="checkbox" id="kvkkOnay" style="margin-top:2px;accent-color:var(--salmon);flex-shrink:0;">
+              <span><a href="file:///Users/emrahbay/Downloads/uyelik.html#" style="color:var(--salmon);font-weight:700;">Gizlilik Politikası</a>'nı ve <a href="file:///Users/emrahbay/Downloads/uyelik.html#" style="color:var(--salmon);font-weight:700;">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
+            </label>
+          </div>
+
+          <button class="btn btn-salmon" id="kayitBtn" onclick="emailKayit()" style="margin-top:16px;">
+            Üye Ol — Ücretsiz →
+          </button>
+        </div>
+
+        <!-- Giriş Formu -->
+        <div id="girisForm" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">E-posta</label>
+            <input class="form-input" id="girisEmail" type="email" placeholder="ornek@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Şifre</label>
+            <input class="form-input" id="girisSifre" type="password" placeholder="Şifreniz">
+          </div>
+          <div style="text-align:right;margin-bottom:16px;">
+            <a href="file:///Users/emrahbay/Downloads/uyelik.html#" onclick="sifreSifirla()" style="font-size:12px;color:var(--blue);">Şifremi Unuttum</a>
+          </div>
+          <button class="btn btn-salmon" onclick="emailGiris()">
+            Giriş Yap →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAYDALAR -->
+    <div class="faydalar">
+      <div class="faydalar-title">Üyeliğin Faydaları</div>
+      <div class="fayda-grid">
+        <div class="fayda"><div class="fayda-icon">🎬</div><div><div class="fayda-title">Tüm İçeriklere Erişim</div><div class="fayda-txt">Blog, podcast ve videolara sınırsız erişim</div></div></div>
+        <div class="fayda"><div class="fayda-icon">📅</div><div><div class="fayda-title">Seminer Kaydı</div><div class="fayda-txt">Ücretsiz seminerlere öncelikli kayıt</div></div></div>
+        <div class="fayda"><div class="fayda-icon">👤</div><div><div class="fayda-title">Kişisel Profil</div><div class="fayda-txt">Okuma listesi, rozetler ve ilerleme takibi</div></div></div>
+        <div class="fayda"><div class="fayda-icon">💬</div><div><div class="fayda-title">Topluluk</div><div class="fayda-txt">Ebeveyn ve öğretmenlerle bağlantı kur</div></div></div>
+        <div class="fayda"><div class="fayda-icon">🎁</div><div><div class="fayda-title">Özel İndirimler</div><div class="fayda-txt">evdemontessori.com'da üye indirimleri</div></div></div>
+        <div class="fayda"><div class="fayda-icon">🔔</div><div><div class="fayda-title">Kişisel Öneriler</div><div class="fayda-txt">Sana özel içerik ve seminer önerileri</div></div></div>
+      </div>
+    </div>
+
+  </div><!-- /formArea -->
+</main>
+
+<script>
+// ── Supabase Başlat ──
+const SUPABASE_URL = 'https://ihjrjfbtvciqpoxmepqv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Q4yLLTNU9g48Sji4v17p-w_1DcLnFD0';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let seciliTip = 'merakli';
+
+// ── Üyelik Tipi Seç ──
+function secTip(tip) {
+  seciliTip = tip;
+  document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('selected','selected-b'));
+  const card = document.getElementById('tip-' + tip);
+  card.classList.add(tip === 'ogretmen' ? 'selected-b' : 'selected');
+
+  // Özel alanları göster/gizle
+  document.getElementById('ebeveynAlanlari').style.display = tip === 'ebeveyn' ? 'block' : 'none';
+  document.getElementById('ogretmenAlanlari').style.display = tip === 'ogretmen' ? 'block' : 'none';
+}
+
+// ── Tab Geçişi ──
+function switchTab(tab) {
+  document.getElementById('kayitForm').style.display = tab === 'kayit' ? 'block' : 'none';
+  document.getElementById('girisForm').style.display = tab === 'giris' ? 'block' : 'none';
+  document.getElementById('tabKayit').classList.toggle('active', tab === 'kayit');
+  document.getElementById('tabGiris').classList.toggle('active', tab === 'giris');
+  document.getElementById('socialBtnText').textContent = tab === 'kayit' ? 'Kayıt Ol' : 'Giriş Yap';
+}
+
+// ── Hata/Başarı Göster ──
+function showAlert(type, msg) {
+  const err = document.getElementById('alertError');
+  const suc = document.getElementById('alertSuccess');
+  err.classList.remove('show'); suc.classList.remove('show');
+  if (type === 'error') { err.textContent = msg; err.classList.add('show'); }
+  else { suc.textContent = msg; suc.classList.add('show'); }
+}
+
+// ── Başarı Ekranı ──
+function showSuccess(user) {
+  document.getElementById('formArea').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+  const name = user.user_metadata?.full_name || user.email;
+  document.getElementById('successMsg').textContent =
+    `Hoş geldin, ${name}! Montessori Okulu topluluğuna başarıyla katıldın. Profilini tamamla ve içeriklere göz at.`;
+  window.scrollTo(0, 0);
+}
+
+// ── Google ile Giriş ──
+async function googleIleGiris() {
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + '/uyelik.html',
+      queryParams: { uyelik_tipi: seciliTip }
+    }
+  });
+  if (error) showAlert('error', 'Google girişi başarısız: ' + error.message);
+}
+
+// ── E-posta Kayıt ──
+async function emailKayit() {
+  const ad = document.getElementById('kayitAd').value.trim();
+  const soyad = document.getElementById('kayitSoyad').value.trim();
+  const email = document.getElementById('kayitEmail').value.trim();
+  const sifre = document.getElementById('kayitSifre').value;
+  const sifreTekrar = document.getElementById('kayitSifreTekrar').value;
+  const kvkk = document.getElementById('kvkkOnay').checked;
+
+  if (!ad || !soyad) { showAlert('error', 'Ad ve soyad zorunludur.'); return; }
+  if (!email) { showAlert('error', 'E-posta adresi zorunludur.'); return; }
+  if (sifre.length < 6) { showAlert('error', 'Şifre en az 6 karakter olmalıdır.'); return; }
+  if (sifre !== sifreTekrar) { showAlert('error', 'Şifreler eşleşmiyor.'); return; }
+  if (!kvkk) { showAlert('error', 'Devam etmek için koşulları kabul etmeniz gerekiyor.'); return; }
+
+  const btn = document.getElementById('kayitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Kaydediliyor...';
+
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password: sifre,
+    options: {
+      data: {
+        full_name: ad + ' ' + soyad,
+        uyelik_tipi: seciliTip,
+        cocuk_yasi: document.getElementById('cocukYasi')?.value || null,
+        okul_adi: document.getElementById('okulAdi')?.value || null,
+      }
+    }
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'Üye Ol — Ücretsiz →';
+
+  if (error) { showAlert('error', hataMetni(error.message)); return; }
+
+  if (data.user) {
+    // Profili güncelle
+    await sb.from('profiller').upsert({
+      id: data.user.id,
+      email: data.user.email,
+      ad_soyad: ad + ' ' + soyad,
+      uyelik_tipi: seciliTip,
+    });
+
+    if (data.session) {
+      showSuccess(data.user);
+    } else {
+      showAlert('success', '✓ Kayıt başarılı! E-posta adresinize doğrulama linki gönderildi.');
+    }
+  }
+}
+
+// ── E-posta Giriş ──
+async function emailGiris() {
+  const email = document.getElementById('girisEmail').value.trim();
+  const sifre = document.getElementById('girisSifre').value;
+  if (!email || !sifre) { showAlert('error', 'E-posta ve şifre zorunludur.'); return; }
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: sifre });
+  if (error) { showAlert('error', hataMetni(error.message)); return; }
+  if (data.user) showSuccess(data.user);
+}
+
+// ── Şifre Sıfırla ──
+async function sifreSifirla() {
+  const email = document.getElementById('girisEmail').value.trim();
+  if (!email) { showAlert('error', 'Önce e-posta adresinizi girin.'); return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/uyelik.html'
+  });
+  if (error) { showAlert('error', error.message); return; }
+  showAlert('success', 'Şifre sıfırlama linki e-postanıza gönderildi.');
+}
+
+// ── Hata Metni ──
+function hataMetni(msg) {
+  const hatalar = {
+    'User already registered': 'Bu e-posta adresi zaten kayıtlı. Giriş yapmayı deneyin.',
+    'Invalid login credentials': 'E-posta veya şifre hatalı.',
+    'Email not confirmed': 'E-postanızı doğrulamanız gerekiyor.',
+    'Password should be at least 6 characters': 'Şifre en az 6 karakter olmalıdır.',
+  };
+  return hatalar[msg] || msg;
+}
+
+// ── Sayfa Yüklenince Auth Durumunu Kontrol Et ──
+window.onload = async () => {
+  // Google OAuth geri dönüşünü yakala
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) {
+    // Üyelik tipini URL'den al (Google OAuth'tan döndükten sonra)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tipParam = urlParams.get('uyelik_tipi');
+    if (tipParam) {
+      await sb.from('profiller').update({ uyelik_tipi: tipParam }).eq('id', session.user.id);
+    }
+    showSuccess(session.user);
+  }
+
+  // Varsayılan tip seç
+  secTip('ebeveyn');
+};
+</script>
+
+
+</body></html>
