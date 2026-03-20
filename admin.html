@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///Users/emrahbay/Downloads/admin_1.html -->
-<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MOC Admin — Montessori Okulu Yönetim Paneli</title>
-<link href="./admin_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 <style>
 :root {
   --salmon:#F4857A; --salmon-d:#D9655A; --salmon-m:#F9A89F;
@@ -338,7 +338,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
     <div class="login-title">Admin Paneli</div>
     <div class="login-sub">İçerik yönetimi için giriş yapın</div>
     <button class="google-btn" onclick="googleLogin()">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"></path></svg>
+      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
       Google ile Giriş Yap
     </button>
     <div class="login-note">Sadece yetkili Google hesapları erişebilir</div>
@@ -373,42 +373,42 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
 
     <nav class="sb-nav">
       <div class="sb-section">Genel</div>
-      <div class="sb-link active" onclick="showPanel(&#39;dashboard&#39;)">
+      <div class="sb-link active" onclick="showPanel('dashboard')">
         <span class="icon">📊</span> Dashboard
       </div>
 
       <div class="sb-section">İçerik</div>
-      <div class="sb-link" onclick="showPanel(&#39;blog&#39;)">
+      <div class="sb-link" onclick="showPanel('blog')">
         <span class="icon">📝</span> Blog Yazıları
         <span class="sb-badge" id="blogCount">8</span>
       </div>
-      <div class="sb-link" onclick="showPanel(&#39;podcast&#39;)">
+      <div class="sb-link" onclick="showPanel('podcast')">
         <span class="icon">🎙</span> Podcast
         <span class="sb-badge" id="podCount">4</span>
       </div>
-      <div class="sb-link" onclick="showPanel(&#39;video&#39;)">
+      <div class="sb-link" onclick="showPanel('video')">
         <span class="icon">🎬</span> Videolar
       </div>
-      <div class="sb-link" onclick="showPanel(&#39;media&#39;)">
+      <div class="sb-link" onclick="showPanel('media')">
         <span class="icon">🖼</span> Medya / Görseller
       </div>
-      <div class="sb-link" onclick="showPanel(&#39;seminer&#39;)">
+      <div class="sb-link" onclick="showPanel('seminer')">
         <span class="icon">📅</span> Seminerler
       </div>
 
       <div class="sb-section">Topluluk</div>
-      <div class="sb-link" onclick="showPanel(&#39;uyeler&#39;)">
+      <div class="sb-link" onclick="showPanel('uyeler')">
         <span class="icon">👥</span> Üyeler
       </div>
-      <div class="sb-link" onclick="showPanel(&#39;yorumlar&#39;)">
+      <div class="sb-link" onclick="showPanel('yorumlar')">
         <span class="icon">💬</span> Yorumlar
       </div>
 
       <div class="sb-section">Site</div>
-      <div class="sb-link" onclick="showPanel(&#39;ayarlar&#39;)">
+      <div class="sb-link" onclick="showPanel('ayarlar')">
         <span class="icon">⚙️</span> Site Ayarları
       </div>
-      <div class="sb-link" onclick="window.open(&#39;https://montessoriokulu.com&#39;,&#39;_blank&#39;)">
+      <div class="sb-link" onclick="window.open('https://montessoriokulu.com','_blank')">
         <span class="icon">🌐</span> Siteyi Görüntüle
       </div>
     </nav>
@@ -482,7 +482,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
             <div class="qc-title">Video Ekle</div>
             <div class="qc-sub">YouTube/Vimeo</div>
           </div>
-          <div class="quick-card" onclick="showPanel(&#39;seminer&#39;)">
+          <div class="quick-card" onclick="showPanel('seminer')">
             <div class="qc-icon">📅</div>
             <div class="qc-title">Seminer Ekle</div>
             <div class="qc-sub">Etkinlik planla</div>
@@ -493,7 +493,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           <div class="card">
             <div class="card-head">
               <span class="card-title">Son Blog Yazıları</span>
-              <button class="btn btn-ghost btn-sm" onclick="showPanel(&#39;blog&#39;)">Tümünü Gör</button>
+              <button class="btn btn-ghost btn-sm" onclick="showPanel('blog')">Tümünü Gör</button>
             </div>
             <div class="card-body" id="dashBlogList">
               <div style="text-align:center;padding:20px;color:var(--ink-s);font-size:13px;">Yükleniyor...</div>
@@ -606,7 +606,9 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
             </div>
             <div style="margin-top:20px;">
               <div style="font-size:12px;font-weight:700;color:var(--ink-s);margin-bottom:12px;">YÜKLENEN GÖRSELLER</div>
-              <div class="img-grid" id="mediaGrid"><div style="text-align:center;padding:30px;color:var(--ink-s);grid-column:1/-1;font-size:12px;">Henüz görsel yüklenmedi.</div></div>
+              <div class="img-grid" id="mediaGrid">
+                <div style="text-align:center;padding:30px;color:var(--ink-s);grid-column:1/-1;font-size:12px;">Henüz görsel yüklenmedi.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -735,7 +737,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
                     <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
                   </div>
                   <label class="toggle">
-                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;ebeveyn&#39;)">
+                    <input type="checkbox" checked onchange="toggleSetting(this,'ebeveyn')">
                     <div class="toggle-track"></div>
                     <div class="toggle-thumb"></div>
                   </label>
@@ -746,7 +748,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
                     <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
                   </div>
                   <label class="toggle">
-                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;ogretmen&#39;)">
+                    <input type="checkbox" checked onchange="toggleSetting(this,'ogretmen')">
                     <div class="toggle-track"></div>
                     <div class="toggle-thumb"></div>
                   </label>
@@ -757,7 +759,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
                     <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
                   </div>
                   <label class="toggle">
-                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;merakli&#39;)">
+                    <input type="checkbox" checked onchange="toggleSetting(this,'merakli')">
                     <div class="toggle-track"></div>
                     <div class="toggle-thumb"></div>
                   </label>
@@ -790,8 +792,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
               </div>
               <div class="form-group">
                 <label class="form-label">İzin Verilen E-postalar</label>
-                <textarea class="form-input" style="min-height:80px;" id="allowedEmails" placeholder="admin@example.com
-editor@example.com"></textarea>
+                <textarea class="form-input" style="min-height:80px;" id="allowedEmails" placeholder="admin@example.com&#10;editor@example.com"></textarea>
                 <div class="form-hint">Her satıra bir e-posta adresi</div>
               </div>
               <button class="btn btn-s" onclick="saveGoogleSettings()">Kaydet</button>
@@ -812,7 +813,7 @@ editor@example.com"></textarea>
   <div class="modal modal-lg">
     <div class="modal-head">
       <span class="modal-title" id="modalBlogTitle">Yeni Blog Yazısı</span>
-      <button class="modal-close" onclick="closeModal(&#39;modalBlog&#39;)">×</button>
+      <button class="modal-close" onclick="closeModal('modalBlog')">×</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
@@ -860,7 +861,7 @@ editor@example.com"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn-s" onclick="saveBlogPost()">✓ Kaydet ve Yayınla</button>
-        <button class="btn btn-ghost" onclick="closeModal(&#39;modalBlog&#39;)">İptal</button>
+        <button class="btn btn-ghost" onclick="closeModal('modalBlog')">İptal</button>
       </div>
     </div>
   </div>
@@ -871,7 +872,7 @@ editor@example.com"></textarea>
   <div class="modal">
     <div class="modal-head">
       <span class="modal-title">Podcast Bölümü Ekle</span>
-      <button class="modal-close" onclick="closeModal(&#39;modalPodcast&#39;)">×</button>
+      <button class="modal-close" onclick="closeModal('modalPodcast')">×</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
@@ -916,7 +917,7 @@ editor@example.com"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn-s" onclick="savePodcast()">✓ Kaydet</button>
-        <button class="btn btn-ghost" onclick="closeModal(&#39;modalPodcast&#39;)">İptal</button>
+        <button class="btn btn-ghost" onclick="closeModal('modalPodcast')">İptal</button>
       </div>
     </div>
   </div>
@@ -927,14 +928,14 @@ editor@example.com"></textarea>
   <div class="modal">
     <div class="modal-head">
       <span class="modal-title">Video Ekle</span>
-      <button class="modal-close" onclick="closeModal(&#39;modalVideo&#39;)">×</button>
+      <button class="modal-close" onclick="closeModal('modalVideo')">×</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">Platform</label>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-s" id="ytBtn" onclick="setPlatform(&#39;youtube&#39;)" style="flex:1;">▶ YouTube</button>
-          <button class="btn btn-ghost" id="vmBtn" onclick="setPlatform(&#39;vimeo&#39;)" style="flex:1;">Vimeo</button>
+          <button class="btn btn-ghost" id="ytBtn" onclick="setPlatform('youtube')" style="flex:1;">▶ YouTube</button>
+          <button class="btn btn-ghost" id="vmBtn" onclick="setPlatform('vimeo')" style="flex:1;">Vimeo</button>
         </div>
       </div>
       <div class="form-group">
@@ -968,7 +969,7 @@ editor@example.com"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn-s" onclick="saveVideo()">✓ Kaydet</button>
-        <button class="btn btn-ghost" onclick="closeModal(&#39;modalVideo&#39;)">İptal</button>
+        <button class="btn btn-ghost" onclick="closeModal('modalVideo')">İptal</button>
       </div>
     </div>
   </div>
@@ -979,7 +980,7 @@ editor@example.com"></textarea>
   <div class="modal">
     <div class="modal-head">
       <span class="modal-title">Yeni Etkinlik / Seminer</span>
-      <button class="modal-close" onclick="closeModal(&#39;modalSeminer&#39;)">×</button>
+      <button class="modal-close" onclick="closeModal('modalSeminer')">×</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
@@ -1026,7 +1027,7 @@ editor@example.com"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn-s" onclick="saveSeminer()">✓ Kaydet</button>
-        <button class="btn btn-ghost" onclick="closeModal(&#39;modalSeminer&#39;)">İptal</button>
+        <button class="btn btn-ghost" onclick="closeModal('modalSeminer')">İptal</button>
       </div>
     </div>
   </div>
@@ -1502,6 +1503,5 @@ window.onload = () => {
   if (ae) document.getElementById('allowedEmails').value = JSON.parse(ae).join('\n');
 };
 </script>
-
-
-</body></html>
+</body>
+</html>
