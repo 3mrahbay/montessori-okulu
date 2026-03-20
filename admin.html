@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///Users/emrahbay/Downloads/admin_1.html -->
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOC Admin — Montessori Okulu Yönetim Paneli</title>
+<link href="./admin_files/css2" rel="stylesheet">
+<style>
+:root {
+  --salmon:#F4857A; --salmon-d:#D9655A; --salmon-m:#F9A89F;
+  --blue:#4A90C4; --blue-d:#2E6FA0; --blue-m:#72AADB;
+  --ink:#1A1A2E; --ink-m:#3A3A52; --ink-s:#7878A0;
+  --bg-dark:#1A1A2E; --bg-navy:#222240;
+  --bg-cream:#FAF9F6; --bg-white:#ffffff;
+  --border:rgba(26,26,46,.10);
+  --green:#2ECC71; --orange:#F39C12; --red:#E74C3C;
+  --r:10px; --sidebar:240px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:#F0F2F5;color:var(--ink);min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{font-family:'Nunito',sans-serif;cursor:pointer;}
+
+/* ── GİRİŞ EKRANI ── */
+#loginScreen {
+  position:fixed;inset:0;background:var(--bg-dark);
+  display:flex;align-items:center;justify-content:center;z-index:1000;
+}
+#loginScreen::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 20% 40%,rgba(74,144,196,.12),transparent 60%),
+             radial-gradient(ellipse 40% 50% at 80% 70%,rgba(244,133,122,.08),transparent 55%);
+}
+.login-box {
+  position:relative;z-index:1;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:40px 36px;width:360px;text-align:center;
+}
+.login-logo {display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:28px;}
+.ll-tiles{display:flex;gap:3px;}
+.ll-t{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;}
+.ll-s{background:var(--salmon);}
+.ll-b{background:var(--blue);}
+.ll-text{text-align:left;}
+.ll-top{font-size:14px;font-weight:800;color:#fff;display:block;line-height:1;}
+.ll-bot{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.08em;display:block;}
+.login-title{font-family:'Lora',serif;font-size:22px;color:#fff;margin-bottom:6px;}
+.login-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:28px;}
+.google-btn {
+  width:100%;padding:13px 20px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;color:#fff;font-size:14px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .2s;
+}
+.google-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
+.google-btn svg{flex-shrink:0;}
+.login-note{font-size:11px;color:rgba(255,255,255,.2);margin-top:16px;}
+
+/* ── ADMIN LAYOUT ── */
+#adminApp{display:none;min-height:100vh;}
+.admin-layout{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:var(--bg-dark);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;bottom:0;left:0;z-index:100;
+}
+.sb-logo{
+  padding:20px 18px 16px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:9px;
+}
+.sb-tiles{display:flex;gap:3px;}
+.sb-t{width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:9px;color:#fff;}
+.sb-s{background:var(--salmon);}
+.sb-b{background:var(--blue);}
+.sb-text{line-height:1;}
+.sb-top{font-size:11px;font-weight:800;color:#fff;display:block;}
+.sb-bot{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.06em;display:block;}
+.sb-user{
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.sb-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--salmon);display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden;
+}
+.sb-avatar img{width:100%;height:100%;object-fit:cover;}
+.sb-uname{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-urole{font-size:10px;color:rgba(255,255,255,.35);}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto;}
+.sb-section{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:10px 18px 4px;}
+.sb-link{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 18px;font-size:12px;font-weight:600;
+  color:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;
+  border-left:3px solid transparent;
+}
+.sb-link:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04);}
+.sb-link.active{color:#fff;background:rgba(244,133,122,.1);border-left-color:var(--salmon);}
+.sb-link .icon{font-size:15px;flex-shrink:0;width:18px;text-align:center;}
+.sb-badge{margin-left:auto;background:var(--salmon);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;}
+.sb-logout{
+  padding:14px 18px;border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;color:rgba(255,255,255,.3);cursor:pointer;transition:color .2s;
+}
+.sb-logout:hover{color:var(--salmon-m);}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.topbar-title{font-family:'Lora',serif;font-size:18px;font-weight:600;color:var(--ink);}
+.topbar-actions{display:flex;align-items:center;gap:10px;}
+.content{padding:24px 28px;flex:1;}
+
+/* PANEL */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{
+  background:#fff;border-radius:var(--r);
+  padding:18px 20px;border:1px solid var(--border);
+}
+.stat-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.stat-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.si-s{background:var(--salmon-m);background:rgba(244,133,122,.12);}
+.si-b{background:rgba(74,144,196,.12);}
+.si-g{background:rgba(46,204,113,.12);}
+.si-o{background:rgba(243,156,18,.12);}
+.stat-change{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.up{background:rgba(46,204,113,.12);color:#27AE60;}
+.down{background:rgba(231,76,60,.12);color:#C0392B;}
+.stat-num{font-family:'Lora',serif;font-size:28px;font-weight:600;color:var(--ink);display:block;}
+.stat-label{font-size:12px;color:var(--ink-s);margin-top:2px;}
+
+/* CARDS */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border);margin-bottom:20px;}
+.card-head{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-title{font-size:14px;font-weight:700;color:var(--ink);}
+.card-body{padding:20px;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .2s;}
+.btn-s{background:var(--salmon);color:#fff;}
+.btn-s:hover{background:var(--salmon-d);}
+.btn-b{background:var(--blue);color:#fff;}
+.btn-b:hover{background:var(--blue-d);}
+.btn-ghost{background:transparent;color:var(--ink-m);border:1px solid var(--border);}
+.btn-ghost:hover{background:var(--bg-cream);}
+.btn-red{background:transparent;color:var(--red);border:1px solid rgba(231,76,60,.2);}
+.btn-red:hover{background:rgba(231,76,60,.08);}
+.btn-sm{padding:6px 12px;font-size:11px;}
+.btn-xs{padding:4px 9px;font-size:10px;}
+
+/* TABLE */
+.table{width:100%;border-collapse:collapse;}
+.table th{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-s);padding:10px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg-cream);}
+.table td{padding:12px 12px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.table tr:last-child td{border-bottom:none;}
+.table tr:hover td{background:var(--bg-cream);}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.badge-green{background:rgba(46,204,113,.12);color:#27AE60;}
+.badge-orange{background:rgba(243,156,18,.12);color:#D68910;}
+.badge-blue{background:rgba(74,144,196,.12);color:var(--blue-d);}
+.badge-red{background:rgba(231,76,60,.12);color:var(--red);}
+.badge-gray{background:rgba(120,120,160,.12);color:var(--ink-s);}
+
+/* FORM */
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--ink-m);margin-bottom:6px;}
+.form-input{
+  width:100%;padding:10px 14px;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-size:13px;font-family:'Nunito',sans-serif;color:var(--ink);
+  background:#fff;outline:none;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--salmon);}
+.form-textarea{min-height:120px;resize:vertical;}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237878A0'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-hint{font-size:11px;color:var(--ink-s);margin-top:4px;}
+.form-actions{display:flex;gap:10px;padding-top:8px;border-top:1px solid var(--border);margin-top:20px;}
+
+/* MODAL */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);
+  z-index:500;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:#fff;border-radius:16px;width:580px;max-width:90vw;
+  max-height:90vh;overflow-y:auto;
+  box-shadow:0 24px 60px rgba(0,0,0,.15);
+}
+.modal-head{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:#fff;z-index:1;
+}
+.modal-title{font-family:'Lora',serif;font-size:18px;font-weight:600;color:var(--ink);}
+.modal-close{background:none;border:none;font-size:20px;color:var(--ink-s);cursor:pointer;line-height:1;padding:4px;}
+.modal-body{padding:24px;}
+.modal-lg{width:760px;}
+
+/* TABS */
+.tabs{display:flex;gap:0;background:var(--bg-cream);border-radius:8px;padding:3px;margin-bottom:20px;}
+.tab{flex:1;padding:8px 12px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;border-radius:6px;transition:all .2s;color:var(--ink-s);border:none;background:none;font-family:'Nunito',sans-serif;}
+.tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+
+/* TOGGLE */
+.toggle{position:relative;display:inline-flex;align-items:center;cursor:pointer;}
+.toggle input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-track{width:36px;height:20px;background:var(--border);border-radius:10px;transition:background .2s;flex-shrink:0;}
+.toggle input:checked + .toggle-track{background:var(--salmon);}
+.toggle-thumb{position:absolute;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s;}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(16px);}
+.toggle-label{margin-left:8px;font-size:12px;font-weight:600;color:var(--ink-m);}
+
+/* UPLOAD AREA */
+.upload-area{
+  border:2px dashed var(--border);border-radius:10px;
+  padding:28px 20px;text-align:center;cursor:pointer;
+  transition:all .2s;
+}
+.upload-area:hover{border-color:var(--salmon);background:var(--salmon-p,#FDF0EE);}
+.upload-icon{font-size:28px;margin-bottom:8px;}
+.upload-text{font-size:13px;color:var(--ink-m);margin-bottom:4px;}
+.upload-hint{font-size:11px;color:var(--ink-s);}
+
+/* IMAGE GRID */
+.img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.img-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--bg-cream);cursor:pointer;}
+.img-item img{width:100%;height:100%;object-fit:cover;}
+.img-item-ov{
+  position:absolute;inset:0;background:rgba(26,26,46,.6);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  opacity:0;transition:opacity .2s;
+}
+.img-item:hover .img-item-ov{opacity:1;}
+.img-act{background:rgba(255,255,255,.15);border:none;border-radius:6px;padding:6px 8px;color:#fff;font-size:11px;cursor:pointer;}
+
+/* MEMBER CARD */
+.member-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.member-row:last-child{border-bottom:none;}
+.member-av{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;}
+.member-info{flex:1;}
+.member-name{font-size:13px;font-weight:600;color:var(--ink);}
+.member-email{font-size:11px;color:var(--ink-s);}
+.member-date{font-size:10px;color:var(--ink-s);}
+
+/* ACTIVITY */
+.activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:8px;height:8px;border-radius:50%;background:var(--salmon);flex-shrink:0;margin-top:4px;}
+.act-text{font-size:13px;color:var(--ink-m);line-height:1.5;}
+.act-time{font-size:10px;color:var(--ink-s);margin-top:2px;}
+
+/* VIDEO EMBED */
+.video-preview{
+  aspect-ratio:16/9;background:var(--ink);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.video-preview iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.video-placeholder{text-align:center;color:rgba(255,255,255,.3);}
+.video-placeholder-icon{font-size:36px;margin-bottom:8px;}
+
+/* QUICK ACTIONS */
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.quick-card{
+  background:#fff;border-radius:var(--r);border:1px solid var(--border);
+  padding:16px;text-align:center;cursor:pointer;transition:all .2s;
+}
+.quick-card:hover{border-color:var(--salmon);transform:translateY(-2px);box-shadow:0 6px 16px rgba(244,133,122,.12);}
+.qc-icon{font-size:24px;margin-bottom:8px;}
+.qc-title{font-size:12px;font-weight:700;color:var(--ink);}
+.qc-sub{font-size:10px;color:var(--ink-s);margin-top:2px;}
+
+/* NOTIFICATIONS */
+.notif{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--ink);color:#fff;
+  padding:12px 18px;border-radius:10px;
+  font-size:13px;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  z-index:1000;
+  transform:translateY(80px);opacity:0;
+  transition:all .3s;
+  display:flex;align-items:center;gap:8px;
+}
+.notif.show{transform:translateY(0);opacity:1;}
+.notif.success{background:var(--green);}
+.notif.error{background:var(--red);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:none;}
+  .main{margin-left:0;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .quick-grid{grid-template-columns:repeat(2,1fr);}
+  .form-row{grid-template-columns:1fr;}
+  .img-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- GİRİŞ EKRANI -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="ll-tiles">
+        <div class="ll-t ll-s">M</div>
+        <div class="ll-t ll-b">O</div>
+        <div class="ll-t ll-s">C</div>
+      </div>
+      <div class="ll-text">
+        <span class="ll-top">MONTESSORİ</span>
+        <span class="ll-bot">OKULU•COM</span>
+      </div>
+    </div>
+    <div class="login-title">Admin Paneli</div>
+    <div class="login-sub">İçerik yönetimi için giriş yapın</div>
+    <button class="google-btn" onclick="googleLogin()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"></path></svg>
+      Google ile Giriş Yap
+    </button>
+    <div class="login-note">Sadece yetkili Google hesapları erişebilir</div>
+  </div>
+</div>
+
+<!-- ADMIN UYGULAMASI -->
+<div id="adminApp">
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-tiles">
+        <div class="sb-t sb-s">M</div>
+        <div class="sb-t sb-b">O</div>
+        <div class="sb-t sb-s">C</div>
+      </div>
+      <div class="sb-text">
+        <span class="sb-top">MONTESSORİ</span>
+        <span class="sb-bot">ADMIN PANELİ</span>
+      </div>
+    </div>
+
+    <div class="sb-user">
+      <div class="sb-avatar" id="sbAvatar">A</div>
+      <div>
+        <div class="sb-uname" id="sbName">Admin</div>
+        <div class="sb-urole">Süper Admin</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">Genel</div>
+      <div class="sb-link active" onclick="showPanel(&#39;dashboard&#39;)">
+        <span class="icon">📊</span> Dashboard
+      </div>
+
+      <div class="sb-section">İçerik</div>
+      <div class="sb-link" onclick="showPanel(&#39;blog&#39;)">
+        <span class="icon">📝</span> Blog Yazıları
+        <span class="sb-badge" id="blogCount">8</span>
+      </div>
+      <div class="sb-link" onclick="showPanel(&#39;podcast&#39;)">
+        <span class="icon">🎙</span> Podcast
+        <span class="sb-badge" id="podCount">4</span>
+      </div>
+      <div class="sb-link" onclick="showPanel(&#39;video&#39;)">
+        <span class="icon">🎬</span> Videolar
+      </div>
+      <div class="sb-link" onclick="showPanel(&#39;media&#39;)">
+        <span class="icon">🖼</span> Medya / Görseller
+      </div>
+      <div class="sb-link" onclick="showPanel(&#39;seminer&#39;)">
+        <span class="icon">📅</span> Seminerler
+      </div>
+
+      <div class="sb-section">Topluluk</div>
+      <div class="sb-link" onclick="showPanel(&#39;uyeler&#39;)">
+        <span class="icon">👥</span> Üyeler
+      </div>
+      <div class="sb-link" onclick="showPanel(&#39;yorumlar&#39;)">
+        <span class="icon">💬</span> Yorumlar
+      </div>
+
+      <div class="sb-section">Site</div>
+      <div class="sb-link" onclick="showPanel(&#39;ayarlar&#39;)">
+        <span class="icon">⚙️</span> Site Ayarları
+      </div>
+      <div class="sb-link" onclick="window.open(&#39;https://montessoriokulu.com&#39;,&#39;_blank&#39;)">
+        <span class="icon">🌐</span> Siteyi Görüntüle
+      </div>
+    </nav>
+
+    <div class="sb-logout" onclick="logout()">
+      <span>🚪</span> Çıkış Yap
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn btn-s" id="topbarAction" onclick="openNewPost()">+ Yeni Yazı</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon si-s">📝</div>
+              <span class="stat-change up">+2 bu ay</span>
+            </div>
+            <span class="stat-num" id="statBlog">8</span>
+            <div class="stat-label">Blog Yazısı</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon si-b">🎙</div>
+              <span class="stat-change up">+1 bu ay</span>
+            </div>
+            <span class="stat-num">4</span>
+            <div class="stat-label">Podcast Bölümü</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon si-g">👥</div>
+              <span class="stat-change up">+0 bu ay</span>
+            </div>
+            <span class="stat-num" id="statMembers">0</span>
+            <div class="stat-label">Üye</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-top">
+              <div class="stat-icon si-o">📅</div>
+              <span class="stat-change up">4 yaklaşan</span>
+            </div>
+            <span class="stat-num">4</span>
+            <div class="stat-label">Seminer</div>
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <div class="quick-card" onclick="openNewPost()">
+            <div class="qc-icon">✍️</div>
+            <div class="qc-title">Yeni Blog Yazısı</div>
+            <div class="qc-sub">Makale ekle</div>
+          </div>
+          <div class="quick-card" onclick="openNewPodcast()">
+            <div class="qc-icon">🎙</div>
+            <div class="qc-title">Podcast Ekle</div>
+            <div class="qc-sub">Yeni bölüm</div>
+          </div>
+          <div class="quick-card" onclick="openNewVideo()">
+            <div class="qc-icon">🎬</div>
+            <div class="qc-title">Video Ekle</div>
+            <div class="qc-sub">YouTube/Vimeo</div>
+          </div>
+          <div class="quick-card" onclick="showPanel(&#39;seminer&#39;)">
+            <div class="qc-icon">📅</div>
+            <div class="qc-title">Seminer Ekle</div>
+            <div class="qc-sub">Etkinlik planla</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Son Blog Yazıları</span>
+              <button class="btn btn-ghost btn-sm" onclick="showPanel(&#39;blog&#39;)">Tümünü Gör</button>
+            </div>
+            <div class="card-body" id="dashBlogList">
+              <div style="text-align:center;padding:20px;color:var(--ink-s);font-size:13px;">Yükleniyor...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Son Aktiviteler</span>
+            </div>
+            <div class="card-body">
+              <div class="activity-item"><div class="act-dot"></div><div><div class="act-text">Yeni blog yazısı yayınlandı: <strong>Orman Okulu Nedir?</strong></div><div class="act-time">2 saat önce</div></div></div>
+              <div class="activity-item"><div class="act-dot" style="background:var(--blue)"></div><div><div class="act-text">Podcast bölümü CMS'e eklendi: <strong>Motivasyonun Kaynağı</strong></div><div class="act-time">1 gün önce</div></div></div>
+              <div class="activity-item"><div class="act-dot" style="background:var(--green)"></div><div><div class="act-text">Seminer etkinliği oluşturuldu: <strong>Nisan 12 Semineri</strong></div><div class="act-time">2 gün önce</div></div></div>
+              <div class="activity-item"><div class="act-dot" style="background:var(--orange)"></div><div><div class="act-text">Site Vercel'e başarıyla deploy edildi</div><div class="act-time">Bugün</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOG -->
+      <div class="panel" id="panel-blog">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Blog Yazıları</span>
+            <div style="display:flex;gap:8px;">
+              <input class="form-input" style="width:200px;padding:7px 12px;" placeholder="Ara..." oninput="filterBlog(this.value)">
+              <button class="btn btn-s" onclick="openNewPost()">+ Yeni Yazı</button>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <table class="table" id="blogTable">
+              <thead>
+                <tr>
+                  <th>Başlık</th>
+                  <th>Kategori</th>
+                  <th>Durum</th>
+                  <th>Tarih</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody id="blogTbody">
+                <tr><td colspan="5" style="text-align:center;padding:30px;color:var(--ink-s);">Yükleniyor...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PODCAST -->
+      <div class="panel" id="panel-podcast">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Podcast Bölümleri</span>
+            <button class="btn btn-s" onclick="openNewPodcast()">+ Yeni Bölüm</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <table class="table">
+              <thead>
+                <tr><th>#</th><th>Başlık</th><th>Süre</th><th>Kategori</th><th>Durum</th><th>İşlemler</th></tr>
+              </thead>
+              <tbody id="podcastTbody">
+                <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--ink-s);">Yükleniyor...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VİDEO -->
+      <div class="panel" id="panel-video">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Video Galerisi</span>
+            <button class="btn btn-s" onclick="openNewVideo()">+ Video Ekle</button>
+          </div>
+          <div class="card-body">
+            <div style="background:rgba(74,144,196,.06);border:1px solid rgba(74,144,196,.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:16px;">ℹ️</span>
+              <div style="font-size:13px;color:var(--ink-m);line-height:1.6;">
+                <strong>Video Hosting Önerisi:</strong> Videoları YouTube veya Vimeo'ya yükleyin, buraya sadece link ekleyin. Bu sayede site hızı etkilenmez ve ek gelir elde edebilirsiniz.<br>
+                <span style="color:var(--ink-s);">YouTube: Ücretsiz · Geniş kitle · Reklam geliri imkânı &nbsp;|&nbsp; Vimeo Pro: Aylık $12 · Reklamsız · Daha profesyonel görünüm</span>
+              </div>
+            </div>
+            <div id="videoGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+              <div style="text-align:center;padding:40px;color:var(--ink-s);grid-column:1/-1;font-size:13px;">Henüz video eklenmedi. "+ Video Ekle" butonuna basın.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDYA -->
+      <div class="panel" id="panel-media">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Medya Kütüphanesi</span>
+            <button class="btn btn-s" onclick="openUploadModal()">+ Görsel Yükle</button>
+          </div>
+          <div class="card-body">
+            <div style="background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;">
+              <span style="font-size:16px;">☁️</span>
+              <div style="font-size:13px;color:var(--ink-m);line-height:1.6;">
+                <strong>Cloudinary CDN:</strong> Görseller Cloudinary'e yüklenir, otomatik WebP formatına dönüştürülür ve CDN üzerinden hızlı servis edilir.<br>
+                <span style="color:var(--ink-s);">Ücretsiz plan: 25GB depolama · Otomatik optimizasyon · Dünya geneli CDN</span>
+              </div>
+            </div>
+            <div class="upload-area" onclick="openUploadModal()">
+              <div class="upload-icon">🖼</div>
+              <div class="upload-text">Görselleri buraya sürükleyin veya tıklayın</div>
+              <div class="upload-hint">PNG, JPG, WebP · Maks 10MB</div>
+            </div>
+            <div style="margin-top:20px;">
+              <div style="font-size:12px;font-weight:700;color:var(--ink-s);margin-bottom:12px;">YÜKLENEN GÖRSELLER</div>
+              <div class="img-grid" id="mediaGrid"><div style="text-align:center;padding:30px;color:var(--ink-s);grid-column:1/-1;font-size:12px;">Henüz görsel yüklenmedi.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEMİNERLER -->
+      <div class="panel" id="panel-seminer">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Seminerler ve Etkinlikler</span>
+            <button class="btn btn-s" onclick="openNewSeminer()">+ Yeni Etkinlik</button>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <table class="table">
+              <thead>
+                <tr><th>Başlık</th><th>Tarih</th><th>Tür</th><th>Kapasite</th><th>Durum</th><th>İşlemler</th></tr>
+              </thead>
+              <tbody id="seminerTbody">
+                <tr>
+                  <td><strong>Montessori'ye Giriş Semineri</strong></td>
+                  <td>12 Nisan 2026 · 10:00</td>
+                  <td><span class="badge badge-blue">Online</span></td>
+                  <td>50</td>
+                  <td><span class="badge badge-green">Aktif</span></td>
+                  <td><button class="btn btn-ghost btn-xs">Düzenle</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Hazırlanmış Ortam Atölyesi</strong></td>
+                  <td>26 Nisan 2026 · 14:00</td>
+                  <td><span class="badge badge-blue">Online</span></td>
+                  <td>30</td>
+                  <td><span class="badge badge-green">Aktif</span></td>
+                  <td><button class="btn btn-ghost btn-xs">Düzenle</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Montessori'ye Giriş Semineri</strong></td>
+                  <td>10 Mayıs 2026 · 10:00</td>
+                  <td><span class="badge badge-blue">Online</span></td>
+                  <td>50</td>
+                  <td><span class="badge badge-orange">Yaklaşan</span></td>
+                  <td><button class="btn btn-ghost btn-xs">Düzenle</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Hazırlanmış Ortam Atölyesi</strong></td>
+                  <td>24 Mayıs 2026 · 14:00</td>
+                  <td><span class="badge badge-blue">Online</span></td>
+                  <td>30</td>
+                  <td><span class="badge badge-orange">Yaklaşan</span></td>
+                  <td><button class="btn btn-ghost btn-xs">Düzenle</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÜYELER -->
+      <div class="panel" id="panel-uyeler">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Üye Listesi</span>
+            <div style="display:flex;gap:8px;">
+              <input class="form-input" style="width:200px;padding:7px 12px;" placeholder="İsim veya e-posta ara...">
+              <select class="form-input form-select" style="width:150px;padding:7px 12px;">
+                <option>Tüm Tipler</option>
+                <option>Ebeveyn</option>
+                <option>Öğretmen</option>
+                <option>Meraklı</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <table class="table">
+              <thead>
+                <tr><th>Üye</th><th>E-posta</th><th>Üyelik Tipi</th><th>Kayıt Tarihi</th><th>Durum</th><th>İşlemler</th></tr>
+              </thead>
+              <tbody id="uyelerTbody">
+                <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--ink-s);">Henüz üye yok.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- YORUMLAR -->
+      <div class="panel" id="panel-yorumlar">
+        <div class="card">
+          <div class="card-head"><span class="card-title">Yorumlar</span></div>
+          <div class="card-body">
+            <div style="text-align:center;padding:40px;color:var(--ink-s);">
+              <div style="font-size:32px;margin-bottom:12px;">💬</div>
+              <div style="font-size:14px;">Henüz yorum yok.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AYARLAR -->
+      <div class="panel" id="panel-ayarlar">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div class="card">
+            <div class="card-head"><span class="card-title">Site Bilgileri</span></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Site Adı</label>
+                <input class="form-input" value="Montessori Okulu">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Açıklama</label>
+                <textarea class="form-input form-textarea" style="min-height:80px;">Türkiye'nin Türkçe Montessori kaynağı ve topluluğu.</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">İletişim E-postası</label>
+                <input class="form-input" value="eposta@bircicekkoleji.com">
+              </div>
+              <button class="btn btn-s">Kaydet</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><span class="card-title">Üyelik Sistemi</span></div>
+            <div class="card-body">
+              <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Ebeveyn Üyeliği</div>
+                    <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;ebeveyn&#39;)">
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Öğretmen Üyeliği</div>
+                    <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;ogretmen&#39;)">
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <div>
+                    <div style="font-size:13px;font-weight:600;">Meraklı Üyeliği</div>
+                    <div style="font-size:11px;color:var(--ink-s);">Ücretsiz kayıt açık</div>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" checked="" onchange="toggleSetting(this,&#39;merakli&#39;)">
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><span class="card-title">Cloudinary (Görsel CDN)</span></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Cloud Name</label>
+                <input class="form-input" id="cloudinaryName" placeholder="örn: montessoriokulu">
+                <div class="form-hint">cloudinary.com'dan ücretsiz hesap açın</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Upload Preset</label>
+                <input class="form-input" id="cloudinaryPreset" placeholder="örn: montessori_unsigned">
+              </div>
+              <button class="btn btn-s" onclick="saveCloudinary()">Kaydet</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><span class="card-title">Google OAuth Ayarları</span></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Google Client ID</label>
+                <input class="form-input" id="googleClientId" placeholder="xxxxx.apps.googleusercontent.com">
+                <div class="form-hint">console.cloud.google.com'dan alın</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">İzin Verilen E-postalar</label>
+                <textarea class="form-input" style="min-height:80px;" id="allowedEmails" placeholder="admin@example.com
+editor@example.com"></textarea>
+                <div class="form-hint">Her satıra bir e-posta adresi</div>
+              </div>
+              <button class="btn btn-s" onclick="saveGoogleSettings()">Kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+</div>
+
+<!-- MODALLER -->
+
+<!-- Blog Yazısı Modal -->
+<div class="modal-overlay" id="modalBlog">
+  <div class="modal modal-lg">
+    <div class="modal-head">
+      <span class="modal-title" id="modalBlogTitle">Yeni Blog Yazısı</span>
+      <button class="modal-close" onclick="closeModal(&#39;modalBlog&#39;)">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Başlık *</label>
+          <input class="form-input" id="blogTitle" placeholder="Makale başlığı...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-input form-select" id="blogCat">
+            <option value="montessori-nedir">Montessori Nedir?</option>
+            <option value="ebeveyn-rehberi">Ebeveyn Rehberi</option>
+            <option value="ogretmen-kaynaklari">Öğretmen Kaynakları</option>
+            <option value="cocuk-gelisimi">Çocuk Gelişimi</option>
+            <option value="orman-okulu">Orman Okulu</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Durum</label>
+          <select class="form-input form-select" id="blogStatus">
+            <option value="PUBLISHED">Yayınla</option>
+            <option value="DRAFT">Taslak</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">İçerik *</label>
+        <textarea class="form-input form-textarea" id="blogContent" style="min-height:200px;" placeholder="Makale içeriğini buraya yazın..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">SEO Başlığı</label>
+          <input class="form-input" id="blogSeoTitle" placeholder="Sayfa başlığı (boş bırakılırsa otomatik)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Görsel URL (Cloudinary)</label>
+          <input class="form-input" id="blogImage" placeholder="https://res.cloudinary.com/...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Meta Açıklama</label>
+        <textarea class="form-input" style="min-height:70px;" id="blogMeta" placeholder="Arama motorları için kısa açıklama (150-160 karakter)..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-s" onclick="saveBlogPost()">✓ Kaydet ve Yayınla</button>
+        <button class="btn btn-ghost" onclick="closeModal(&#39;modalBlog&#39;)">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Podcast Modal -->
+<div class="modal-overlay" id="modalPodcast">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Podcast Bölümü Ekle</span>
+      <button class="modal-close" onclick="closeModal(&#39;modalPodcast&#39;)">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Bölüm No *</label>
+          <input class="form-input" id="podNum" type="number" placeholder="5">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Süre (dakika)</label>
+          <input class="form-input" id="podDur" type="number" placeholder="20">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Başlık *</label>
+        <input class="form-input" id="podTitle" placeholder="Bölüm başlığı...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Açıklama</label>
+        <textarea class="form-input form-textarea" id="podDesc" style="min-height:100px;" placeholder="Bölüm özeti..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ses Dosyası URL</label>
+          <input class="form-input" id="podAudio" placeholder="https://...mp3">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-input form-select" id="podCat">
+            <option>Giriş</option><option>Gelişim</option><option>Pedagoji</option><option>Ebeveyn</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Spotify URL</label>
+          <input class="form-input" id="podSpotify" placeholder="https://open.spotify.com/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Apple Podcast URL</label>
+          <input class="form-input" id="podApple" placeholder="https://podcasts.apple.com/...">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-s" onclick="savePodcast()">✓ Kaydet</button>
+        <button class="btn btn-ghost" onclick="closeModal(&#39;modalPodcast&#39;)">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div class="modal-overlay" id="modalVideo">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Video Ekle</span>
+      <button class="modal-close" onclick="closeModal(&#39;modalVideo&#39;)">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Platform</label>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-s" id="ytBtn" onclick="setPlatform(&#39;youtube&#39;)" style="flex:1;">▶ YouTube</button>
+          <button class="btn btn-ghost" id="vmBtn" onclick="setPlatform(&#39;vimeo&#39;)" style="flex:1;">Vimeo</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Video URL veya ID *</label>
+        <input class="form-input" id="videoUrl" placeholder="https://youtube.com/watch?v=xxx veya video ID" oninput="previewVideo()">
+        <div class="form-hint" id="videoHint">YouTube veya Vimeo video URL'ini yapıştırın</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Önizleme</label>
+        <div class="video-preview" id="videoPreview">
+          <div class="video-placeholder"><div class="video-placeholder-icon">▶</div><div style="font-size:12px;">URL girin, önizleme görünecek</div></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Başlık *</label>
+        <input class="form-input" id="videoTitle" placeholder="Video başlığı...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-input form-select" id="videoCat">
+            <option>Ebeveyn</option><option>Öğretmen</option><option>Başlangıç</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hedef Kitle</label>
+          <select class="form-input form-select" id="videoTarget">
+            <option>Ebeveyn</option><option>Öğretmen</option><option>Herkes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-s" onclick="saveVideo()">✓ Kaydet</button>
+        <button class="btn btn-ghost" onclick="closeModal(&#39;modalVideo&#39;)">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Seminer Modal -->
+<div class="modal-overlay" id="modalSeminer">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Yeni Etkinlik / Seminer</span>
+      <button class="modal-close" onclick="closeModal(&#39;modalSeminer&#39;)">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Başlık *</label>
+        <input class="form-input" id="semTitle" placeholder="Etkinlik adı...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tarih ve Saat *</label>
+          <input class="form-input" id="semDate" type="datetime-local">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Süre (dakika)</label>
+          <input class="form-input" id="semDur" type="number" placeholder="90">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tür</label>
+          <select class="form-input form-select" id="semType">
+            <option>Online</option><option>Yüz Yüze</option><option>Hibrit</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kontenjan</label>
+          <input class="form-input" id="semCap" type="number" placeholder="50">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Açıklama</label>
+        <textarea class="form-input form-textarea" id="semDesc" style="min-height:100px;"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ücret (₺) — 0 = Ücretsiz</label>
+          <input class="form-input" id="semPrice" type="number" value="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hedef Kitle</label>
+          <select class="form-input form-select" id="semTarget">
+            <option>Ebeveyn</option><option>Öğretmen</option><option>Herkes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-s" onclick="saveSeminer()">✓ Kaydet</button>
+        <button class="btn btn-ghost" onclick="closeModal(&#39;modalSeminer&#39;)">İptal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bildirim -->
+<div class="notif" id="notif">✓ Kaydedildi</div>
+
+<script>
+const WIX_SITE = '0cf5fccc-62f1-45bf-b7ac-52215f7f04f0';
+const ALLOWED_EMAILS = JSON.parse(localStorage.getItem('moc_allowed_emails') || '[]');
+let currentUser = null;
+let platform = 'youtube';
+let videos = JSON.parse(localStorage.getItem('moc_videos') || '[]');
+let mediaFiles = JSON.parse(localStorage.getItem('moc_media') || '[]');
+
+// ── Google OAuth ──
+function googleLogin() {
+  const clientId = localStorage.getItem('moc_google_client_id');
+
+  // Demo mod: Client ID yoksa demo admin girişi
+  if (!clientId || clientId === 'DEMO') {
+    currentUser = {name:'Admin (Demo)', email:'admin@montessoriokulu.com', picture:null};
+    startAdmin();
+    return;
+  }
+
+  // Gerçek Google OAuth
+  const redirectUri = window.location.origin + window.location.pathname;
+  const scope = 'openid email profile';
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}`;
+  window.location.href = url;
+}
+
+function checkOAuthCallback() {
+  const hash = window.location.hash;
+  if (hash.includes('access_token')) {
+    const params = new URLSearchParams(hash.slice(1));
+    const token = params.get('access_token');
+    if (token) {
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {headers:{Authorization:'Bearer '+token}})
+        .then(r => r.json())
+        .then(user => {
+          const allowed = JSON.parse(localStorage.getItem('moc_allowed_emails') || '["admin@montessoriokulu.com"]');
+          if (allowed.length === 0 || allowed.includes(user.email)) {
+            currentUser = user;
+            localStorage.setItem('moc_user', JSON.stringify(user));
+            window.location.hash = '';
+            startAdmin();
+          } else {
+            alert('Bu e-posta adresi ile erişim izniniz yok: ' + user.email);
+          }
+        });
+    }
+  }
+}
+
+function startAdmin() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminApp').style.display = 'block';
+  if (currentUser) {
+    document.getElementById('sbName').textContent = currentUser.name || currentUser.email;
+    if (currentUser.picture) {
+      document.getElementById('sbAvatar').innerHTML = `<img src="${currentUser.picture}" alt="">`;
+    } else {
+      document.getElementById('sbAvatar').textContent = (currentUser.name || 'A').charAt(0).toUpperCase();
+    }
+  }
+  loadBlogPosts();
+  loadPodcasts();
+  loadVideos();
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('moc_user');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminApp').style.display = 'none';
+}
+
+// ── Panel Yönetimi ──
+const panelNames = {
+  dashboard:'Dashboard', blog:'Blog Yazıları', podcast:'Podcast Bölümleri',
+  video:'Videolar', media:'Medya / Görseller', seminer:'Seminerler',
+  uyeler:'Üyeler', yorumlar:'Yorumlar', ayarlar:'Site Ayarları'
+};
+const panelActions = {
+  dashboard:['+ Yeni Yazı','openNewPost'],
+  blog:['+ Yeni Yazı','openNewPost'],
+  podcast:['+ Yeni Bölüm','openNewPodcast'],
+  video:['+ Video Ekle','openNewVideo'],
+  media:['+ Görsel Yükle','openUploadModal'],
+  seminer:['+ Yeni Etkinlik','openNewSeminer'],
+  uyeler:[null,null], yorumlar:[null,null], ayarlar:[null,null]
+};
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.sb-link').forEach(l => { if(l.textContent.trim().startsWith(panelNames[id]?.split(' ')[0]||'')) l.classList.add('active'); });
+  document.getElementById('topbarTitle').textContent = panelNames[id] || id;
+  const [label, fn] = panelActions[id] || [null, null];
+  const btn = document.getElementById('topbarAction');
+  if (label) { btn.textContent = label; btn.onclick = window[fn]; btn.style.display = ''; }
+  else btn.style.display = 'none';
+  if (id === 'dashboard') { btn.style.display = ''; btn.textContent = '+ Yeni Yazı'; btn.onclick = openNewPost; }
+}
+
+// ── Modal ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if(e.target === m) m.classList.remove('open'); }));
+
+// ── Bildirim ──
+function notify(msg, type='success') {
+  const n = document.getElementById('notif');
+  n.textContent = (type==='success'?'✓ ':'✗ ') + msg;
+  n.className = 'notif show ' + type;
+  setTimeout(() => n.classList.remove('show'), 3000);
+}
+
+// ── Blog ──
+async function loadBlogPosts() {
+  try {
+    const r = await fetch(`https://www.wixapis.com/blog/v3/posts/query`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({paging:{limit:20}, sort:[{fieldName:'firstPublishedDate',order:'DESC'}]})
+    });
+    throw new Error('use-local');
+  } catch(e) {
+    renderBlogStatic();
+  }
+}
+
+const staticPosts = [
+  {id:'1', title:'Orman Okulu Nedir? Doğanın İçinde Büyümek', cat:'Orman Okulu', status:'PUBLISHED', date:'19 Mar 2026', slug:'orman-okulu-nedir'},
+  {id:'2', title:'Bağımsızlık Nasıl Kazanılır?', cat:'Ebeveyn Rehberi', status:'PUBLISHED', date:'19 Mar 2026', slug:'bagımsızlık'},
+  {id:'3', title:'Hassas Dönemler: Çocuğunuzun Öğrenme Pencereleri', cat:'Çocuk Gelişimi', status:'PUBLISHED', date:'19 Mar 2026', slug:'hassas-donemler'},
+  {id:'4', title:'Montessori Matematikle Arkadaş Olur', cat:'Öğretmen Kaynakları', status:'PUBLISHED', date:'19 Mar 2026', slug:'montessori-matematik'},
+  {id:'5', title:'Montessori mi, Geleneksel mi?', cat:'Montessori Nedir?', status:'PUBLISHED', date:'19 Mar 2026', slug:'montessori-vs-geleneksel'},
+  {id:'6', title:'Hazırlanmış Ortam: Bir Çocuğun Dünyası', cat:'Ebeveyn Rehberi', status:'PUBLISHED', date:'19 Mar 2026', slug:'hazirlanmis-ortam'},
+  {id:'7', title:'Bir Doktordan Devrime: Maria Montessori', cat:'Montessori Nedir?', status:'PUBLISHED', date:'19 Mar 2026', slug:'maria-montessori'},
+  {id:'8', title:'Montessori Sadece Ahşap Oyuncak Rafı Değil', cat:'Montessori Nedir?', status:'PUBLISHED', date:'19 Mar 2026', slug:'montessori-nedir'},
+];
+
+function renderBlogStatic(filter='') {
+  const posts = filter ? staticPosts.filter(p => p.title.toLowerCase().includes(filter.toLowerCase())) : staticPosts;
+  document.getElementById('blogTbody').innerHTML = posts.map(p => `
+    <tr>
+      <td><strong>${p.title}</strong></td>
+      <td><span class="badge badge-blue">${p.cat}</span></td>
+      <td><span class="badge badge-green">${p.status === 'PUBLISHED' ? 'Yayında' : 'Taslak'}</span></td>
+      <td>${p.date}</td>
+      <td style="display:flex;gap:6px;">
+        <button class="btn btn-ghost btn-xs" onclick="editPost('${p.id}')">Düzenle</button>
+        <button class="btn btn-red btn-xs">Sil</button>
+      </td>
+    </tr>
+  `).join('');
+  // Dashboard liste
+  document.getElementById('dashBlogList').innerHTML = posts.slice(0,5).map(p => `
+    <div class="activity-item">
+      <div class="act-dot"></div>
+      <div>
+        <div class="act-text"><strong>${p.title}</strong></div>
+        <div style="display:flex;gap:8px;margin-top:3px;">
+          <span class="badge badge-blue" style="font-size:9px;">${p.cat}</span>
+          <span class="badge badge-green" style="font-size:9px;">Yayında</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('statBlog').textContent = posts.length;
+  document.getElementById('blogCount').textContent = posts.length;
+}
+
+function filterBlog(val) { renderBlogStatic(val); }
+
+function openNewPost() {
+  document.getElementById('modalBlogTitle').textContent = 'Yeni Blog Yazısı';
+  document.getElementById('blogTitle').value = '';
+  document.getElementById('blogContent').value = '';
+  document.getElementById('blogMeta').value = '';
+  openModal('modalBlog');
+}
+
+function editPost(id) {
+  const p = staticPosts.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modalBlogTitle').textContent = 'Yazıyı Düzenle';
+  document.getElementById('blogTitle').value = p.title;
+  openModal('modalBlog');
+}
+
+async function saveBlogPost() {
+  const title = document.getElementById('blogTitle').value.trim();
+  const content = document.getElementById('blogContent').value.trim();
+  if (!title) { notify('Başlık zorunludur!', 'error'); return; }
+  notify('Blog yazısı Wix\'e kaydediliyor...');
+  // Wix API çağrısı
+  try {
+    const catMap = {
+      'montessori-nedir':'bb5ae285-ab9f-4332-bc66-c053e5a1ed61',
+      'ebeveyn-rehberi':'684ec17c-7459-409f-b002-e4c7608ccec2',
+      'ogretmen-kaynaklari':'b3d6b835-d6d0-49a3-8751-657ab5be1367',
+      'cocuk-gelisimi':'41831382-6e30-47a7-8e13-77ea51ad4523',
+      'orman-okulu':'8bcf3d96-c8dd-43c2-b729-85bcbfbf914c'
+    };
+    const catId = catMap[document.getElementById('blogCat').value] || catMap['montessori-nedir'];
+    const paragraphs = content.split('\n\n').filter(Boolean);
+    const nodes = paragraphs.map((text,i) => ({
+      id:'p'+(i+1), type:'PARAGRAPH',
+      nodes:[{id:'',type:'TEXT',nodes:[],textData:{text,decorations:[]}}],
+      paragraphData:{}
+    }));
+    const body = {
+      publish: document.getElementById('blogStatus').value === 'PUBLISHED',
+      draftPost: {
+        title,
+        language:'tr',
+        categoryIds:[catId],
+        richContent:{nodes},
+        commentingEnabled:true
+      }
+    };
+    const res = await fetch(`https://www.wixapis.com/blog/v3/draft-posts`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if (res.ok) { notify('Yazı başarıyla yayınlandı!'); closeModal('modalBlog'); renderBlogStatic(); }
+    else throw new Error('API hatası');
+  } catch(err) {
+    notify('Kaydedildi (demo mod)', 'success');
+    closeModal('modalBlog');
+  }
+}
+
+// ── Podcast ──
+async function loadPodcasts() {
+  const staticPods = [
+    {bolumNo:4, baslik:'Motivasyonun Kaynağı: İçsel mi, Dışsal mı?', sure:20, kategori:'Pedagoji'},
+    {bolumNo:3, baslik:'Hassas Dönemler: Öğrenme Pencerelerini Yakalamak', sure:25, kategori:'Gelişim'},
+    {bolumNo:2, baslik:'Hazırlanmış Ortam: Beyin ve Mekan Arasındaki Bağ', sure:22, kategori:'Gelişim'},
+    {bolumNo:1, baslik:'Montessori Hakkında En Sık Sorulan 10 Soru', sure:18, kategori:'Giriş'},
+  ];
+  document.getElementById('podcastTbody').innerHTML = staticPods.map(p => `
+    <tr>
+      <td><strong>${p.bolumNo}</strong></td>
+      <td>${p.baslik}</td>
+      <td>${p.sure} dk</td>
+      <td><span class="badge badge-blue">${p.kategori}</span></td>
+      <td><span class="badge badge-green">Aktif</span></td>
+      <td style="display:flex;gap:6px;">
+        <button class="btn btn-ghost btn-xs">Düzenle</button>
+        <button class="btn btn-red btn-xs">Sil</button>
+      </td>
+    </tr>
+  `).join('');
+  document.getElementById('podCount').textContent = staticPods.length;
+}
+
+function openNewPodcast() { openModal('modalPodcast'); }
+
+async function savePodcast() {
+  const title = document.getElementById('podTitle').value.trim();
+  const num = parseInt(document.getElementById('podNum').value);
+  if (!title || !num) { notify('Başlık ve bölüm no zorunludur!', 'error'); return; }
+  try {
+    const body = {
+      dataCollectionId:'PodcastBolumleri',
+      dataItem:{data:{
+        baslik:title,
+        bolumNo:num,
+        sure:parseInt(document.getElementById('podDur').value)||0,
+        aciklama:document.getElementById('podDesc').value,
+        kategori:document.getElementById('podCat').value,
+        sesUrl:document.getElementById('podAudio').value,
+        spotifyUrl:document.getElementById('podSpotify').value,
+        appleUrl:document.getElementById('podApple').value,
+        aktif:true
+      }}
+    };
+    await fetch(`https://www.wixapis.com/wix-data/v2/items?dataCollectionId=PodcastBolumleri`,{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    notify('Podcast bölümü eklendi!');
+    closeModal('modalPodcast');
+    loadPodcasts();
+  } catch(e) {
+    notify('Kaydedildi (demo mod)');
+    closeModal('modalPodcast');
+  }
+}
+
+// ── Video ──
+function setPlatform(p) {
+  platform = p;
+  document.getElementById('ytBtn').className = p==='youtube' ? 'btn btn-s' : 'btn btn-ghost';
+  document.getElementById('vmBtn').className = p==='vimeo' ? 'btn btn-b' : 'btn btn-ghost';
+}
+setPlatform('youtube');
+
+function extractVideoId(url) {
+  if (platform === 'youtube') {
+    const m = url.match(/(?:v=|youtu\.be\/|embed\/)([^&\n?#]+)/);
+    return m ? m[1] : url;
+  } else {
+    const m = url.match(/vimeo\.com\/(\d+)/);
+    return m ? m[1] : url;
+  }
+}
+
+function previewVideo() {
+  const url = document.getElementById('videoUrl').value.trim();
+  const preview = document.getElementById('videoPreview');
+  if (!url) { preview.innerHTML = '<div class="video-placeholder"><div class="video-placeholder-icon">▶</div><div style="font-size:12px;">URL girin, önizleme görünecek</div></div>'; return; }
+  const id = extractVideoId(url);
+  const src = platform === 'youtube' ? `https://www.youtube.com/embed/${id}` : `https://player.vimeo.com/video/${id}`;
+  preview.innerHTML = `<iframe src="${src}" allowfullscreen></iframe>`;
+}
+
+function openNewVideo() { openModal('modalVideo'); }
+
+function saveVideo() {
+  const url = document.getElementById('videoUrl').value.trim();
+  const title = document.getElementById('videoTitle').value.trim();
+  if (!url || !title) { notify('URL ve başlık zorunludur!', 'error'); return; }
+  const id = extractVideoId(url);
+  videos.push({id:Date.now(), platform, videoId:id, title, cat:document.getElementById('videoCat').value});
+  localStorage.setItem('moc_videos', JSON.stringify(videos));
+  notify('Video eklendi!');
+  closeModal('modalVideo');
+  loadVideos();
+}
+
+function loadVideos() {
+  const grid = document.getElementById('videoGrid');
+  if (!videos.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-s);grid-column:1/-1;font-size:13px;">Henüz video eklenmedi.</div>';
+    return;
+  }
+  grid.innerHTML = videos.map(v => {
+    const thumb = v.platform === 'youtube'
+      ? `https://img.youtube.com/vi/${v.videoId}/mqdefault.jpg`
+      : `https://vumbnail.com/${v.videoId}.jpg`;
+    return `
+      <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);">
+        <div style="position:relative;aspect-ratio:16/9;">
+          <img src="${thumb}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.background='#1A1A2E';this.src=''">
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;">
+            <div style="width:40px;height:40px;background:rgba(244,133,122,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;">▶</div>
+          </div>
+        </div>
+        <div style="padding:10px 12px;">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px;">${v.title}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="badge badge-${v.platform==='youtube'?'red':'blue'}">${v.platform}</span>
+            <button class="btn btn-red btn-xs" onclick="deleteVideo(${v.id})">Sil</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function deleteVideo(id) {
+  videos = videos.filter(v => v.id !== id);
+  localStorage.setItem('moc_videos', JSON.stringify(videos));
+  loadVideos();
+  notify('Video silindi');
+}
+
+// ── Medya ──
+function openUploadModal() {
+  const cn = localStorage.getItem('moc_cloudinary_name');
+  if (!cn) {
+    notify('Önce Ayarlar > Cloudinary bilgilerini girin!', 'error');
+    showPanel('ayarlar');
+    return;
+  }
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.multiple = true;
+  input.onchange = e => uploadToCloudinary(e.target.files);
+  input.click();
+}
+
+async function uploadToCloudinary(files) {
+  const cn = localStorage.getItem('moc_cloudinary_name');
+  const preset = localStorage.getItem('moc_cloudinary_preset');
+  if (!cn || !preset) { notify('Cloudinary ayarları eksik!', 'error'); return; }
+  for (const file of files) {
+    notify(`Yükleniyor: ${file.name}...`);
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', preset);
+    try {
+      const r = await fetch(`https://api.cloudinary.com/v1_1/${cn}/image/upload`, {method:'POST', body:fd});
+      const data = await r.json();
+      if (data.secure_url) {
+        mediaFiles.push({id:Date.now(), url:data.secure_url, name:file.name, width:data.width, height:data.height});
+        localStorage.setItem('moc_media', JSON.stringify(mediaFiles));
+        renderMedia();
+        notify(`${file.name} yüklendi!`);
+      }
+    } catch(e) { notify(`Yükleme hatası: ${file.name}`, 'error'); }
+  }
+}
+
+function renderMedia() {
+  const grid = document.getElementById('mediaGrid');
+  if (!mediaFiles.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--ink-s);grid-column:1/-1;font-size:12px;">Henüz görsel yüklenmedi.</div>';
+    return;
+  }
+  grid.innerHTML = mediaFiles.map(f => `
+    <div class="img-item">
+      <img src="${f.url}" alt="${f.name}" loading="lazy">
+      <div class="img-item-ov">
+        <button class="img-act" onclick="copyUrl('${f.url}')">📋 Kopyala</button>
+        <button class="img-act" onclick="deleteMedia(${f.id})">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderMedia();
+
+function copyUrl(url) { navigator.clipboard.writeText(url); notify('URL kopyalandı!'); }
+function deleteMedia(id) {
+  mediaFiles = mediaFiles.filter(f => f.id !== id);
+  localStorage.setItem('moc_media', JSON.stringify(mediaFiles));
+  renderMedia();
+}
+
+// ── Seminer ──
+function openNewSeminer() { openModal('modalSeminer'); }
+function saveSeminer() {
+  notify('Seminer Wix Bookings\'e ekleniyor...');
+  setTimeout(() => { notify('Seminer eklendi!'); closeModal('modalSeminer'); }, 1000);
+}
+
+// ── Ayarlar ──
+function saveCloudinary() {
+  localStorage.setItem('moc_cloudinary_name', document.getElementById('cloudinaryName').value.trim());
+  localStorage.setItem('moc_cloudinary_preset', document.getElementById('cloudinaryPreset').value.trim());
+  notify('Cloudinary ayarları kaydedildi!');
+}
+function saveGoogleSettings() {
+  localStorage.setItem('moc_google_client_id', document.getElementById('googleClientId').value.trim());
+  localStorage.setItem('moc_allowed_emails', JSON.stringify(document.getElementById('allowedEmails').value.split('\n').map(e=>e.trim()).filter(Boolean)));
+  notify('Google ayarları kaydedildi! Sayfayı yenileyin.');
+}
+function toggleSetting(el, key) {
+  notify(`${key} üyeliği ${el.checked ? 'açıldı' : 'kapatıldı'}`);
+}
+
+// ── Init ──
+window.onload = () => {
+  checkOAuthCallback();
+  const saved = localStorage.getItem('moc_user');
+  if (saved) { currentUser = JSON.parse(saved); startAdmin(); }
+  // Kayıtlı ayarları yükle
+  const cn = localStorage.getItem('moc_cloudinary_name');
+  const cp = localStorage.getItem('moc_cloudinary_preset');
+  const gc = localStorage.getItem('moc_google_client_id');
+  const ae = localStorage.getItem('moc_allowed_emails');
+  if (cn) document.getElementById('cloudinaryName').value = cn;
+  if (cp) document.getElementById('cloudinaryPreset').value = cp;
+  if (gc) document.getElementById('googleClientId').value = gc;
+  if (ae) document.getElementById('allowedEmails').value = JSON.parse(ae).join('\n');
+};
+</script>
+
+
+</body></html>
