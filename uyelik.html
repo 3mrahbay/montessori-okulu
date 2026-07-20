@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///Users/emrahbay/Downloads/uyelik_1.html -->
-<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Üye Ol — Montessori Okulu</title>
-<meta name="description" content="Türkiye&#39;nin Montessori topluluğuna katıl. Ücretsiz üyelik ile tüm içeriklere eriş.">
-<link href="./uyelik_files/css2" rel="stylesheet">
-<script src="./uyelik_files/supabase.min.js"></script>
+<meta name="description" content="Türkiye'nin Montessori topluluğuna katıl. Ücretsiz üyelik ile tüm içeriklere eriş.">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 :root{
   --salmon:#F4857A;--salmon-d:#D9655A;--salmon-m:#F9A89F;--salmon-p:#FDF0EE;
@@ -146,7 +146,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
 <!-- NAV -->
 <nav>
   <div class="nav-in">
-    <a href="file:///Users/emrahbay/Downloads/index.html" class="logo">
+    <a href="index.html" class="logo">
       <div style="display:flex;gap:3px;">
         <div class="lt lt-s">M</div>
         <div class="lt lt-b">O</div>
@@ -157,7 +157,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
         <span class="lt-bot">OKULU<span class="lt-dot">•</span>COM</span>
       </div>
     </a>
-    <a href="file:///Users/emrahbay/Downloads/index.html" class="nav-back">← Ana Sayfaya Dön</a>
+    <a href="index.html" class="nav-back">← Ana Sayfaya Dön</a>
   </div>
 </nav>
 
@@ -185,8 +185,8 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
     <h2 class="success-title">Hoş Geldin!</h2>
     <p class="success-sub" id="successMsg">Montessori Okulu topluluğuna başarıyla katıldın. Profilini tamamla ve içeriklere göz atmaya başla.</p>
     <div class="success-btns">
-      <button class="success-btn" style="background:var(--salmon);color:#fff;" onclick="window.location.href=&#39;profil.html&#39;">👤 Profilimi Görüntüle</button>
-      <button class="success-btn" style="background:var(--bg-cream);color:var(--ink);border:1.5px solid var(--border);" onclick="window.location.href=&#39;index.html&#39;">🏠 Ana Sayfaya Git</button>
+      <button class="success-btn" style="background:var(--salmon);color:#fff;" onclick="window.location.href='profil.html'">👤 Profilimi Görüntüle</button>
+      <button class="success-btn" style="background:var(--bg-cream);color:var(--ink);border:1.5px solid var(--border);" onclick="window.location.href='index.html'">🏠 Ana Sayfaya Git</button>
     </div>
   </div>
 
@@ -203,7 +203,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
       </div>
       <div class="form-body">
         <div class="tip-grid">
-          <div class="tip-card selected" id="tip-ebeveyn" onclick="secTip(&#39;ebeveyn&#39;)">
+          <div class="tip-card" id="tip-ebeveyn" onclick="secTip('ebeveyn')">
             <div class="tip-icon">👨‍👩‍👧</div>
             <div class="tip-title">Ebeveyn</div>
             <div class="tip-sub">Çocuğum için Montessori öğrenmek istiyorum</div>
@@ -213,7 +213,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
               <div class="tip-feat">Okul seçimi rehberi</div>
             </div>
           </div>
-          <div class="tip-card" id="tip-ogretmen" onclick="secTip(&#39;ogretmen&#39;)">
+          <div class="tip-card" id="tip-ogretmen" onclick="secTip('ogretmen')">
             <div class="tip-icon">🍎</div>
             <div class="tip-title">Öğretmen</div>
             <div class="tip-sub">Montessori pedagojimi geliştirmek istiyorum</div>
@@ -223,7 +223,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
               <div class="tip-feat">Mesleki gelişim</div>
             </div>
           </div>
-          <div class="tip-card" id="tip-merakli" onclick="secTip(&#39;merakli&#39;)">
+          <div class="tip-card" id="tip-merakli" onclick="secTip('merakli')">
             <div class="tip-icon">🌱</div>
             <div class="tip-title">Meraklı</div>
             <div class="tip-sub">Montessori'yi keşfetmek istiyorum</div>
@@ -253,14 +253,14 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
 
         <!-- Auth Tabs -->
         <div class="auth-tabs">
-          <button class="auth-tab active" id="tabKayit" onclick="switchTab(&#39;kayit&#39;)">Yeni Hesap</button>
-          <button class="auth-tab" id="tabGiris" onclick="switchTab(&#39;giris&#39;)">Giriş Yap</button>
+          <button class="auth-tab active" id="tabKayit" onclick="switchTab('kayit')">Yeni Hesap</button>
+          <button class="auth-tab" id="tabGiris" onclick="switchTab('giris')">Giriş Yap</button>
         </div>
 
         <!-- Google ile giriş -->
         <div class="social-btns">
           <button class="social-btn" onclick="googleIleGiris()">
-            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
             Google ile <span id="socialBtnText">Kayıt Ol</span>
           </button>
         </div>
@@ -295,7 +295,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
           </div>
 
           <!-- Ebeveyn özel alanları -->
-          <div id="ebeveynAlanlari" style="display: block;">
+          <div id="ebeveynAlanlari" style="display:none;">
             <div class="form-group">
               <label class="form-label">Çocuğunuzun Yaşı <span class="form-optional">(isteğe bağlı)</span></label>
               <input class="form-input" id="cocukYasi" type="text" placeholder="örn: 3, 5 yaş">
@@ -314,7 +314,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
           <div class="form-group" style="margin-top:4px;">
             <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--ink-m);line-height:1.5;">
               <input type="checkbox" id="kvkkOnay" style="margin-top:2px;accent-color:var(--salmon);flex-shrink:0;">
-              <span><a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" style="color:var(--salmon);font-weight:700;">Gizlilik Politikası</a>'nı ve <a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" style="color:var(--salmon);font-weight:700;">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
+              <span><a href="#" style="color:var(--salmon);font-weight:700;">Gizlilik Politikası</a>'nı ve <a href="#" style="color:var(--salmon);font-weight:700;">Kullanım Koşulları</a>'nı okudum, kabul ediyorum.</span>
             </label>
           </div>
 
@@ -334,7 +334,7 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
             <input class="form-input" id="girisSifre" type="password" placeholder="Şifreniz">
           </div>
           <div style="text-align:right;margin-bottom:16px;">
-            <a href="file:///Users/emrahbay/Downloads/uyelik_1.html#" onclick="sifreSifirla()" style="font-size:12px;color:var(--blue);">Şifremi Unuttum</a>
+            <a href="#" onclick="sifreSifirla()" style="font-size:12px;color:var(--blue);">Şifremi Unuttum</a>
           </div>
           <button class="btn btn-salmon" onclick="emailGiris()">
             Giriş Yap →
@@ -472,19 +472,31 @@ async function emailKayit() {
   if (error) { showAlert('error', hataMetni(error.message)); return; }
 
   if (data.user) {
-    // Profili güncelle
-    await sb.from('profiller').upsert({
-      id: data.user.id,
-      email: data.user.email,
-      ad_soyad: ad + ' ' + soyad,
-      uyelik_tipi: seciliTip,
-    });
+    // Profili kaydet (session olmasa bile)
+    try {
+      await sb.from('profiller').upsert({
+        id: data.user.id,
+        email: data.user.email,
+        ad_soyad: ad + ' ' + soyad,
+        uyelik_tipi: seciliTip,
+      });
+    } catch(e) { console.log('Profil kayıt hatası (normal olabilir):', e); }
 
     if (data.session) {
+      // Oturum açıldı, doğrulama gerekmedi
       showSuccess(data.user);
     } else {
-      showAlert('success', '✓ Kayıt başarılı! E-posta adresinize doğrulama linki gönderildi.');
+      // E-posta doğrulama gerekiyor
+      document.getElementById('formArea').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      document.getElementById('successScreen').querySelector('.success-icon').textContent = '📧';
+      document.getElementById('successScreen').querySelector('.success-title').textContent = 'E-postanı Doğrula!';
+      document.getElementById('successMsg').textContent =
+        ad + ' ' + soyad + ', kaydın başarıyla oluşturuldu! ' + email + ' adresine bir doğrulama e-postası gönderdik. Lütfen e-postanı kontrol edip linke tıkla.';
+      window.scrollTo(0, 0);
     }
+  } else if (!error) {
+    showAlert('error', 'Kayıt tamamlanamadı. Lütfen tekrar deneyin.');
   }
 }
 
@@ -493,10 +505,20 @@ async function emailGiris() {
   const email = document.getElementById('girisEmail').value.trim();
   const sifre = document.getElementById('girisSifre').value;
   if (!email || !sifre) { showAlert('error', 'E-posta ve şifre zorunludur.'); return; }
+  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı.'); return; }
 
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: sifre });
-  if (error) { showAlert('error', hataMetni(error.message)); return; }
-  if (data.user) showSuccess(data.user);
+  const btn = event?.target;
+  if (btn) { btn.disabled = true; btn.textContent = 'Giriş yapılıyor...'; }
+
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: sifre });
+    if (btn) { btn.disabled = false; btn.textContent = 'Giriş Yap →'; }
+    if (error) { showAlert('error', hataMetni(error.message)); return; }
+    if (data.user) showSuccess(data.user);
+  } catch(e) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Giriş Yap →'; }
+    showAlert('error', 'Bağlantı hatası: ' + e.message);
+  }
 }
 
 // ── Şifre Sıfırla ──
@@ -539,6 +561,5 @@ window.onload = async () => {
   secTip('ebeveyn');
 };
 </script>
-
-
-</body></html>
+</body>
+</html>
