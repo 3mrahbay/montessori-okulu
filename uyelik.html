@@ -397,8 +397,15 @@ function showAlert(type, msg) {
   else { suc.textContent = msg; suc.classList.add('show'); }
 }
 
+// Girişten sonra dönülecek sayfa (yalnızca site içi göreli adres)
+const donus = (() => {
+  const d = new URLSearchParams(location.search).get('donus') || '';
+  return /^[a-z0-9][a-z0-9\-\/]*(\.html)?(\?[a-z0-9=&%_\-]*)?(#[a-z0-9\-]*)?$/i.test(d) && !d.includes('//') ? d : '';
+})();
+
 // ── Başarı Ekranı ──
 function showSuccess(user) {
+  if (donus) { location.replace(donus); return; }
   document.getElementById('formArea').style.display = 'none';
   document.getElementById('successScreen').style.display = 'block';
   const name = user.displayName || user.email;

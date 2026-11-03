@@ -4,6 +4,7 @@ import {
   kimlik, oturumDinle, profilGetir, profilGuncelle, cikisYap,
   sifreSifirlamaGonder, dogrulamaTekrarGonder, hataMetni, GOREVLER, ILGI_ALANLARI
 } from './oturum.js';
+import { benimGonderilerim, benimCevaplarim, TURLER as T_TURLER, tarihYazi } from './topluluk-veri.js';
 
 // Önizleme yetkisi olan yönetici hesapları (admin.html ile aynı)
 const YONETICILER = ['emrahby@gmail.com', 'eposta@bircicekkoleji.com'];
@@ -200,6 +201,29 @@ function panelSeminer() {
     ${kart('Kayıtlarım', 'onay', bosDurum('takvim', 'Henüz bir seminere kayıtlı değilsin', 'Seminer takvimi açıldığında kayıt olduğun etkinlikler ve katılım bağlantıları burada görünecek.'))}`;
 }
 
+async function panelPaylasimlar() {
+  if (onizleme) return kart('Paylaşımlarım', 'sohbet', bosDurum('sohbet', 'Önizlemede paylaşımlar gösterilmez', 'Bu bölüm üyenin kendi soru, deneyim ve cevaplarını listeler.'));
+  let g = [], c = [];
+  try { [g, c] = await Promise.all([benimGonderilerim(kullanici.uid), benimCevaplarim(kullanici.uid)]); } catch (e) { console.error(e); }
+  const durum = (d) => d === 'yayinda' ? '<span class="rozet r-hazir">Yayında</span>' : d === 'beklemede' ? '<span class="rozet r-plan">İncelemede</span>' : '<span class="rozet r-yakinda">Gizlendi</span>';
+  const ust = `<div class="hizli-izgara" style="grid-template-columns:repeat(3,1fr)">
+      ${['soru', 'deneyim', 'rehber'].map(t => `<a class="hizli" href="topluluk.html?yaz=${t}"><div class="hizli-ik">${ik(T_TURLER[t].ik)}</div>
+        <div class="hizli-baslik">${T_TURLER[t].fiil}</div><div class="hizli-alt">Toplulukta</div></a>`).join('')}</div>`;
+  const gHtml = g.length ? g.map(o => `<a class="liste-oge" href="topluluk.html?g=${encodeURIComponent(o.id)}">
+      <div class="lo-ik ozet-ik oi-v">${ik(T_TURLER[o.tur]?.ik || 'sohbet')}</div>
+      <div class="lo-bilgi"><div class="lo-ust">${kacis(T_TURLER[o.tur]?.ad || '')} · ${tarihYazi(o.olusturma)}</div>
+        <div class="lo-baslik">${kacis(o.baslik)}</div><div class="lo-meta">${o.cevap_sayisi || 0} ${o.tur === 'soru' ? 'cevap' : 'yorum'}</div></div>
+      ${durum(o.durum)}</a>`).join('')
+    : bosDurum('sohbet', 'Henüz bir paylaşımın yok', 'Topluluğa ilk sorunu sor ya da bir deneyimini paylaş.', `<a class="btn btn-v" href="topluluk.html">${ik('uyeler')} Topluluğa git</a>`);
+  const cHtml = c.length ? c.map(o => `<a class="liste-oge" href="topluluk.html?g=${encodeURIComponent(o.gonderi_id)}">
+      <div class="lo-ik ozet-ik oi-b">${ik('sohbet')}</div>
+      <div class="lo-bilgi"><div class="lo-ust">Cevap · ${tarihYazi(o.olusturma)}</div>
+        <div class="lo-baslik" style="font-weight:600">${kacis(String(o.metin).slice(0, 120))}${String(o.metin).length > 120 ? '…' : ''}</div></div>
+      ${durum(o.durum)}</a>`).join('') : '';
+  return ust + kart('Paylaşımlarım', 'sohbet', gHtml, `<a class="btn btn-hayalet btn-kucuk" href="topluluk.html">Topluluk ${ik('ok-sag', 'ik ik-sm')}</a>`)
+    + (cHtml ? kart('Cevaplarım ve yorumlarım', 'sohbet', cHtml) : '');
+}
+
 function panelKaydedilenler() {
   return kart('Kaydettiklerim', 'isaret', bosDurum('isaret', 'Kaydedilen içerik yok',
     'İçerikler yayına girdiğinde beğendiğin yazıları, podcast bölümlerini ve videoları buraya kaydedip istediğin zaman dönebileceksin.',
@@ -262,8 +286,9 @@ function panelYol(id) {
         "Montessori'de sık geçen kavramların sade Türkçe açıklamaları burada, alfabetik olarak yer alacak."));
     case 'sss':
       return `${kart('Sık sorulan sorular', 'soru', icerikListesi(icerikFiltre(['sss10'])))}
-        ${kart('Sorunu sor', 'sohbet', bosDurum('sohbet', 'Soru-cevap alanı yakında',
-          'Topluluk soru-cevap alanı açıldığında sorularını buradan sorabileceksin.'))}`;
+        ${kart('Sorunu sor', 'sohbet', bosDurum('sohbet', 'Toplulukta sor',
+          'Aklına takılanı topluluğa sor; ekibimiz ve diğer üyeler cevaplasın.',
+          `<a class="btn btn-v" href="topluluk.html?yaz=soru">${ik('soru')} Soru sor</a>`))}`;
   }
   return '';
 }
@@ -361,6 +386,8 @@ function menuKur() {
     <div class="yan-bolum">${kacis(t.ad)} Yolu</div>
     ${t.yol.map(y => link(y.id, y.ad, y.ik)).join('')}
     <div class="yan-bolum">Topluluk</div>
+    <a class="yan-link" href="topluluk.html">${ik('uyeler')} Topluluk</a>
+    ${link('paylasimlar', 'Paylaşımlarım', 'sohbet')}
     ${tip === 'ogretmen' ? '' : link('seminer', 'Seminerler', 'takvim')}
     ${link('kaydedilen', 'Kaydettiklerim', 'isaret')}
     <div class="yan-bolum">Hesabım</div>
@@ -371,17 +398,21 @@ function menuKur() {
 function panelBasligi(id) {
   const yol = TIPLER[tip].yol.find(y => y.id === id);
   if (yol) return yol.ad;
-  return { genel: 'Genel Bakış', seminer: 'Seminerler', kaydedilen: 'Kaydettiklerim', profil: 'Profil Bilgilerim', hesap: 'Hesap ve Güvenlik' }[id] || 'Genel Bakış';
+  return { genel: 'Genel Bakış', paylasimlar: 'Paylaşımlarım', seminer: 'Seminerler', kaydedilen: 'Kaydettiklerim', profil: 'Profil Bilgilerim', hesap: 'Hesap ve Güvenlik' }[id] || 'Genel Bakış';
 }
 
 function panelGoster(id) {
-  const gecerli = ['genel', 'seminer', 'kaydedilen', 'profil', 'hesap', ...TIPLER[tip].yol.map(y => y.id)];
+  const gecerli = ['genel', 'paylasimlar', 'seminer', 'kaydedilen', 'profil', 'hesap', ...TIPLER[tip].yol.map(y => y.id)];
   if (!gecerli.includes(id)) id = 'genel';
   if (id === 'seminer' && tip === 'ogretmen') id = 'gelisim';
   aktifPanel = id;
-  const html = id === 'genel' ? panelGenel() : id === 'seminer' ? panelSeminer() : id === 'kaydedilen' ? panelKaydedilenler()
+  if (id === 'paylasimlar') {
+    $('#icerik').innerHTML = '<div class="panel aktif"><div class="bos"><div class="bos-metin">Yükleniyor…</div></div></div>';
+    panelPaylasimlar().then(h => { if (aktifPanel === 'paylasimlar') $('#icerik').innerHTML = `<div class="panel aktif">${h}</div>`; });
+  }
+  const html = id === 'paylasimlar' ? null : id === 'genel' ? panelGenel() : id === 'seminer' ? panelSeminer() : id === 'kaydedilen' ? panelKaydedilenler()
     : id === 'profil' ? panelProfil() : id === 'hesap' ? panelHesap() : panelYol(id);
-  $('#icerik').innerHTML = `<div class="panel aktif">${html}</div>`;
+  if (html !== null) $('#icerik').innerHTML = `<div class="panel aktif">${html}</div>`;
   $('#ustBaslik').textContent = panelBasligi(id);
   document.title = panelBasligi(id) + ' — Montessori Okulu';
   menuKur();

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topluluk — Sorular, Deneyimler ve Üye Rehberleri · Montessori Okulu</title>
+<meta name="description" content="Montessori'yi evde ve sınıfta uygulayan ebeveyn ve öğretmenlerin Türkçe topluluğu: soru sor, deneyimini paylaş, üyelerin hazırladığı rehberleri oku.">
+<link rel="canonical" href="https://montessoriokulu.com/topluluk">
+<meta property="og:title" content="Montessori Okulu Topluluğu">
+<meta property="og:description" content="Soru sor, deneyimini paylaş, Montessori'yi birlikte öğrenelim.">
+<meta property="og:image" content="https://montessoriokulu.com/og-image.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="topluluk.css">
+</head>
+<body>
+
+<header class="ust-bar">
+  <div class="ust-bar-ic">
+    <a href="index.html" class="marka" aria-label="Montessori Okulu ana sayfa">
+      <span class="marka-karolar" aria-hidden="true">
+        <span class="karo karo-s">M</span><span class="karo karo-g">O</span><span class="karo karo-s">C</span>
+      </span>
+      <span class="marka-yazi">
+        <span class="marka-ust">MONTESSORİ</span>
+        <span class="marka-alt">OKULU<b>•</b>COM</span>
+      </span>
+    </a>
+    <nav aria-label="Ana menü" style="display:contents">
+      <ul class="ust-linkler">
+        <li><a href="topluluk.html" class="aktif">Topluluk</a></li>
+        <li><a href="rehber.html">Rehberler</a></li>
+        <li><a href="index.html#kitaplik">Kitaplık</a></li>
+        <li><a href="index.html#seminerler">Seminerler</a></li>
+        <li><a href="index.html#okul">Bir Çiçek Koleji</a></li>
+      </ul>
+    </nav>
+    <div class="ust-eylem">
+      <a class="dugme dugme-hayalet dugme-kucuk" href="uyelik.html?donus=topluluk.html" id="girisDugme">Giriş Yap</a>
+      <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html?donus=topluluk.html" id="uyeDugme">Üye Ol — Ücretsiz</a>
+      <button class="hamburger" id="hamburger" aria-label="Menüyü aç"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobil-menu" id="mobilMenu">
+  <a href="topluluk.html">Topluluk</a>
+  <a href="rehber.html">Rehberler</a>
+  <a href="index.html#kitaplik">Kitaplık</a>
+  <a href="index.html#seminerler">Seminerler</a>
+  <a href="index.html#okul">Bir Çiçek Koleji</a>
+  <div class="mobil-eylem">
+    <a class="dugme dugme-hayalet" style="flex:1" href="uyelik.html?donus=topluluk.html">Giriş Yap</a>
+    <a class="dugme dugme-somon" style="flex:1" href="uyelik.html?donus=topluluk.html">Üye Ol</a>
+  </div>
+</div>
+
+<main id="ana">
+  <section class="t-giris">
+    <div class="icerik">
+      <div>
+        <div class="etiket"><span class="karo karo-y">T</span> Topluluk</div>
+        <h1>Sor, paylaş,<br>birlikte öğrenelim.</h1>
+        <p>Montessori'yi evde ya da sınıfta uygulamaya çalışan herkesin buluştuğu yer. Takıldığın konuyu sor, işe yarayan deneyimini anlat, bildiklerini bir rehbere dönüştür.</p>
+        <div class="t-dugmeler">
+          <button class="dugme dugme-somon" data-yaz="soru">Soru sor</button>
+          <button class="dugme dugme-acik" data-yaz="deneyim">Deneyimini paylaş</button>
+          <button class="dugme dugme-acik" data-yaz="rehber">Rehber gönder</button>
+        </div>
+      </div>
+      <div class="t-vitrin" aria-label="Topluluk özeti">
+        <div class="t-vitrin-kart"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-ses-kutusu"/></svg>
+          <div class="t-vitrin-sayi" id="saySoru">–</div><div class="t-vitrin-ad">Soru</div></div>
+        <div class="t-vitrin-kart"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-dokme"/></svg>
+          <div class="t-vitrin-sayi" id="sayDeneyim">–</div><div class="t-vitrin-ad">Deneyim</div></div>
+        <div class="t-vitrin-kart"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-zimpara-harf"/></svg>
+          <div class="t-vitrin-sayi" id="sayRehber">–</div><div class="t-vitrin-ad">Üye rehberi</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="t-kural">
+    <div class="icerik">
+      <svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-kilit"/></svg>
+      <span><strong>Çocukların mahremiyeti önce gelir.</strong> Paylaşımlarında çocuğunun tam adını, okulunu, fotoğrafını ya da sağlık bilgisini yazma. Sağlıkla ilgili konularda mutlaka doktoruna danış.</span>
+    </div>
+  </div>
+
+  <section class="t-govde">
+    <div class="icerik">
+      <div class="t-izgara">
+        <div id="anaAlan"><div class="yukleniyor-k">Topluluk yükleniyor…</div></div>
+
+        <aside class="t-yan">
+          <div class="y-kart">
+            <h4><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-sayi-cubugu"/></svg> Nasıl işler?</h4>
+            <div class="y-adim"><b>1</b><span>Ücretsiz üye ol ya da giriş yap.</span></div>
+            <div class="y-adim"><b>2</b><span>Sorunu, deneyimini ya da rehberini yaz.</span></div>
+            <div class="y-adim"><b>3</b><span>İlk paylaşımın kısa bir incelemeden sonra yayına girer; sonrakiler hemen görünür.</span></div>
+          </div>
+          <div class="y-kart">
+            <h4><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-yaprak"/></svg> Uzman cevapları</h4>
+            <p style="font-size:13.5px;color:var(--murekkep-o);line-height:1.6">Montessori Okulu ekibinin cevapları <b>"Uzman cevabı"</b> rozetiyle en üstte görünür.</p>
+          </div>
+          <div class="y-kart">
+            <h4><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-pembe-kule"/></svg> Rehberler</h4>
+            <a class="y-link" href="rehber.html#anne"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-giyinme"/></svg><span>Anne Rehberi<small>Evde Montessori için</small></span></a>
+            <a class="y-link" href="rehber.html#ogretmen"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-geometrik"/></svg><span>Öğretmen Rehberi<small>Sınıf için kaynaklar</small></span></a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- PAYLAŞIM PENCERESİ -->
+<div class="pencere-ort" id="pencere" role="dialog" aria-modal="true" aria-labelledby="pencereBaslik">
+  <div class="pencere" id="pencereIc"></div>
+</div>
+<div class="bildirim-k" id="bildirimK"></div>
+
+<footer>
+  <div class="icerik">
+    <div class="alt-taban" style="border-top:none;padding-top:0">
+      <span class="alt-telif">© 2026 montessoriokulu.com — Bir Çiçek Koleji Anaokulu ailesinden</span>
+      <div class="alt-kardes">
+        <a href="index.html">Ana sayfa</a> ·
+        <a href="rehber.html">Rehberler</a> ·
+        <a href="https://www.instagram.com/montessoriokulucom/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="topluluk.js"></script>
+</body>
+</html>

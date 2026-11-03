@@ -1,17 +1,37 @@
 rules_version = '2';
 // montessoriokulu.com — Firestore güvenlik kuralları
-// Her üye yalnızca kendi profil belgesini okuyup yazabilir.
+// profiller: her üye yalnızca kendi profilini okur/yazar; "onayli" alanını yalnızca yönetici değiştirir.
+// gonderiler / cevaplar: herkes yayındakileri okur; üyeler kendi adına yazar;
+//   onaylı olmayan üyenin gönderisi "beklemede" başlar, yönetici onaylayınca yayına girer.
+// bildirimler: üyeler uygunsuz içeriği bildirir; yalnızca yönetici okur.
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function girisli() { return request.auth != null; }
+    function yonetici() {
+      return girisli() && request.auth.token.email_verified == true
+        && request.auth.token.email in ['emrahby@gmail.com', 'eposta@bircicekkoleji.com'];
+    }
+    function onayliUye() {
+      return girisli()
+        && exists(/databases/$(database)/documents/profiller/$(request.auth.uid))
+        && get(/databases/$(database)/documents/profiller/$(request.auth.uid)).data.get('onayli', false) == true;
+    }
+    function gecerliDurum(d) {
+      return d.durum == 'beklemede' || (d.durum == 'yayinda' && (onayliUye() || yonetici()));
+    }
+    function gecerliAd(d) {
+      return d.yazar_ad is string && d.yazar_ad.size() >= 2 && d.yazar_ad.size() <= 60
+        && (!('yazar_tip' in d) || d.yazar_tip in ['ebeveyn', 'ogretmen', 'merakli']);
+    }
+
+    // ── PROFİLLER ──
     match /profiller/{uid} {
-      function kendisi() {
-        return request.auth != null && request.auth.uid == uid;
-      }
+      function kendisi() { return girisli() && request.auth.uid == uid; }
       function gecerliAlanlar() {
         let d = request.resource.data;
         return d.keys().hasOnly(['email', 'ad_soyad', 'uyelik_tipi', 'cocuk_yasi',
-                                 'okul_adi', 'gorev', 'ilgi_alanlari', 'olusturma', 'guncelleme'])
+                                 'okul_adi', 'gorev', 'ilgi_alanlari', 'onayli', 'olusturma', 'guncelleme'])
           && (!('uyelik_tipi' in d) || d.uyelik_tipi in ['ebeveyn', 'ogretmen', 'merakli'])
           && (!('gorev' in d) || d.gorev == null
               || d.gorev in ['montessori_ogretmeni', 'asistan', 'yonetici', 'ogretmen_adayi', 'diger'])
@@ -22,13 +42,85 @@ service cloud.firestore {
           && (!('cocuk_yasi' in d) || d.cocuk_yasi == null || (d.cocuk_yasi is string && d.cocuk_yasi.size() <= 40))
           && (!('okul_adi' in d) || d.okul_adi == null || (d.okul_adi is string && d.okul_adi.size() <= 120));
       }
+      // Üye "onayli" alanını kendisi ekleyemez ya da değiştiremez
+      function onayDegismedi() {
+        return request.resource.data.get('onayli', null) == resource.data.get('onayli', null);
+      }
 
-      allow read: if kendisi();
-      allow create: if kendisi() && gecerliAlanlar()
+      allow read: if kendisi() || yonetici();
+      allow create: if kendisi() && gecerliAlanlar() && !('onayli' in request.resource.data)
         && request.resource.data.email == request.auth.token.email;
-      allow update: if kendisi() && gecerliAlanlar()
-        && request.resource.data.email == resource.data.email;
+      allow update: if (kendisi() && gecerliAlanlar() && onayDegismedi()
+                        && request.resource.data.email == resource.data.email)
+        || (yonetici() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['onayli'])
+            && request.resource.data.onayli is bool);
       allow delete: if false;
+    }
+
+    // ── GÖNDERİLER (soru, deneyim, üye rehberi) ──
+    match /gonderiler/{gid} {
+      function gecerliGonderi() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['tur', 'baslik', 'metin', 'kategori', 'yas', 'yazar_uid', 'yazar_ad',
+                                 'yazar_tip', 'durum', 'olusturma', 'cevap_sayisi'])
+          && d.keys().hasAll(['tur', 'baslik', 'metin', 'kategori', 'yazar_uid', 'yazar_ad', 'durum', 'olusturma', 'cevap_sayisi'])
+          && d.yazar_uid == request.auth.uid
+          && d.tur in ['soru', 'deneyim', 'rehber']
+          && d.baslik is string && d.baslik.size() >= 5 && d.baslik.size() <= 140
+          && d.metin is string && d.metin.size() >= 10
+          && (d.metin.size() <= 4000 || (d.tur == 'rehber' && d.metin.size() <= 12000))
+          && d.kategori in ['ev-ortami', 'gunluk-yasam', 'gelisim', 'dil', 'matematik', 'duygular-davranis',
+                            'okul-secimi', 'sinif-yonetimi', 'materyaller', 'orman-okulu', 'diger']
+          && (!('yas' in d) || d.yas in ['0-3', '3-6', '6-12', 'genel'])
+          && gecerliAd(d)
+          && d.olusturma == request.time
+          && d.cevap_sayisi == 0
+          && gecerliDurum(d);
+      }
+      allow read: if resource.data.durum == 'yayinda'
+        || (girisli() && resource.data.yazar_uid == request.auth.uid) || yonetici();
+      allow create: if girisli() && gecerliGonderi();
+      // Yayındaki gönderiye cevap verildiğinde cevap sayısı bir artırılabilir; geri kalanı yönetici
+      allow update: if yonetici()
+        || (girisli() && resource.data.durum == 'yayinda'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['cevap_sayisi'])
+            && request.resource.data.cevap_sayisi == resource.data.cevap_sayisi + 1);
+      allow delete: if yonetici() || (girisli() && resource.data.yazar_uid == request.auth.uid);
+    }
+
+    // ── CEVAPLAR ──
+    match /cevaplar/{cid} {
+      function gecerliCevap() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['gonderi_id', 'metin', 'yazar_uid', 'yazar_ad', 'yazar_tip', 'uzman', 'durum', 'olusturma'])
+          && d.keys().hasAll(['gonderi_id', 'metin', 'yazar_uid', 'yazar_ad', 'durum', 'olusturma'])
+          && d.yazar_uid == request.auth.uid
+          && d.gonderi_id is string
+          && get(/databases/$(database)/documents/gonderiler/$(d.gonderi_id)).data.durum == 'yayinda'
+          && d.metin is string && d.metin.size() >= 2 && d.metin.size() <= 4000
+          && (!('uzman' in d) || d.uzman == false || (d.uzman == true && yonetici()))
+          && gecerliAd(d)
+          && d.olusturma == request.time
+          && gecerliDurum(d);
+      }
+      allow read: if resource.data.durum == 'yayinda'
+        || (girisli() && resource.data.yazar_uid == request.auth.uid) || yonetici();
+      allow create: if girisli() && gecerliCevap();
+      allow update: if yonetici();
+      allow delete: if yonetici() || (girisli() && resource.data.yazar_uid == request.auth.uid);
+    }
+
+    // ── BİLDİRİMLER (uygunsuz içerik) ──
+    match /bildirimler/{bid} {
+      allow create: if girisli()
+        && request.resource.data.keys().hasOnly(['hedef_tur', 'hedef_id', 'gonderi_id', 'neden', 'bildiren_uid', 'olusturma'])
+        && request.resource.data.bildiren_uid == request.auth.uid
+        && request.resource.data.hedef_tur in ['gonderi', 'cevap']
+        && request.resource.data.hedef_id is string
+        && request.resource.data.neden is string && request.resource.data.neden.size() <= 300
+        && request.resource.data.olusturma == request.time;
+      allow read, delete: if yonetici();
+      allow update: if false;
     }
 
     // Başka hiçbir koleksiyona erişim yok

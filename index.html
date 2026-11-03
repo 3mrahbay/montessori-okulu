@@ -371,6 +371,19 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
 .mi-sekme{width:24px;height:24px;vertical-align:-6px;margin-right:7px}
 .mi-rozet{width:18px;height:18px}
 .mi-art{width:52px;height:52px}
+
+/* ═══════════ TOPLULUK VE REHBERLER VİTRİNİ ═══════════ */
+.canli{background:var(--beyaz);border-top:1px solid var(--cizgi);border-bottom:1px solid var(--cizgi)}
+.canli-izgara{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.canli-kart{border-radius:var(--r-b);padding:24px 22px;display:flex;flex-direction:column;gap:8px;border:1.5px solid var(--cizgi);transition:transform .22s, box-shadow .22s}
+.canli-kart:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(34,34,58,.1)}
+.canli-kart .mi{width:64px;height:64px;margin-bottom:6px}
+.ck-1{background:var(--gok-a)} .ck-2{background:var(--somon-a)} .ck-3{background:var(--altin-a)} .ck-4{background:var(--yaprak-a)}
+.ck-ad{font-family:var(--d);font-size:21px;font-weight:600}
+.ck-metin{font-size:14px;line-height:1.6;color:var(--murekkep-o);flex:1}
+.ck-git{font-size:13.5px;font-weight:800;color:var(--murekkep);margin-top:6px}
+@media(max-width:980px){.canli-izgara{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.canli-izgara{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -389,7 +402,8 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     </a>
     <nav aria-label="Ana menü" style="display:contents">
       <ul class="ust-linkler">
-        <li><a href="#topluluk">Topluluk</a></li>
+        <li><a href="topluluk.html">Topluluk</a></li>
+        <li><a href="rehber.html">Rehberler</a></li>
         <li><a href="#kitaplik">Kitaplık</a></li>
         <li><a href="#seminerler">Seminerler</a></li>
         <li><a href="#okul">Bir Çiçek Koleji</a></li>
@@ -407,7 +421,8 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
 </header>
 
 <div class="mobil-menu" id="mobilMenu">
-  <a href="#topluluk" onclick="mobilMenuKapat()">Topluluk</a>
+  <a href="topluluk.html">Topluluk</a>
+  <a href="rehber.html">Rehberler</a>
   <a href="#kitaplik" onclick="mobilMenuKapat()">Kitaplık</a>
   <a href="#seminerler" onclick="mobilMenuKapat()">Seminerler</a>
   <a href="#okul" onclick="mobilMenuKapat()">Bir Çiçek Koleji</a>
@@ -429,7 +444,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     <p class="giris-alt">Ebeveynler ve öğretmenler için Türkçe yazılar, podcast ve seminerler. Anlattıklarımız teoriden değil, her gün sınıfta yaşananlardan geliyor.</p>
     <div class="giris-dugmeler">
       <a class="dugme dugme-somon" href="uyelik.html">Topluluğa Katıl — Ücretsiz</a>
-      <a class="dugme dugme-hayalet" href="#kitaplik">Kitaplığa Göz At</a>
+      <a class="dugme dugme-hayalet" href="topluluk.html">Topluluğa Göz At</a>
     </div>
     <div class="giris-sayilar" aria-label="Kısaca Montessori Okulu">
       <div class="sayi"><span class="sayi-deger">2018</span><span class="sayi-ad">Sınıftan beri</span></div>
@@ -483,6 +498,31 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
         </ul>
         <a class="yol-lnk" href="uyelik.html">Meraklı olarak katıl →</a>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TOPLULUK VE REHBERLER ═══ -->
+<section class="bolum canli" id="canli">
+  <div class="icerik">
+    <div class="bolum-bas">
+      <div class="etiket"><span class="karo karo-y">T</span> Topluluk ve Rehberler</div>
+      <h2 class="baslik-2">Sor, paylaş, birlikte öğren.</h2>
+      <p class="govde">Takıldığın konuyu topluluğa sor, işe yarayan deneyimini anlat; kaynaklı Anne ve Öğretmen rehberleriyle bir adım öne geç.</p>
+    </div>
+    <div class="canli-izgara">
+      <a class="canli-kart ck-1" href="topluluk.html"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-ses-kutusu"/></svg>
+        <span class="ck-ad">Soru-Cevap</span><span class="ck-metin">Ebeveynler ve öğretmenler soruyor; ekibimiz ve üyeler cevaplıyor. Ekibin cevapları "Uzman cevabı" rozetiyle öne çıkar.</span>
+        <span class="ck-git">Topluluğa git →</span></a>
+      <a class="canli-kart ck-2" href="topluluk.html?tur=deneyim"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-dokme"/></svg>
+        <span class="ck-ad">Deneyimler</span><span class="ck-metin">Evde ve sınıfta denenip işe yarayanlar. Senin deneyimin de bir başkasına yol göstersin.</span>
+        <span class="ck-git">Deneyimleri oku →</span></a>
+      <a class="canli-kart ck-3" href="rehber.html#anne"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-giyinme"/></svg>
+        <span class="ck-ad">Anne Rehberi</span><span class="ck-metin">Emici zihinden evde gözleme, kaynaklı ve sade rehberler. Her yazıda evde deneyebileceğin bir uygulama.</span>
+        <span class="ck-git">Rehberi aç →</span></a>
+      <a class="canli-kart ck-4" href="rehber.html#ogretmen"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-geometrik"/></svg>
+        <span class="ck-ad">Öğretmen Rehberi</span><span class="ck-metin">Hazırlanmış ortam, üç aşamalı ders, gözlem kaydı ve sınıf yaşamı üzerine uygulamalı yazılar.</span>
+        <span class="ck-git">Rehberi aç →</span></a>
     </div>
   </div>
 </section>
@@ -655,6 +695,9 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
       </div>
       <div>
         <div class="alt-baslik">Topluluk</div>
+        <a class="alt-lnk" href="topluluk.html">Soru-Cevap ve Deneyimler</a>
+        <a class="alt-lnk" href="rehber.html#anne">Anne Rehberi</a>
+        <a class="alt-lnk" href="rehber.html#ogretmen">Öğretmen Rehberi</a>
         <a class="alt-lnk" href="uyelik.html">Üye Ol</a>
         <a class="alt-lnk" href="profil.html">Profilim</a>
         <a class="alt-lnk" href="#seminerler">Seminerler</a>

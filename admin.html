@@ -418,7 +418,8 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-uyeler"/></svg></span> Üyeler
       </div>
       <div class="sb-link" onclick="showPanel('yorumlar')">
-        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></span> Yorumlar
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></span> Topluluk Moderasyonu
+        <span class="sb-badge" id="modCount" style="display:none">0</span>
       </div>
 
       <div class="sb-section">Site</div>
@@ -688,19 +689,19 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           <div class="card-head">
             <span class="card-title">Üye Listesi</span>
             <div style="display:flex;gap:8px;">
-              <input class="form-input" style="width:200px;padding:7px 12px;" placeholder="İsim veya e-posta ara...">
-              <select class="form-input form-select" style="width:150px;padding:7px 12px;">
-                <option>Tüm Tipler</option>
-                <option>Ebeveyn</option>
-                <option>Öğretmen</option>
-                <option>Meraklı</option>
+              <input class="form-input" id="uyeAra" style="width:200px;padding:7px 12px;" placeholder="İsim veya e-posta ara...">
+              <select class="form-input form-select" id="uyeTip" style="width:150px;padding:7px 12px;">
+                <option value="">Tüm Tipler</option>
+                <option value="ebeveyn">Ebeveyn</option>
+                <option value="ogretmen">Öğretmen</option>
+                <option value="merakli">Meraklı</option>
               </select>
             </div>
           </div>
           <div class="card-body" style="padding:0;">
             <table class="table">
               <thead>
-                <tr><th>Üye</th><th>E-posta</th><th>Üyelik Tipi</th><th>Kayıt Tarihi</th><th>Durum</th><th>İşlemler</th></tr>
+                <tr><th>Üye</th><th>E-posta</th><th>Üyelik Tipi</th><th>Kayıt Tarihi</th><th>Topluluk</th><th>İşlemler</th></tr>
               </thead>
               <tbody id="uyelerTbody">
                 <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--ink-s);">Henüz üye yok.</td></tr>
@@ -712,15 +713,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
 
       <!-- YORUMLAR -->
       <div class="panel" id="panel-yorumlar">
-        <div class="card">
-          <div class="card-head"><span class="card-title">Yorumlar</span></div>
-          <div class="card-body">
-            <div style="text-align:center;padding:40px;color:var(--ink-s);">
-              <div style="margin-bottom:12px;color:var(--ink-s);"><svg class="ik" style="width:40px;height:40px" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></div>
-              <div style="font-size:14px;">Henüz yorum yok.</div>
-            </div>
-          </div>
-        </div>
+        <div id="modAlan"></div>
       </div>
 
       <!-- AYARLAR -->
@@ -1129,7 +1122,7 @@ function logout() {
 const panelNames = {
   dashboard:'Dashboard', blog:'Blog Yazıları', podcast:'Podcast Bölümleri',
   video:'Videolar', media:'Medya / Görseller', seminer:'Seminerler',
-  uyeler:'Üyeler', yorumlar:'Yorumlar', ayarlar:'Site Ayarları'
+  uyeler:'Üyeler', yorumlar:'Topluluk Moderasyonu', ayarlar:'Site Ayarları'
 };
 const panelActions = {
   dashboard:['+ Yeni Yazı','openNewPost'],
@@ -1552,5 +1545,6 @@ window.logout = async function () {
   eskiCikis();
 };
 </script>
+<script type="module" src="topluluk-yonetim.js"></script>
 </body>
 </html>
