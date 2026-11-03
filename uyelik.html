@@ -8,7 +8,6 @@
 <meta name="description" content="Montessori Okulu'na ücretsiz üye ol: yeni yazılar, podcast bölümleri ve seminer duyurularından haberdar ol.">
 <meta name="robots" content="noindex, follow">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <style>
 :root{
   --salmon:#F4857A;--salmon-d:#D9655A;--salmon-m:#F9A89F;--salmon-p:#FDF0EE;
@@ -359,14 +358,12 @@ nav{background:var(--bg-dark);border-bottom:2px solid rgba(244,133,122,.12);posi
   </div><!-- /formArea -->
 </main>
 
-<script>
-// ── Supabase Başlat ──
-const SUPABASE_URL = 'https://ihjrjfbtvciqpoxmepqv.supabase.co';
-// Supabase Dashboard > Settings > API > anon public key
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanJqZmJ0dmNpcXBveG1lcHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzczMzcsImV4cCI6MjA4OTU1MzMzN30.JCzLpDq-ib6D7p6oDBSdTS6FAR--JecI6InllH-p-Kc';
-const { createClient } = supabase;
-let sb;
-try { sb = createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.error('Supabase init error:', e); }
+<script type="module">
+// ── Firebase oturum modülü ──
+import {
+  oturumDinle, profilKaydet, googleIleGirisYap, yonlendirmeSonucu,
+  epostaIleKayit, epostaIleGiris, sifreSifirlamaGonder, hataMetni
+} from './oturum.js';
 
 let seciliTip = 'merakli';
 
@@ -404,32 +401,41 @@ function showAlert(type, msg) {
 function showSuccess(user) {
   document.getElementById('formArea').style.display = 'none';
   document.getElementById('successScreen').style.display = 'block';
-  const name = user.user_metadata?.full_name || user.email;
+  const name = user.displayName || user.email;
   document.getElementById('successMsg').textContent =
     `Hoş geldin, ${name}! Montessori Okulu topluluğuna başarıyla katıldın. Profilini tamamla ve içeriklere göz at.`;
   window.scrollTo(0, 0);
 }
 
+// ── Doğrulama E-postası Ekranı ──
+function showVerify(adSoyad, email) {
+  document.getElementById('formArea').style.display = 'none';
+  const ekran = document.getElementById('successScreen');
+  ekran.style.display = 'block';
+  ekran.querySelector('.success-icon').textContent = '📧';
+  ekran.querySelector('.success-title').textContent = 'E-postanı Doğrula!';
+  document.getElementById('successMsg').textContent =
+    adSoyad + ', kaydın başarıyla oluşturuldu! ' + email + ' adresine bir doğrulama e-postası gönderdik. Lütfen e-postanı kontrol edip linke tıkla.';
+  window.scrollTo(0, 0);
+}
+
+// Kayıt/giriş akışı sürerken otomatik "başarı" ekranını bekletir
+let islemSuruyor = false;
+
 // ── Google ile Giriş ──
 async function googleIleGiris() {
-  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı. Lütfen sayfayı yenileyin.'); return; }
+  islemSuruyor = true;
   try {
-    showAlert('success', 'Google sayfasına yönlendiriliyorsunuz...');
-    const { data, error } = await sb.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/uyelik.html',
-        queryParams: { uyelik_tipi: seciliTip }
-      }
-    });
-    if (error) {
-      console.error('Google OAuth hatası:', error);
-      showAlert('error', 'Google girişi başarısız: ' + error.message + ' — Supabase Dashboard > Authentication > Providers > Google aktif edildi mi?');
+    showAlert('success', 'Google penceresi açılıyor...');
+    const user = await googleIleGirisYap();
+    if (user) {
+      await profilKaydet(user, { uyelik_tipi: seciliTip });
+      showSuccess(user);
     }
-  } catch(e) {
-    console.error('Google login exception:', e);
-    showAlert('error', 'Bağlantı hatası: ' + e.message);
-  }
+  } catch (e) {
+    console.error('Google girişi hatası:', e);
+    showAlert('error', 'Google girişi başarısız: ' + hataMetni(e));
+  } finally { islemSuruyor = false; }
 }
 
 // ── E-posta Kayıt ──
@@ -450,73 +456,46 @@ async function emailKayit() {
   const btn = document.getElementById('kayitBtn');
   btn.disabled = true;
   btn.textContent = 'Kaydediliyor...';
+  islemSuruyor = true;
 
-  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı.'); return; }
-  const { data, error } = await sb.auth.signUp({
-    email,
-    password: sifre,
-    options: {
-      data: {
-        full_name: ad + ' ' + soyad,
+  try {
+    const adSoyad = ad + ' ' + soyad;
+    const user = await epostaIleKayit(email, sifre, adSoyad);
+    try {
+      await profilKaydet(user, {
+        ad_soyad: adSoyad,
         uyelik_tipi: seciliTip,
         cocuk_yasi: document.getElementById('cocukYasi')?.value || null,
-        okul_adi: document.getElementById('okulAdi')?.value || null,
-      }
-    }
-  });
-
-  btn.disabled = false;
-  btn.textContent = 'Üye Ol — Ücretsiz →';
-
-  if (error) { showAlert('error', hataMetni(error.message)); return; }
-
-  if (data.user) {
-    // Profili kaydet (session olmasa bile)
-    try {
-      await sb.from('profiller').upsert({
-        id: data.user.id,
-        email: data.user.email,
-        ad_soyad: ad + ' ' + soyad,
-        uyelik_tipi: seciliTip,
+        okul_adi: document.getElementById('okulAdi')?.value || null
       });
-    } catch(e) { console.log('Profil kayıt hatası (normal olabilir):', e); }
-
-    if (data.session) {
-      // Oturum açıldı, doğrulama gerekmedi
-      showSuccess(data.user);
-    } else {
-      // E-posta doğrulama gerekiyor
-      document.getElementById('formArea').style.display = 'none';
-      document.getElementById('successScreen').style.display = 'block';
-      document.getElementById('successScreen').querySelector('.success-icon').textContent = '📧';
-      document.getElementById('successScreen').querySelector('.success-title').textContent = 'E-postanı Doğrula!';
-      document.getElementById('successMsg').textContent =
-        ad + ' ' + soyad + ', kaydın başarıyla oluşturuldu! ' + email + ' adresine bir doğrulama e-postası gönderdik. Lütfen e-postanı kontrol edip linke tıkla.';
-      window.scrollTo(0, 0);
-    }
-  } else if (!error) {
-    showAlert('error', 'Kayıt tamamlanamadı. Lütfen tekrar deneyin.');
+    } catch (e) { console.warn('Profil kayıt hatası:', e); }
+    showVerify(adSoyad, email);
+  } catch (e) {
+    showAlert('error', hataMetni(e));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Üye Ol — Ücretsiz →';
+    islemSuruyor = false;
   }
 }
 
 // ── E-posta Giriş ──
-async function emailGiris() {
+async function emailGiris(ev) {
   const email = document.getElementById('girisEmail').value.trim();
   const sifre = document.getElementById('girisSifre').value;
   if (!email || !sifre) { showAlert('error', 'E-posta ve şifre zorunludur.'); return; }
-  if (!sb) { showAlert('error', 'Supabase bağlantısı kurulamadı.'); return; }
 
-  const btn = event?.target;
+  const btn = ev?.target || window.event?.target;
   if (btn) { btn.disabled = true; btn.textContent = 'Giriş yapılıyor...'; }
-
+  islemSuruyor = true;
   try {
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: sifre });
+    const user = await epostaIleGiris(email, sifre);
+    showSuccess(user);
+  } catch (e) {
+    showAlert('error', hataMetni(e));
+  } finally {
     if (btn) { btn.disabled = false; btn.textContent = 'Giriş Yap →'; }
-    if (error) { showAlert('error', hataMetni(error.message)); return; }
-    if (data.user) showSuccess(data.user);
-  } catch(e) {
-    if (btn) { btn.disabled = false; btn.textContent = 'Giriş Yap →'; }
-    showAlert('error', 'Bağlantı hatası: ' + e.message);
+    islemSuruyor = false;
   }
 }
 
@@ -524,41 +503,28 @@ async function emailGiris() {
 async function sifreSifirla() {
   const email = document.getElementById('girisEmail').value.trim();
   if (!email) { showAlert('error', 'Önce e-posta adresinizi girin.'); return; }
-  const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/uyelik.html'
-  });
-  if (error) { showAlert('error', error.message); return; }
-  showAlert('success', 'Şifre sıfırlama linki e-postanıza gönderildi.');
+  try {
+    await sifreSifirlamaGonder(email);
+    showAlert('success', 'Şifre sıfırlama linki e-postanıza gönderildi.');
+  } catch (e) { showAlert('error', hataMetni(e)); }
 }
 
-// ── Hata Metni ──
-function hataMetni(msg) {
-  const hatalar = {
-    'User already registered': 'Bu e-posta adresi zaten kayıtlı. Giriş yapmayı deneyin.',
-    'Invalid login credentials': 'E-posta veya şifre hatalı.',
-    'Email not confirmed': 'E-postanızı doğrulamanız gerekiyor.',
-    'Password should be at least 6 characters': 'Şifre en az 6 karakter olmalıdır.',
-  };
-  return hatalar[msg] || msg;
-}
+// Satır içi onclick'ler için fonksiyonları sayfaya aç
+Object.assign(window, { secTip, switchTab, googleIleGiris, emailKayit, emailGiris, sifreSifirla });
 
-// ── Sayfa Yüklenince Auth Durumunu Kontrol Et ──
-window.onload = async () => {
-  // Google OAuth geri dönüşünü yakala
-  const { data: { session } } = await sb.auth.getSession();
-  if (session?.user) {
-    // Üyelik tipini URL'den al (Google OAuth'tan döndükten sonra)
-    const urlParams = new URLSearchParams(window.location.search);
-    const tipParam = urlParams.get('uyelik_tipi');
-    if (tipParam) {
-      await sb.from('profiller').update({ uyelik_tipi: tipParam }).eq('id', session.user.id);
-    }
-    showSuccess(session.user);
-  }
+// ── Sayfa Açılışı ──
+secTip('ebeveyn');
 
-  // Varsayılan tip seç
-  secTip('ebeveyn');
-};
+// Google yönlendirmesiyle dönüldüyse profili tamamla
+yonlendirmeSonucu().then(async user => {
+  if (user) { await profilKaydet(user, { uyelik_tipi: seciliTip }); }
+}).catch(e => console.warn('Yönlendirme sonucu:', e));
+
+// Zaten giriş yapmış kullanıcıya doğrudan başarı ekranını göster
+const ilkDinleme = oturumDinle(user => {
+  ilkDinleme();
+  if (user && !islemSuruyor) showSuccess(user);
+});
 </script>
 </body>
 </html>

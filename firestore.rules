@@ -1,0 +1,34 @@
+rules_version = '2';
+// montessoriokulu.com — Firestore güvenlik kuralları
+// Her üye yalnızca kendi profil belgesini okuyup yazabilir.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /profiller/{uid} {
+      function kendisi() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+      function gecerliAlanlar() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['email', 'ad_soyad', 'uyelik_tipi', 'cocuk_yasi',
+                                 'okul_adi', 'olusturma', 'guncelleme'])
+          && (!('uyelik_tipi' in d) || d.uyelik_tipi in ['ebeveyn', 'ogretmen', 'merakli'])
+          && (!('ad_soyad' in d) || d.ad_soyad == null || (d.ad_soyad is string && d.ad_soyad.size() <= 120))
+          && (!('cocuk_yasi' in d) || d.cocuk_yasi == null || (d.cocuk_yasi is string && d.cocuk_yasi.size() <= 40))
+          && (!('okul_adi' in d) || d.okul_adi == null || (d.okul_adi is string && d.okul_adi.size() <= 120));
+      }
+
+      allow read: if kendisi();
+      allow create: if kendisi() && gecerliAlanlar()
+        && request.resource.data.email == request.auth.token.email;
+      allow update: if kendisi() && gecerliAlanlar()
+        && request.resource.data.email == resource.data.email;
+      allow delete: if false;
+    }
+
+    // Başka hiçbir koleksiyona erişim yok
+    match /{belge=**} {
+      allow read, write: if false;
+    }
+  }
+}
