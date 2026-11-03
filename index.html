@@ -3,13 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Montessori Okulu — Türkiye'nin Montessori Topluluğu</title>
-<meta name="description" content="Türkiye'nin ilk Montessori topluluğu. Ebeveynler ve öğretmenler için Türkçe içerik kitaplığı, canlı seminerler, soru-cevap topluluğu ve Bir Çiçek Koleji deneyimi. Üyelik ücretsiz.">
-<meta property="og:title" content="Montessori Okulu — Türkiye'nin Montessori Topluluğu">
-<meta property="og:description" content="Çocuğu izle. Yolu birlikte bulalım. Türkçe Montessori içerikleri, seminerler ve topluluk — üyelik ücretsiz.">
+<title>Montessori Okulu — Ebeveyn ve Öğretmenler için Türkçe Montessori Rehberi</title>
+<meta name="description" content="Montessori'yi Türkçe, sade ve uygulamadan gelen bilgiyle öğren. Ebeveynler ve öğretmenler için yazılar, podcast ve seminerler. Bir Çiçek Koleji Anaokulu ailesinden. Üyelik ücretsiz.">
+<link rel="canonical" href="https://www.montessoriokulu.com/">
+<meta property="og:title" content="Montessori Okulu — Türkçe Montessori Rehberi">
+<meta property="og:description" content="Çocuğu izle. Yolu birlikte bulalım. Ebeveyn ve öğretmenler için Türkçe Montessori yazıları, podcast ve seminerler.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.montessoriokulu.com">
-<link rel="icon" type="image/png" href="logo.png">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Montessori Okulu">
+<meta property="og:url" content="https://www.montessoriokulu.com/">
+<meta property="og:image" content="https://www.montessoriokulu.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1C1C31">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.montessoriokulu.com/#website",
+      "url": "https://www.montessoriokulu.com/",
+      "name": "Montessori Okulu",
+      "inLanguage": "tr-TR",
+      "publisher": {"@id": "https://www.montessoriokulu.com/#org"}
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.montessoriokulu.com/#org",
+      "name": "Montessori Okulu",
+      "url": "https://www.montessoriokulu.com/",
+      "logo": "https://www.montessoriokulu.com/favicon-192.png",
+      "sameAs": ["https://www.instagram.com/montessoriokulucom/"],
+      "parentOrganization": {
+        "@type": "Preschool",
+        "name": "Bir Çiçek Koleji Anaokulu",
+        "url": "https://bircicekkoleji.com/",
+        "address": {"@type": "PostalAddress", "addressLocality": "Tuzla", "addressRegion": "İstanbul", "addressCountry": "TR"}
+      }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -182,7 +221,7 @@ button{font-family:var(--g);cursor:pointer}
 .sekme.aktif{background:var(--murekkep);color:#fff;box-shadow:0 3px 10px rgba(34,34,58,.25)}
 .kitap-izgara{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .kitap{background:var(--kagit);border:1.5px solid var(--cizgi);border-radius:var(--r);overflow:hidden;
-  transition:transform .22s, box-shadow .22s;cursor:pointer}
+  transition:transform .22s, box-shadow .22s}
 .kitap:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(34,34,58,.1)}
 .kitap-gorsel{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;font-size:30px;position:relative}
 .kg-1{background:linear-gradient(135deg,#FBDAD5,#F6BEB5)}
@@ -196,6 +235,7 @@ button{font-family:var(--g);cursor:pointer}
 .kitap-ad{font-size:13.5px;font-weight:700;line-height:1.4;margin-bottom:8px}
 .kitap-meta{font-size:11.5px;color:var(--murekkep-s);display:flex;justify-content:space-between;align-items:center}
 .kitap-meta b{color:var(--gok-k);font-weight:800}
+.kitap-meta b.yakinda{font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:var(--altin-a);color:#8A6418;padding:3px 8px;border-radius:6px}
 .kitaplik-taban{margin-top:34px;text-align:center}
 /* raf motifi */
 .raf-cizgi{position:relative;margin-top:34px;height:8px}
@@ -224,6 +264,7 @@ button{font-family:var(--g);cursor:pointer}
   border-radius:11px;padding:9px 4px;line-height:1.15}
 .st-gun{font-family:var(--d);font-size:21px;font-weight:600;display:block}
 .st-ay{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--somon)}
+.st-gun.st-yakinda{font-family:var(--g);font-size:12px;font-weight:700;margin-top:2px}
 .seminer-bilgi{flex:1;min-width:0}
 .seminer-ad{font-size:15px;font-weight:800;margin-bottom:2px}
 .seminer-meta{font-size:12.5px;color:var(--murekkep-s)}
@@ -366,21 +407,21 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
 <!-- ═══ HERO ═══ -->
 <section class="giris">
   <div class="giris-ic">
-    <div class="giris-ustyazi">Türkiye'nin Montessori Topluluğu</div>
+    <div class="giris-ustyazi">Türkçe Montessori Rehberi</div>
     <h1 class="baslik-1">
       Çocuğu izle.<br>
       Yolu <span class="karo-soz" aria-label="birlikte"><span class="karo karo-s">B</span><span class="karo karo-g">İ</span><span class="karo karo-y">R</span><span class="karo karo-a">L</span><span class="karo karo-s">İ</span><span class="karo karo-g">K</span><span class="karo karo-y">T</span><span class="karo karo-a">E</span></span> bulalım.
     </h1>
-    <p class="giris-alt">Ebeveynler ve öğretmenler için Türkçe içerik kitaplığı, canlı seminerler ve soru sorabileceğin gerçek bir topluluk. Montessori yolculuğunda yalnız değilsin.</p>
+    <p class="giris-alt">Ebeveynler ve öğretmenler için Türkçe yazılar, podcast ve seminerler. Anlattıklarımız teoriden değil, her gün sınıfta yaşananlardan geliyor.</p>
     <div class="giris-dugmeler">
       <a class="dugme dugme-somon" href="uyelik.html">Topluluğa Katıl — Ücretsiz</a>
       <a class="dugme dugme-hayalet" href="#kitaplik">Kitaplığa Göz At</a>
     </div>
-    <div class="giris-sayilar" aria-label="Topluluk istatistikleri">
-      <div class="sayi"><span class="sayi-deger" id="uyeSayisi">—</span><span class="sayi-ad">Üye</span></div>
-      <div class="sayi"><span class="sayi-deger">12+</span><span class="sayi-ad">İçerik</span></div>
-      <div class="sayi"><span class="sayi-deger">4</span><span class="sayi-ad">Seminer</span></div>
-      <div class="sayi"><span class="sayi-deger">%100</span><span class="sayi-ad">Ücretsiz</span></div>
+    <div class="giris-sayilar" aria-label="Kısaca Montessori Okulu">
+      <div class="sayi"><span class="sayi-deger">2018</span><span class="sayi-ad">Sınıftan beri</span></div>
+      <div class="sayi"><span class="sayi-deger">MACTE</span><span class="sayi-ad">Sertifikalı program</span></div>
+      <div class="sayi"><span class="sayi-deger">Türkçe</span><span class="sayi-ad">Tüm içerikler</span></div>
+      <div class="sayi"><span class="sayi-deger">Ücretsiz</span><span class="sayi-ad">Üyelik</span></div>
     </div>
   </div>
   <div class="raf" aria-hidden="true"></div>
@@ -392,7 +433,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     <div class="bolum-bas">
       <div class="etiket"><span class="karo karo-s">Y</span>Yolunu Seç</div>
       <h2 class="baslik-2">Hangi pencereden bakıyorsun?</h2>
-      <p class="govde">Topluluk üç yol üzerine kurulu. Üye olurken birini seçersin; kitaplık, seminerler ve öneriler sana göre şekillenir.</p>
+      <p class="govde">Montessori'ye herkes farklı bir yerden gelir. Kendine en yakın yolu seç, oradan başla.</p>
     </div>
     <div class="yol-izgara">
       <article class="yol yol-e">
@@ -402,18 +443,18 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
         <ul class="yol-liste">
           <li>Evde hazırlanmış ortam rehberleri</li>
           <li>Yaşa göre etkinlik önerileri</li>
-          <li>Okul seçimi ve soru-cevap desteği</li>
+          <li>Okul seçerken nelere bakılır?</li>
         </ul>
         <a class="yol-lnk" href="uyelik.html">Ebeveyn olarak katıl →</a>
       </article>
       <article class="yol yol-o">
         <span class="karo karo-g">Ö</span>
         <h3 class="yol-ad">Öğretmen</h3>
-        <p class="yol-tanim">Sınıfını geliştirmek, pedagojini derinleştirmek ve meslektaşlarınla bağ kurmak istiyorsun.</p>
+        <p class="yol-tanim">Sınıfını geliştirmek ve pedagojini derinleştirmek istiyorsun.</p>
         <ul class="yol-liste">
           <li>Sınıf ortamı ve materyal rehberleri</li>
+          <li>Gözleme dayalı pratik ipuçları</li>
           <li>Mesleki gelişim seminerleri</li>
-          <li>Öğretmen forumu ve deneyim paylaşımı</li>
         </ul>
         <a class="yol-lnk" href="uyelik.html">Öğretmen olarak katıl →</a>
       </article>
@@ -424,7 +465,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
         <ul class="yol-liste">
           <li>Sıfırdan başlangıç serisi</li>
           <li>Temel kavram sözlüğü</li>
-          <li>Topluluk etkinliklerine katılım</li>
+          <li>Sık sorulan sorular</li>
         </ul>
         <a class="yol-lnk" href="uyelik.html">Meraklı olarak katıl →</a>
       </article>
@@ -437,8 +478,8 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
   <div class="icerik">
     <div class="bolum-bas">
       <div class="etiket"><span class="karo karo-g">K</span>İçerik Kitaplığı</div>
-      <h2 class="baslik-2">Raflar dolu, hepsi Türkçe.</h2>
-      <p class="govde">Blog yazıları, podcast bölümleri ve videolar tek kitaplıkta. Her hafta yeni içerik ekleniyor.</p>
+      <h2 class="baslik-2">Raflar diziliyor, hepsi Türkçe.</h2>
+      <p class="govde">Yazılar, podcast bölümleri ve videolar tek kitaplıkta toplanıyor. Her biri kendi sayfasında, herkese açık olarak yayına alınıyor.</p>
     </div>
 
     <div class="kitaplik-sekmeler" role="tablist" aria-label="İçerik türü">
@@ -450,84 +491,51 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     <div class="kitap-izgara" id="panel-blog" role="tabpanel">
       <article class="kitap"><div class="kitap-gorsel kg-3"><span>🌲</span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Orman Okulu</div><div class="kitap-ad">Orman Okulu Nedir? Doğanın İçinde Büyümek</div>
-        <div class="kitap-meta"><span>6 dk okuma</span><b>Oku →</b></div></div></article>
+        <div class="kitap-meta"><span>6 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-1"><span>🧒</span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Ebeveyn Rehberi</div><div class="kitap-ad">Bağımsızlık Nasıl Kazanılır? "Yapıyorum!" Diyen Çocuk</div>
-        <div class="kitap-meta"><span>6 dk okuma</span><b>Oku →</b></div></div></article>
+        <div class="kitap-meta"><span>6 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-2"><span>🌱</span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Çocuk Gelişimi</div><div class="kitap-ad">Hassas Dönemler: Çocuğunuzun Öğrenme Pencereleri</div>
-        <div class="kitap-meta"><span>7 dk okuma</span><b>Oku →</b></div></div></article>
+        <div class="kitap-meta"><span>7 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-4"><span>📐</span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Öğretmen Kaynakları</div><div class="kitap-ad">Montessori Matematikle Arkadaş Olur</div>
-        <div class="kitap-meta"><span>8 dk okuma</span><b>Oku →</b></div></div></article>
+        <div class="kitap-meta"><span>8 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
     </div>
 
     <div class="kitap-izgara" id="panel-podcast" role="tabpanel" style="display:none">
       <article class="kitap"><div class="kitap-gorsel kg-4"><span>🎙</span><span class="kitap-tur">Bölüm 4</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Pedagoji</div><div class="kitap-ad">Motivasyonun Kaynağı: İçsel mi, Dışsal mı?</div>
-        <div class="kitap-meta"><span>20 dk</span><b>Dinle →</b></div></div></article>
+        <div class="kitap-meta"><span>20 dk</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-2"><span>🎙</span><span class="kitap-tur">Bölüm 3</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Gelişim</div><div class="kitap-ad">Hassas Dönemler: Pencereleri Yakalamak</div>
-        <div class="kitap-meta"><span>25 dk</span><b>Dinle →</b></div></div></article>
+        <div class="kitap-meta"><span>25 dk</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-1"><span>🎙</span><span class="kitap-tur">Bölüm 2</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Gelişim</div><div class="kitap-ad">Hazırlanmış Ortam: Beyin ve Mekân Arasındaki Bağ</div>
-        <div class="kitap-meta"><span>22 dk</span><b>Dinle →</b></div></div></article>
+        <div class="kitap-meta"><span>22 dk</span><b class="yakinda">Yakında</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-3"><span>🎙</span><span class="kitap-tur">Bölüm 1</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Giriş</div><div class="kitap-ad">Montessori Hakkında En Sık Sorulan 10 Soru</div>
-        <div class="kitap-meta"><span>18 dk</span><b>Dinle →</b></div></div></article>
+        <div class="kitap-meta"><span>18 dk</span><b class="yakinda">Yakında</b></div></div></article>
     </div>
 
     <div class="kitap-izgara" id="panel-video" role="tabpanel" style="display:none">
       <article class="kitap"><div class="kitap-gorsel kg-1"><span>🏠</span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Ebeveyn</div><div class="kitap-ad">Evde Hazırlanmış Ortam Nasıl Kurulur?</div>
-        <div class="kitap-meta"><span>12 dk</span><b>İzle →</b></div></div></article>
+        <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-2"><span>🎨</span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Öğretmen</div><div class="kitap-ad">Sınıf Ortamı: Raf Organizasyonu İpuçları</div>
-        <div class="kitap-meta"><span>15 dk</span><b>İzle →</b></div></div></article>
+        <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-3"><span>🍳</span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Günlük Yaşam</div><div class="kitap-ad">Çocuğunuzu Mutfağa Dahil Edin</div>
-        <div class="kitap-meta"><span>10 dk</span><b>İzle →</b></div></div></article>
+        <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
       <article class="kitap"><div class="kitap-gorsel kg-4"><span>🌱</span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Başlangıç</div><div class="kitap-ad">Montessori Nedir? 5 Dakikada Temel Kavramlar</div>
-        <div class="kitap-meta"><span>5 dk</span><b>İzle →</b></div></div></article>
+        <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
     </div>
 
     <div class="raf-cizgi" aria-hidden="true"></div>
     <div class="kitaplik-taban">
-      <a class="dugme dugme-cerceve" href="uyelik.html">Tüm kitaplığa eriş — üye ol</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ TOPLULUK NASIL İŞLİYOR ═══ -->
-<section class="bolum">
-  <div class="icerik">
-    <div class="bolum-bas ortala">
-      <div class="etiket"><span class="karo karo-a">T</span>Topluluk</div>
-      <h2 class="baslik-2">Sadece içerik değil, gerçek bir topluluk.</h2>
-      <p class="govde">Dünyadaki büyük Montessori topluluklarının Türkiye'de karşılığı yoktu. Şimdi var.</p>
-    </div>
-    <div class="ozellik-izgara">
-      <article class="ozellik">
-        <span class="karo karo-s">S</span>
-        <h3 class="ozellik-ad">Sor &amp; Paylaş</h3>
-        <p class="ozellik-tanim">Aklına takılanı sor; ebeveynler ve öğretmenler deneyimleriyle yanıtlasın. Yalnız Google'a kalma.</p>
-      </article>
-      <article class="ozellik">
-        <span class="karo karo-g">C</span>
-        <h3 class="ozellik-ad">Canlı Buluşmalar</h3>
-        <p class="ozellik-tanim">Her ay ücretsiz online seminerler ve atölyeler. Kayıt profil sayfandan tek tıkla.</p>
-      </article>
-      <article class="ozellik">
-        <span class="karo karo-a">R</span>
-        <h3 class="ozellik-ad">Rozetler &amp; İlerleme</h3>
-        <p class="ozellik-tanim">Okudukça, katıldıkça rozet kazan. Montessori yolculuğun profil sayfanda birikiyor.</p>
-      </article>
-      <article class="ozellik">
-        <span class="karo karo-y">K</span>
-        <h3 class="ozellik-ad">Kaynak Havuzu</h3>
-        <p class="ozellik-tanim">İndirilebilir rehberler, kontrol listeleri ve materyaller. Üyeler katkıda bulunur, havuz büyür.</p>
-      </article>
+      <a class="dugme dugme-cerceve" href="https://www.instagram.com/montessoriokulucom/" target="_blank" rel="noopener">Yeni içerikleri Instagram'da takip et →</a>
     </div>
   </div>
 </section>
@@ -536,47 +544,30 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
 <section class="bolum kitaplik" id="seminerler">
   <div class="icerik">
     <div class="bolum-bas">
-      <div class="etiket"><span class="karo karo-y">S</span>Yaklaşan Seminerler</div>
-      <h2 class="baslik-2">Takvimini ayır.</h2>
-      <p class="govde">Tüm seminerler online ve üyelere ücretsiz. Kontenjan dolmadan yerini al.</p>
+      <div class="etiket"><span class="karo karo-y">S</span>Seminerler</div>
+      <h2 class="baslik-2">Yeni dönem seminerleri hazırlanıyor.</h2>
+      <p class="govde">Online seminerlerin tarihleri netleşince bu sayfada ve Instagram hesabımızda duyuracağız. Planladığımız ilk konular:</p>
     </div>
     <div class="seminer-liste">
       <article class="seminer">
-        <div class="seminer-tarih"><span class="st-gun">12</span><span class="st-ay">Nis</span></div>
+        <div class="seminer-tarih"><span class="st-ay">Tarih</span><span class="st-gun st-yakinda">yakında</span></div>
         <div class="seminer-bilgi">
           <div class="seminer-ad">Montessori'ye Giriş: Temel Kavramlar</div>
-          <div class="seminer-meta">Pazar 10:00 · Online · 90 dk · 50 kişilik</div>
+          <div class="seminer-meta">Online · Ebeveyn ve öğretmenler için</div>
         </div>
-        <span class="seminer-rozet">Ücretsiz</span>
-        <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html">Kayıt Ol</a>
+        <span class="seminer-rozet">Planlanıyor</span>
       </article>
       <article class="seminer">
-        <div class="seminer-tarih"><span class="st-gun">26</span><span class="st-ay">Nis</span></div>
+        <div class="seminer-tarih"><span class="st-ay">Tarih</span><span class="st-gun st-yakinda">yakında</span></div>
         <div class="seminer-bilgi">
-          <div class="seminer-ad">Hazırlanmış Ortam Atölyesi</div>
-          <div class="seminer-meta">Pazar 14:00 · Online · 120 dk · 30 kişilik</div>
+          <div class="seminer-ad">Hazırlanmış Ortam Atölyesi: Evde ve Sınıfta</div>
+          <div class="seminer-meta">Online · Uygulamalı atölye</div>
         </div>
-        <span class="seminer-rozet">Ücretsiz</span>
-        <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html">Kayıt Ol</a>
+        <span class="seminer-rozet">Planlanıyor</span>
       </article>
-      <article class="seminer">
-        <div class="seminer-tarih"><span class="st-gun">10</span><span class="st-ay">May</span></div>
-        <div class="seminer-bilgi">
-          <div class="seminer-ad">Montessori'ye Giriş: Temel Kavramlar</div>
-          <div class="seminer-meta">Pazar 10:00 · Online · 90 dk · 50 kişilik</div>
-        </div>
-        <span class="seminer-rozet">Ücretsiz</span>
-        <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html">Kayıt Ol</a>
-      </article>
-      <article class="seminer">
-        <div class="seminer-tarih"><span class="st-gun">24</span><span class="st-ay">May</span></div>
-        <div class="seminer-bilgi">
-          <div class="seminer-ad">Hazırlanmış Ortam Atölyesi</div>
-          <div class="seminer-meta">Pazar 14:00 · Online · 120 dk · 30 kişilik</div>
-        </div>
-        <span class="seminer-rozet">Ücretsiz</span>
-        <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html">Kayıt Ol</a>
-      </article>
+    </div>
+    <div class="kitaplik-taban">
+      <a class="dugme dugme-cerceve" href="https://www.instagram.com/montessoriokulucom/" target="_blank" rel="noopener">Duyurular için takip et: @montessoriokulucom</a>
     </div>
   </div>
 </section>
@@ -586,23 +577,23 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
   <div class="icerik">
     <div class="okul-izgara">
       <div>
-        <div class="okul-rozet">🌲 Orman Okulları Derneği Akrediteli</div>
-        <h2 class="baslik-2">Topluluğun okulu:<br>Bir Çiçek Koleji Anaokulu</h2>
-        <p class="okul-metin">Bu topluluk, İstanbul Tuzla'daki Bir Çiçek Koleji Anaokulu'nun deneyiminden doğdu. MACTE sertifikalı Montessori programı ve akrediteli orman okulu — teoride anlattığımız her şeyi her gün sınıfta yaşıyoruz.</p>
+        <div class="okul-rozet">🌱 MEB ruhsatlı anaokulu · Tuzla</div>
+        <h2 class="baslik-2">Anlattıklarımızın her gün yaşandığı okul:<br>Bir Çiçek Koleji Anaokulu</h2>
+        <p class="okul-metin">Montessori Okulu, İstanbul Tuzla'daki Bir Çiçek Koleji Anaokulu'nun 2018'den bu yana biriken deneyiminden doğdu. Burada paylaştığımız her şeyi önce sınıfta, çocuklarla birlikte yaşıyoruz.</p>
         <ul class="okul-maddeler">
-          <li><span class="karo karo-s">✓</span>MACTE sertifikalı Montessori müfredatı</li>
-          <li><span class="karo karo-g">✓</span>Karma yaş grupları: 2,5–6 yaş birlikte öğreniyor</li>
-          <li><span class="karo karo-y">✓</span>Seviye 3 Orman Okulu — haftalık doğa günleri</li>
-          <li><span class="karo karo-a">✓</span>Veli gözlem günleri ve aile eğitimleri</li>
+          <li><span class="karo karo-s">✓</span>MACTE sertifikalı Montessori programı</li>
+          <li><span class="karo karo-g">✓</span>24–72 ay çocuklar için Montessori sınıfları</li>
+          <li><span class="karo karo-y">✓</span>Seviye 3 Orman Okulu programı</li>
+          <li><span class="karo karo-a">✓</span>Değerler eğitimi, İngilizce ve branş dersleri</li>
         </ul>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a class="dugme dugme-somon" href="https://bircicekkoleji.com" target="_blank" rel="noopener">Okulu Keşfet →</a>
-          <a class="dugme dugme-hayalet" href="https://bircicekkoleji.com" target="_blank" rel="noopener">2026–27 Kayıt Bilgisi</a>
+          <a class="dugme dugme-somon" href="https://bircicekkoleji.com/?utm_source=montessoriokulu.com&utm_medium=referral&utm_campaign=ekosistem&utm_content=okulu_kesfet" target="_blank" rel="noopener">Okulu Keşfet →</a>
+          <a class="dugme dugme-hayalet" href="https://bircicekkoleji.com/?utm_source=montessoriokulu.com&utm_medium=referral&utm_campaign=ekosistem&utm_content=randevu" target="_blank" rel="noopener">Okuldan randevu al</a>
         </div>
       </div>
       <div class="okul-gorsel">
         <div class="okul-logo"><img src="logo.png" alt="Bir Çiçek Koleji Anaokulu logosu" width="168" height="168" loading="lazy"></div>
-        <p class="okul-not">"Her bahar bir çiçekle başlar."<br>Tuzla Aydınlı, İstanbul</p>
+        <p class="okul-not">"Her bahar Bir Çiçekle başlar."<br>Aydınlı, Tuzla · İstanbul</p>
       </div>
     </div>
   </div>
@@ -614,15 +605,15 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     <div class="magaza-izgara">
       <div>
         <div class="etiket"><span class="karo karo-s">E</span>Evde Montessori</div>
-        <h2 class="baslik-2">Doğru materyal, doğru yaşta.</h2>
-        <p class="govde" style="margin-bottom:22px">Kardeş sitemiz evdemontessori.com'da yaşa uygun, gerçek Montessori materyalleri ve ev için danışmanlık var. Topluluk üyelerine özel indirimler yakında.</p>
-        <a class="dugme dugme-somon" href="https://evdemontessori.com" target="_blank" rel="noopener">Mağazayı Gez →</a>
+        <h2 class="baslik-2">Evinde küçük bir Montessori köşesi.</h2>
+        <p class="govde" style="margin-bottom:22px">Kardeş sitemiz evdemontessori.com yeniden açılmaya hazırlanıyor: yaşa göre ev rehberleri, oda oda hazırlanmış ortam fikirleri, indirilebilir listeler ve ev danışmanlığı. Açılışı Instagram'dan duyuracağız.</p>
+        <a class="dugme dugme-somon" href="https://www.instagram.com/evdemontessoricom/" target="_blank" rel="noopener">@evdemontessoricom'u takip et →</a>
       </div>
       <div class="magaza-kartlar">
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🧸</div><div class="magaza-kart-ad">0–3 Yaş Materyalleri</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🔢</div><div class="magaza-kart-ad">Matematik Serisi</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🔤</div><div class="magaza-kart-ad">Dil &amp; Alfabe</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🏡</div><div class="magaza-kart-ad">Ev Danışmanlığı</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon">🏡</div><div class="magaza-kart-ad">Yaşa Göre Ev Rehberleri</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon">🪴</div><div class="magaza-kart-ad">Oda Oda Hazırlanmış Ortam</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon">📋</div><div class="magaza-kart-ad">İndirilebilir Listeler</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon">💬</div><div class="magaza-kart-ad">Ev Danışmanlığı</div></div>
       </div>
     </div>
   </div>
@@ -632,7 +623,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
 <section class="kapanis">
   <div class="kapanis-ic">
     <h2 class="baslik-2">Bugün katıl, yarın uygulamaya başla.</h2>
-    <p class="kapanis-alt">Kayıt 2 dakika sürer. Kredi kartı yok, gizli ücret yok — Türkiye'nin Montessori topluluğu herkese açık.</p>
+    <p class="kapanis-alt">Kayıt 2 dakika sürer. Kredi kartı yok, gizli ücret yok. Montessori yolculuğunda yalnız değilsin.</p>
     <a class="dugme dugme-somon" style="padding:15px 34px;font-size:15.5px" href="uyelik.html">Topluluğa Katıl — Ücretsiz</a>
     <p class="kapanis-not">Zaten üye misin? <a href="uyelik.html" style="color:var(--somon);font-weight:700">Giriş yap</a></p>
   </div>
@@ -646,7 +637,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
         <span class="marka-karolar" style="font-size:14px" aria-hidden="true">
           <span class="karo karo-s">M</span><span class="karo karo-g">O</span><span class="karo karo-s">C</span>
         </span>
-        <p class="alt-tanim">Türkiye'nin Montessori topluluğu. Ebeveynler ve öğretmenler için Türkçe içerik, seminer ve dayanışma.</p>
+        <p class="alt-tanim">Ebeveynler ve öğretmenler için Türkçe Montessori rehberi. Bir Çiçek Koleji Anaokulu ailesinden.</p>
       </div>
       <div>
         <div class="alt-baslik">Topluluk</div>
@@ -656,22 +647,21 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
       </div>
       <div>
         <div class="alt-baslik">Kitaplık</div>
-        <a class="alt-lnk" href="#kitaplik">Blog</a>
+        <a class="alt-lnk" href="#kitaplik">Yazılar</a>
         <a class="alt-lnk" href="#kitaplik">Podcast</a>
         <a class="alt-lnk" href="#kitaplik">Videolar</a>
       </div>
       <div>
         <div class="alt-baslik">Ekosistem</div>
-        <a class="alt-lnk" href="https://bircicekkoleji.com" target="_blank" rel="noopener">Bir Çiçek Koleji</a>
-        <a class="alt-lnk" href="https://evdemontessori.com" target="_blank" rel="noopener">Evde Montessori</a>
-        <a class="alt-lnk" href="https://instagram.com/bircicekkoleji" target="_blank" rel="noopener">Instagram</a>
+        <a class="alt-lnk" href="https://bircicekkoleji.com/?utm_source=montessoriokulu.com&utm_medium=referral&utm_campaign=ekosistem&utm_content=footer" target="_blank" rel="noopener">Bir Çiçek Koleji</a>
+        <a class="alt-lnk" href="https://www.instagram.com/montessoriokulucom/" target="_blank" rel="noopener">Instagram · @montessoriokulucom</a>
+        <a class="alt-lnk" href="https://www.instagram.com/evdemontessoricom/" target="_blank" rel="noopener">Instagram · @evdemontessoricom</a>
       </div>
     </div>
     <div class="alt-taban">
-      <span class="alt-telif">© 2026 montessoriokulu.com — Tüm hakları saklıdır</span>
+      <span class="alt-telif">© 2026 montessoriokulu.com — Bir Çiçek Koleji Anaokulu ailesinden</span>
       <div class="alt-kardes">
-        <a href="https://bircicekkoleji.com" target="_blank" rel="noopener">bircicekkoleji.com</a>
-        <a href="https://evdemontessori.com" target="_blank" rel="noopener">evdemontessori.com</a>
+        <a href="https://bircicekkoleji.com/?utm_source=montessoriokulu.com&utm_medium=referral&utm_campaign=ekosistem&utm_content=footer_alt" target="_blank" rel="noopener">bircicekkoleji.com</a>
       </div>
     </div>
   </div>
@@ -691,35 +681,22 @@ function sekmeSec(dugme, id){
   });
 }
 
-/* ── Supabase: üye sayısı + oturum durumu (hata olsa bile sayfa çalışır) ── */
+/* ── Supabase: oturum durumu (hata olsa bile sayfa çalışır) ── */
 window.addEventListener('load', async () => {
   try{
-    if(typeof supabase === 'undefined') throw new Error('cdn yok');
+    if(typeof supabase === 'undefined') return;
     const sb = supabase.createClient(
       'https://ihjrjfbtvciqpoxmepqv.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanJqZmJ0dmNpcXBveG1lcHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzczMzcsImV4cCI6MjA4OTU1MzMzN30.JCzLpDq-ib6D7p6oDBSdTS6FAR--JecI6InllH-p-Kc'
     );
-
-    /* Üye sayısı */
-    try{
-      const { count } = await sb.from('profiller').select('*',{count:'exact',head:true});
-      document.getElementById('uyeSayisi').textContent = (count && count>0) ? count : '1+';
-    }catch(e){ document.getElementById('uyeSayisi').textContent = '1+'; }
-
-    /* Oturum: giriş yaptıysa butonları değiştir */
-    try{
-      const { data:{ session } } = await sb.auth.getSession();
-      if(session?.user){
-        const giris = document.getElementById('girisDugme');
-        const uye = document.getElementById('uyeDugme');
-        giris.textContent = 'Profilim';
-        giris.href = 'profil.html';
-        uye.style.display = 'none';
-      }
-    }catch(e){}
-  }catch(e){
-    document.getElementById('uyeSayisi').textContent = '1+';
-  }
+    const { data:{ session } } = await sb.auth.getSession();
+    if(session?.user){
+      const giris = document.getElementById('girisDugme');
+      giris.textContent = 'Profilim';
+      giris.href = 'profil.html';
+      document.getElementById('uyeDugme').style.display = 'none';
+    }
+  }catch(e){}
 });
 </script>
 </body>
