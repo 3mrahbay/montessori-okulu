@@ -71,7 +71,7 @@ export async function epostaIleKayit(email, sifre, adSoyad) {
   const sonuc = await createUserWithEmailAndPassword(kimlik, email, sifre);
   await updateProfile(sonuc.user, { displayName: adSoyad });
   try {
-    await sendEmailVerification(sonuc.user, { url: location.origin + "/uyelik" });
+    await sendEmailVerification(sonuc.user, { url: location.origin + "/uyelik.html" });
   } catch (e) { console.warn("Doğrulama e-postası gönderilemedi:", e); }
   return sonuc.user;
 }
@@ -82,7 +82,7 @@ export async function epostaIleGiris(email, sifre) {
 }
 
 export function sifreSifirlamaGonder(email) {
-  return sendPasswordResetEmail(kimlik, email, { url: location.origin + "/uyelik" });
+  return sendPasswordResetEmail(kimlik, email, { url: location.origin + "/uyelik.html" });
 }
 
 export function cikisYap() {
