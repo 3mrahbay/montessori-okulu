@@ -11,8 +11,13 @@ service cloud.firestore {
       function gecerliAlanlar() {
         let d = request.resource.data;
         return d.keys().hasOnly(['email', 'ad_soyad', 'uyelik_tipi', 'cocuk_yasi',
-                                 'okul_adi', 'olusturma', 'guncelleme'])
+                                 'okul_adi', 'gorev', 'ilgi_alanlari', 'olusturma', 'guncelleme'])
           && (!('uyelik_tipi' in d) || d.uyelik_tipi in ['ebeveyn', 'ogretmen', 'merakli'])
+          && (!('gorev' in d) || d.gorev == null
+              || d.gorev in ['montessori_ogretmeni', 'asistan', 'yonetici', 'ogretmen_adayi', 'diger'])
+          && (!('ilgi_alanlari' in d) || (d.ilgi_alanlari is list && d.ilgi_alanlari.size() <= 8
+              && d.ilgi_alanlari.hasOnly(['hazirlanmis_ortam', 'gunluk_yasam', 'hassas_donemler', 'matematik',
+                                          'dil', 'orman_okulu', 'okul_secimi', 'ev_uygulamalari'])))
           && (!('ad_soyad' in d) || d.ad_soyad == null || (d.ad_soyad is string && d.ad_soyad.size() <= 120))
           && (!('cocuk_yasi' in d) || d.cocuk_yasi == null || (d.cocuk_yasi is string && d.cocuk_yasi.size() <= 40))
           && (!('okul_adi' in d) || d.okul_adi == null || (d.okul_adi is string && d.okul_adi.size() <= 120));

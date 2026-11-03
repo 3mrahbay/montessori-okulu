@@ -22,23 +22,49 @@ export function oturumDinle(geriCagir) {
   return onAuthStateChanged(kimlik, geriCagir);
 }
 
-// Profil belgesini oluşturur ya da günceller: profiller/{uid}
+// Geçerli değerler (firestore.rules ile aynı tutulmalı)
+export const UYELIK_TIPLERI = ["ebeveyn", "ogretmen", "merakli"];
+export const GOREVLER = ["montessori_ogretmeni", "asistan", "yonetici", "ogretmen_adayi", "diger"];
+export const ILGI_ALANLARI = ["hazirlanmis_ortam", "gunluk_yasam", "hassas_donemler", "matematik",
+  "dil", "orman_okulu", "okul_secimi", "ev_uygulamalari"];
+
+// Giriş/kayıt sırasında çağrılır: profil yoksa oluşturur.
+// Var olan profilde üyelik tipini ve adı EZMEZ (yalnızca eksikse tamamlar).
 export async function profilKaydet(kullanici, alanlar = {}) {
   const ref = doc(veritabani, "profiller", kullanici.uid);
   const mevcut = await getDoc(ref);
-  const veri = {
-    email: kullanici.email || null,
-    ad_soyad: alanlar.ad_soyad || kullanici.displayName || null,
-    guncelleme: serverTimestamp()
-  };
-  if (alanlar.uyelik_tipi) veri.uyelik_tipi = alanlar.uyelik_tipi;
-  if (alanlar.cocuk_yasi) veri.cocuk_yasi = String(alanlar.cocuk_yasi).slice(0, 40);
-  if (alanlar.okul_adi) veri.okul_adi = String(alanlar.okul_adi).slice(0, 120);
+  const eski = mevcut.exists() ? mevcut.data() : {};
+  const veri = { email: kullanici.email || null, guncelleme: serverTimestamp() };
+  if (!eski.ad_soyad) veri.ad_soyad = alanlar.ad_soyad || kullanici.displayName || null;
   if (!mevcut.exists()) {
     veri.olusturma = serverTimestamp();
-    if (!veri.uyelik_tipi) veri.uyelik_tipi = "merakli";
+    veri.uyelik_tipi = UYELIK_TIPLERI.includes(alanlar.uyelik_tipi) ? alanlar.uyelik_tipi : "merakli";
+    if (alanlar.cocuk_yasi) veri.cocuk_yasi = String(alanlar.cocuk_yasi).slice(0, 40);
+    if (alanlar.okul_adi) veri.okul_adi = String(alanlar.okul_adi).slice(0, 120);
   }
   await setDoc(ref, veri, { merge: true });
+}
+
+// Profil sayfasından bilinçli düzenleme: yalnızca izin verilen alanları yazar
+export async function profilGuncelle(kullanici, alanlar) {
+  const ref = doc(veritabani, "profiller", kullanici.uid);
+  const veri = { email: kullanici.email || null, guncelleme: serverTimestamp() };
+  if ("ad_soyad" in alanlar) veri.ad_soyad = String(alanlar.ad_soyad || "").trim().slice(0, 120) || null;
+  if (UYELIK_TIPLERI.includes(alanlar.uyelik_tipi)) veri.uyelik_tipi = alanlar.uyelik_tipi;
+  if ("cocuk_yasi" in alanlar) veri.cocuk_yasi = String(alanlar.cocuk_yasi || "").trim().slice(0, 40) || null;
+  if ("okul_adi" in alanlar) veri.okul_adi = String(alanlar.okul_adi || "").trim().slice(0, 120) || null;
+  if ("gorev" in alanlar) veri.gorev = GOREVLER.includes(alanlar.gorev) ? alanlar.gorev : null;
+  if ("ilgi_alanlari" in alanlar) {
+    veri.ilgi_alanlari = (alanlar.ilgi_alanlari || []).filter(a => ILGI_ALANLARI.includes(a)).slice(0, 8);
+  }
+  const mevcut = await getDoc(ref);
+  if (!mevcut.exists()) veri.olusturma = serverTimestamp();
+  await setDoc(ref, veri, { merge: true });
+}
+
+export function dogrulamaTekrarGonder() {
+  if (!kimlik.currentUser) return Promise.reject(new Error("Oturum yok"));
+  return sendEmailVerification(kimlik.currentUser, { url: location.origin + "/profil.html" });
 }
 
 export async function profilGetir(uid) {

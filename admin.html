@@ -98,14 +98,22 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
 .sb-nav{flex:1;padding:12px 0;overflow-y:auto;}
 .sb-section{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:10px 18px 4px;}
 .sb-link{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 18px;font-size:12px;font-weight:600;
+  display:flex;align-items:center;gap:12px;
+  padding:11px 18px;font-size:13px;font-weight:600;
   color:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;
   border-left:3px solid transparent;
 }
 .sb-link:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04);}
 .sb-link.active{color:#fff;background:rgba(244,133,122,.1);border-left-color:var(--salmon);}
-.sb-link .icon{font-size:15px;flex-shrink:0;width:18px;text-align:center;}
+.sb-link .icon{flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;}
+/* ── İKONLAR (ikonlar.svg) ── */
+.ik{width:20px;height:20px;flex-shrink:0;display:inline-block;vertical-align:middle;}
+.ik-sm{width:15px;height:15px;}
+.sb-link .ik{width:20px;height:20px;opacity:.85;}
+.sb-link.active .ik{opacity:1;color:var(--salmon-m);}
+.sb-logout .icon{display:inline-flex;}
+.bilgi-ik{display:inline-flex;flex-shrink:0;margin-top:1px;}
+.bilgi-ik .ik{width:20px;height:20px;}
 .sb-badge{margin-left:auto;background:var(--salmon);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;}
 .sb-logout{
   padding:14px 18px;border-top:1px solid rgba(255,255,255,.06);
@@ -136,11 +144,12 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
   padding:18px 20px;border:1px solid var(--border);
 }
 .stat-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
-.stat-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.si-s{background:var(--salmon-m);background:rgba(244,133,122,.12);}
-.si-b{background:rgba(74,144,196,.12);}
-.si-g{background:rgba(46,204,113,.12);}
-.si-o{background:rgba(243,156,18,.12);}
+.stat-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+.stat-icon .ik{width:23px;height:23px;}
+.si-s{background:rgba(244,133,122,.14);color:var(--salmon-d);}
+.si-b{background:rgba(74,144,196,.14);color:var(--blue-d);}
+.si-g{background:rgba(46,204,113,.14);color:#239B56;}
+.si-o{background:rgba(243,156,18,.14);color:#C27C0E;}
 .stat-change{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;}
 .up{background:rgba(46,204,113,.12);color:#27AE60;}
 .down{background:rgba(231,76,60,.12);color:#C0392B;}
@@ -240,7 +249,8 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
   transition:all .2s;
 }
 .upload-area:hover{border-color:var(--salmon);background:var(--salmon-p,#FDF0EE);}
-.upload-icon{font-size:28px;margin-bottom:8px;}
+.upload-icon{margin-bottom:8px;color:var(--ink-s);}
+.upload-icon .ik{width:36px;height:36px;}
 .upload-text{font-size:13px;color:var(--ink-m);margin-bottom:4px;}
 .upload-hint{font-size:11px;color:var(--ink-s);}
 
@@ -254,7 +264,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
   opacity:0;transition:opacity .2s;
 }
 .img-item:hover .img-item-ov{opacity:1;}
-.img-act{background:rgba(255,255,255,.15);border:none;border-radius:6px;padding:6px 8px;color:#fff;font-size:11px;cursor:pointer;}
+.img-act{background:rgba(255,255,255,.15);border:none;border-radius:6px;padding:6px 8px;color:#fff;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
 
 /* MEMBER CARD */
 .member-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
@@ -289,8 +299,13 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
   padding:16px;text-align:center;cursor:pointer;transition:all .2s;
 }
 .quick-card:hover{border-color:var(--salmon);transform:translateY(-2px);box-shadow:0 6px 16px rgba(244,133,122,.12);}
-.qc-icon{font-size:24px;margin-bottom:8px;}
-.qc-title{font-size:12px;font-weight:700;color:var(--ink);}
+.qc-icon{width:52px;height:52px;border-radius:14px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;}
+.qc-icon .ik{width:26px;height:26px;}
+.qi-s{background:rgba(244,133,122,.14);color:var(--salmon-d);}
+.qi-b{background:rgba(74,144,196,.14);color:var(--blue-d);}
+.qi-g{background:rgba(46,204,113,.14);color:#239B56;}
+.qi-o{background:rgba(243,156,18,.14);color:#C27C0E;}
+.qc-title{font-size:13px;font-weight:700;color:var(--ink);}
 .qc-sub{font-size:10px;color:var(--ink-s);margin-top:2px;}
 
 /* NOTIFICATIONS */
@@ -376,47 +391,47 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
     <nav class="sb-nav">
       <div class="sb-section">Genel</div>
       <div class="sb-link active" onclick="showPanel('dashboard')">
-        <span class="icon">📊</span> Dashboard
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-pano"/></svg></span> Dashboard
       </div>
 
       <div class="sb-section">İçerik</div>
       <div class="sb-link" onclick="showPanel('blog')">
-        <span class="icon">📝</span> Blog Yazıları
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-yazi"/></svg></span> Blog Yazıları
         <span class="sb-badge" id="blogCount">8</span>
       </div>
       <div class="sb-link" onclick="showPanel('podcast')">
-        <span class="icon">🎙</span> Podcast
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-mikrofon"/></svg></span> Podcast
         <span class="sb-badge" id="podCount">4</span>
       </div>
       <div class="sb-link" onclick="showPanel('video')">
-        <span class="icon">🎬</span> Videolar
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-video"/></svg></span> Videolar
       </div>
       <div class="sb-link" onclick="showPanel('media')">
-        <span class="icon">🖼</span> Medya / Görseller
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-gorsel"/></svg></span> Medya / Görseller
       </div>
       <div class="sb-link" onclick="showPanel('seminer')">
-        <span class="icon">📅</span> Seminerler
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-takvim"/></svg></span> Seminerler
       </div>
 
       <div class="sb-section">Topluluk</div>
       <div class="sb-link" onclick="showPanel('uyeler')">
-        <span class="icon">👥</span> Üyeler
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-uyeler"/></svg></span> Üyeler
       </div>
       <div class="sb-link" onclick="showPanel('yorumlar')">
-        <span class="icon">💬</span> Yorumlar
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></span> Yorumlar
       </div>
 
       <div class="sb-section">Site</div>
       <div class="sb-link" onclick="showPanel('ayarlar')">
-        <span class="icon">⚙️</span> Site Ayarları
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-ayar"/></svg></span> Site Ayarları
       </div>
       <div class="sb-link" onclick="window.open('https://montessoriokulu.com','_blank')">
-        <span class="icon">🌐</span> Siteyi Görüntüle
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-dunya"/></svg></span> Siteyi Görüntüle
       </div>
     </nav>
 
     <div class="sb-logout" onclick="logout()">
-      <span>🚪</span> Çıkış Yap
+      <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-cikis"/></svg></span> Çıkış Yap
     </div>
   </aside>
 
@@ -436,7 +451,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-card-top">
-              <div class="stat-icon si-s">📝</div>
+              <div class="stat-icon si-s"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-yazi"/></svg></div>
               <span class="stat-change up">+2 bu ay</span>
             </div>
             <span class="stat-num" id="statBlog">8</span>
@@ -444,7 +459,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           </div>
           <div class="stat-card">
             <div class="stat-card-top">
-              <div class="stat-icon si-b">🎙</div>
+              <div class="stat-icon si-b"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-mikrofon"/></svg></div>
               <span class="stat-change up">+1 bu ay</span>
             </div>
             <span class="stat-num">4</span>
@@ -452,7 +467,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           </div>
           <div class="stat-card">
             <div class="stat-card-top">
-              <div class="stat-icon si-g">👥</div>
+              <div class="stat-icon si-g"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-uyeler"/></svg></div>
               <span class="stat-change up">+0 bu ay</span>
             </div>
             <span class="stat-num" id="statMembers">0</span>
@@ -460,7 +475,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           </div>
           <div class="stat-card">
             <div class="stat-card-top">
-              <div class="stat-icon si-o">📅</div>
+              <div class="stat-icon si-o"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-takvim"/></svg></div>
               <span class="stat-change up">4 yaklaşan</span>
             </div>
             <span class="stat-num">4</span>
@@ -470,22 +485,22 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
 
         <div class="quick-grid">
           <div class="quick-card" onclick="openNewPost()">
-            <div class="qc-icon">✍️</div>
+            <div class="qc-icon qi-s"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-kalem"/></svg></div>
             <div class="qc-title">Yeni Blog Yazısı</div>
             <div class="qc-sub">Makale ekle</div>
           </div>
           <div class="quick-card" onclick="openNewPodcast()">
-            <div class="qc-icon">🎙</div>
+            <div class="qc-icon qi-b"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-mikrofon"/></svg></div>
             <div class="qc-title">Podcast Ekle</div>
             <div class="qc-sub">Yeni bölüm</div>
           </div>
           <div class="quick-card" onclick="openNewVideo()">
-            <div class="qc-icon">🎬</div>
+            <div class="qc-icon qi-g"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-video"/></svg></div>
             <div class="qc-title">Video Ekle</div>
             <div class="qc-sub">YouTube/Vimeo</div>
           </div>
           <div class="quick-card" onclick="showPanel('seminer')">
-            <div class="qc-icon">📅</div>
+            <div class="qc-icon qi-o"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-takvim"/></svg></div>
             <div class="qc-title">Seminer Ekle</div>
             <div class="qc-sub">Etkinlik planla</div>
           </div>
@@ -573,7 +588,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           </div>
           <div class="card-body">
             <div style="background:rgba(74,144,196,.06);border:1px solid rgba(74,144,196,.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;">
-              <span style="font-size:16px;">ℹ️</span>
+              <span class="bilgi-ik" style="color:var(--blue-d)"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-bilgi"/></svg></span>
               <div style="font-size:13px;color:var(--ink-m);line-height:1.6;">
                 <strong>Video Hosting Önerisi:</strong> Videoları YouTube veya Vimeo'ya yükleyin, buraya sadece link ekleyin. Bu sayede site hızı etkilenmez ve ek gelir elde edebilirsiniz.<br>
                 <span style="color:var(--ink-s);">YouTube: Ücretsiz · Geniş kitle · Reklam geliri imkânı &nbsp;|&nbsp; Vimeo Pro: Aylık $12 · Reklamsız · Daha profesyonel görünüm</span>
@@ -595,14 +610,14 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           </div>
           <div class="card-body">
             <div style="background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.15);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;">
-              <span style="font-size:16px;">☁️</span>
+              <span class="bilgi-ik" style="color:#27AE60"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-bulut"/></svg></span>
               <div style="font-size:13px;color:var(--ink-m);line-height:1.6;">
                 <strong>Cloudinary CDN:</strong> Görseller Cloudinary'e yüklenir, otomatik WebP formatına dönüştürülür ve CDN üzerinden hızlı servis edilir.<br>
                 <span style="color:var(--ink-s);">Ücretsiz plan: 25GB depolama · Otomatik optimizasyon · Dünya geneli CDN</span>
               </div>
             </div>
             <div class="upload-area" onclick="openUploadModal()">
-              <div class="upload-icon">🖼</div>
+              <div class="upload-icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-yukle"/></svg></div>
               <div class="upload-text">Görselleri buraya sürükleyin veya tıklayın</div>
               <div class="upload-hint">PNG, JPG, WebP · Maks 10MB</div>
             </div>
@@ -701,7 +716,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
           <div class="card-head"><span class="card-title">Yorumlar</span></div>
           <div class="card-body">
             <div style="text-align:center;padding:40px;color:var(--ink-s);">
-              <div style="font-size:32px;margin-bottom:12px;">💬</div>
+              <div style="margin-bottom:12px;color:var(--ink-s);"><svg class="ik" style="width:40px;height:40px" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></div>
               <div style="font-size:14px;">Henüz yorum yok.</div>
             </div>
           </div>
@@ -862,7 +877,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         <textarea class="form-input" style="min-height:70px;" id="blogMeta" placeholder="Arama motorları için kısa açıklama (150-160 karakter)..."></textarea>
       </div>
       <div class="form-actions">
-        <button class="btn btn-s" onclick="saveBlogPost()">✓ Kaydet ve Yayınla</button>
+        <button class="btn btn-s" onclick="saveBlogPost()"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-onay"/></svg> Kaydet ve Yayınla</button>
         <button class="btn btn-ghost" onclick="closeModal('modalBlog')">İptal</button>
       </div>
     </div>
@@ -918,7 +933,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-s" onclick="savePodcast()">✓ Kaydet</button>
+        <button class="btn btn-s" onclick="savePodcast()"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-onay"/></svg> Kaydet</button>
         <button class="btn btn-ghost" onclick="closeModal('modalPodcast')">İptal</button>
       </div>
     </div>
@@ -970,7 +985,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-s" onclick="saveVideo()">✓ Kaydet</button>
+        <button class="btn btn-s" onclick="saveVideo()"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-onay"/></svg> Kaydet</button>
         <button class="btn btn-ghost" onclick="closeModal('modalVideo')">İptal</button>
       </div>
     </div>
@@ -1028,7 +1043,7 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn btn-s" onclick="saveSeminer()">✓ Kaydet</button>
+        <button class="btn btn-s" onclick="saveSeminer()"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-onay"/></svg> Kaydet</button>
         <button class="btn btn-ghost" onclick="closeModal('modalSeminer')">İptal</button>
       </div>
     </div>
@@ -1452,8 +1467,8 @@ function renderMedia() {
     <div class="img-item">
       <img src="${f.url}" alt="${f.name}" loading="lazy">
       <div class="img-item-ov">
-        <button class="img-act" onclick="copyUrl('${f.url}')">📋 Kopyala</button>
-        <button class="img-act" onclick="deleteMedia(${f.id})">🗑</button>
+        <button class="img-act" onclick="copyUrl('${f.url}')"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-kopyala"/></svg> Kopyala</button>
+        <button class="img-act" onclick="deleteMedia(${f.id})" title="Sil"><svg class="ik ik-sm" aria-hidden="true"><use href="ikonlar.svg#ik-sil"/></svg></button>
       </div>
     </div>
   `).join('');
