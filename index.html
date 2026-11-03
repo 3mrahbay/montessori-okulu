@@ -52,7 +52,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js" defer></script>
 <style>
 /* ═══════════ TOKENS ═══════════ */
 :root{
@@ -686,24 +685,19 @@ function sekmeSec(dugme, id){
     document.getElementById('panel-'+p).style.display = p===id ? 'grid' : 'none';
   });
 }
-
-/* ── Supabase: oturum durumu (hata olsa bile sayfa çalışır) ── */
-window.addEventListener('load', async () => {
-  try{
-    if(typeof supabase === 'undefined') return;
-    const sb = supabase.createClient(
-      'https://ihjrjfbtvciqpoxmepqv.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanJqZmJ0dmNpcXBveG1lcHF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzczMzcsImV4cCI6MjA4OTU1MzMzN30.JCzLpDq-ib6D7p6oDBSdTS6FAR--JecI6InllH-p-Kc'
-    );
-    const { data:{ session } } = await sb.auth.getSession();
-    if(session?.user){
-      const giris = document.getElementById('girisDugme');
-      giris.textContent = 'Profilim';
-      giris.href = 'profil.html';
-      document.getElementById('uyeDugme').style.display = 'none';
-    }
-  }catch(e){}
-});
+</script>
+<script type="module">
+/* ── Firebase: oturum durumu (hata olsa bile sayfa çalışır) ── */
+try{
+  const { oturumDinle } = await import('./oturum.js');
+  oturumDinle(user => {
+    if(!user) return;
+    const giris = document.getElementById('girisDugme');
+    giris.textContent = 'Profilim';
+    giris.href = 'profil.html';
+    document.getElementById('uyeDugme').style.display = 'none';
+  });
+}catch(e){ console.warn('Oturum kontrolü atlandı:', e); }
 </script>
 </body>
 </html>

@@ -10,13 +10,13 @@ Montessori Thrive, Trillium, Circle/Mighty Networks) incelenerek temellendirildi
 
 | Katman | Araç | Durum |
 |---|---|---|
-| Hosting + CDN | Vercel | ✅ Canlı |
-| Kimlik (Auth) | Supabase Auth (Google + e-posta) | ✅ Kuruldu |
-| Veritabanı | Supabase PostgreSQL | ✅ Şema hazır |
-| İçerik (geçiş dönemi) | Wix CMS | ✅ Çalışıyor → Faz 3'te Supabase'e taşınacak |
+| Hosting + CDN | Cloudflare Pages | ✅ Kasım 2026 Vercel'den taşındı |
+| Kimlik (Auth) | Firebase Authentication (Google + e-posta) | ✅ Kasım 2026 Supabase'den taşındı |
+| Veritabanı | Firebase Firestore (ayrı proje, okul verisinden bağımsız) | ✅ `profiller` koleksiyonu, kurallar `firestore.rules` |
+| İçerik (geçiş dönemi) | Wix CMS | ✅ Çalışıyor → Faz 3'te Firestore'a taşınacak |
 | Görseller | Cloudinary (25GB ücretsiz) | ⏳ Hesap açılacak |
 | Video | YouTube embed | ⏳ Kanal açılacak |
-| Seminer kayıtları | Supabase `seminer_kayitlari` | ✅ Tablo hazır |
+| Seminer kayıtları | Firestore (koleksiyon eklenecek) | ⏳ |
 | E-posta | Resend (bülten) | ⏳ Faz 2 |
 
 ## Tasarım Sistemi (v9 — "Hareketli Alfabe")
@@ -33,39 +33,39 @@ Montessori Thrive, Trillium, Circle/Mighty Networks) incelenerek temellendirildi
 
 ```
 /            → index.html      Ana sayfa (✅ v9 yeni tasarım)
-/uyelik      → uyelik.html     Kayıt + giriş (✅ Supabase)
-/profil      → profil.html     Üye paneli (🔄 Supabase'e bağlanacak)
+/uyelik      → uyelik.html     Kayıt + giriş (✅ Firebase)
+/profil      → profil.html     Üye paneli (🔄 Firebase'e bağlanacak)
 /admin       → admin.html      Yönetim (✅ Google OAuth)
 /blog        → blog.html       Kitaplık: yazılar (⏳ Faz 1)
 /podcast     → podcast.html    Kitaplık: bölümler (⏳ Faz 1)
 /topluluk    → topluluk.html   Soru-Cevap forumu (⏳ Faz 2)
 ```
-`vercel.json` → `cleanUrls: true` sayesinde `.html` uzantısız temiz adresler.
+Cloudflare Pages `.html` uzantısız temiz adresleri kendiliğinden sunar; güvenlik başlıkları `_headers` dosyasında.
 
 ## Fazlar
 
 **Faz 0 — Temel (✅ tamamlandı)**
-Ana sayfa v9, üyelik (Google + e-posta), Supabase şeması, admin paneli, domain.
+Ana sayfa v9, üyelik (Google + e-posta), Firestore kuralları, admin paneli, domain.
 
 **Faz 1 — Kitaplık (sıradaki)**
 - blog.html + podcast.html ayrı sayfalar, kategori filtreli
-- profil.html'i Supabase'e bağla (gerçek rozetler, okuma listesi)
+- profil.html'i Firebase'e bağla (gerçek rozetler, okuma listesi)
 - Cloudinary hesabı + görsellerin taşınması
-- Seminer kaydını Supabase'e yaz (tek tık kayıt)
+- Seminer kaydını Firestore'a yaz (tek tık kayıt)
 
 **Faz 2 — Topluluk**
-- Soru-Cevap forumu (Supabase `sorular` + `cevaplar` tabloları, RLS'li)
+- Soru-Cevap forumu (Firestore `sorular` + `cevaplar` koleksiyonları, kurallı)
 - Rozet motoru (ilk soru, ilk cevap, 5 içerik okuma...)
 - Resend ile haftalık bülten
 - Üye sayısı 1.000+ hedefi
 
 **Faz 3 — Bağımsızlık ve Ölçek**
-- İçeriğin Wix'ten Supabase'e tam taşınması
+- İçeriğin Wix'ten Firestore'a tam taşınması
 - Next.js'e geçiş (SEO + hız için SSG)
 - Premium içerik katmanı (isteğe bağlı gelir modeli)
 - SaaS vizyonu: diğer okullara topluluk altyapısı
 
 ## Ölçeklenme Notları
-- Vercel CDN: milyonlarca istek, sorun değil.
-- Supabase ücretsiz plan: 50.000 aktif üye, 500MB DB — Faz 2 sonuna kadar yeterli.
+- Cloudflare CDN: sınırsız statik trafik, ücretsiz.
+- Firebase ücretsiz plan (Spark): günlük okuma/yazma kotası küçük topluluk için yeterli.
 - Video/görsel trafiği sitede değil (YouTube + Cloudinary) → site her zaman hızlı.
