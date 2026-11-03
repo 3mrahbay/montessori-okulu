@@ -1505,5 +1505,37 @@ window.onload = () => {
   if (ae) document.getElementById('allowedEmails').value = JSON.parse(ae).join('\n');
 };
 </script>
+<script type="module">
+// ── Yönetim girişi: Firebase Authentication (Google) ──
+// Eski doğrudan Google OAuth yönlendirmesi, sabit yönlendirme adresi gerektirdiği için kaldırıldı.
+import { googleIleGirisYap, cikisYap, hataMetni } from './oturum.js';
+
+window.googleLogin = async function () {
+  try {
+    const kullanici = await googleIleGirisYap();
+    if (!kullanici) return; // yönlendirme ile devam ediyor
+    const eposta = (kullanici.email || '').toLowerCase();
+    if (!ALLOWED_EMAILS.map(e => e.toLowerCase()).includes(eposta)) {
+      await cikisYap();
+      document.getElementById('loginScreen').insertAdjacentHTML('beforeend',
+        '<p style="color:#E74C3C;margin-top:12px">Bu e-posta adresi ile yönetim izniniz yok: ' + eposta.replace(/[<>&"]/g, '') + '</p>');
+      return;
+    }
+    currentUser = { name: kullanici.displayName, email: kullanici.email, picture: kullanici.photoURL };
+    localStorage.setItem('moc_user', JSON.stringify(currentUser));
+    startAdmin();
+  } catch (e) {
+    console.error('Yönetim girişi hatası:', e);
+    document.getElementById('loginScreen').insertAdjacentHTML('beforeend',
+      '<p style="color:#E74C3C;margin-top:12px">Giriş başarısız: ' + hataMetni(e) + '</p>');
+  }
+};
+
+const eskiCikis = window.logout;
+window.logout = async function () {
+  try { await cikisYap(); } catch (e) {}
+  eskiCikis();
+};
+</script>
 </body>
 </html>
