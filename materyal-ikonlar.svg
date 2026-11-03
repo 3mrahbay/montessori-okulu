@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<!-- Montessori Okulu — Montessori materyallerinden ikon seti (renkli, 64x64)
+     Kullanım: <svg class="mi"><use href="materyal-ikonlar.svg#m-pembe-kule"/></svg> -->
+<defs>
+
+<!-- Pembe kule: küçülerek üst üste dizilen küpler -->
+<symbol id="m-pembe-kule" viewBox="0 0 64 64">
+  <rect x="18.0" y="39.0" width="28" height="21" rx="1.7" fill="#F2A7B3"/>
+  <rect x="40.4" y="39.0" width="5.6" height="21" rx="1.4" fill="#E28C9C"/>
+  <rect x="18.0" y="39.0" width="28" height="2.1" rx=".8" fill="#FFFFFF" opacity=".35"/>
+  <rect x="21.0" y="22.5" width="22" height="16.5" rx="1.3" fill="#F5B6C1"/>
+  <rect x="38.6" y="22.5" width="4.4" height="16.5" rx="1.1" fill="#E28C9C"/>
+  <rect x="21.0" y="22.5" width="22" height="1.7" rx=".8" fill="#FFFFFF" opacity=".35"/>
+  <rect x="24.0" y="10.5" width="16" height="12" rx="1.0" fill="#F2A7B3"/>
+  <rect x="36.8" y="10.5" width="3.2" height="12" rx="0.8" fill="#E28C9C"/>
+  <rect x="24.0" y="10.5" width="16" height="1.2" rx=".8" fill="#FFFFFF" opacity=".35"/>
+  <rect x="26.5" y="2.0" width="11" height="8.5" rx="0.8" fill="#F5B6C1"/>
+  <rect x="35.3" y="2.0" width="2.2" height="8.5" rx="0.6" fill="#E28C9C"/>
+  <rect x="26.5" y="2.0" width="11" height="0.9" rx=".8" fill="#FFFFFF" opacity=".35"/>
+  <rect x="28.5" y="-3.5" width="7" height="5.5" rx="0.8" fill="#F2A7B3"/>
+  <rect x="34.1" y="-3.5" width="1.4" height="5.5" rx="0.6" fill="#E28C9C"/>
+  <rect x="28.5" y="-3.5" width="7" height="0.8" rx=".8" fill="#FFFFFF" opacity=".35"/>
+</symbol>
+
+<!-- Altın boncuklar: yüzlük kare, onluk çubuk ve birlik boncuk -->
+<symbol id="m-altin-boncuk" viewBox="0 0 64 64">
+  <rect x="5" y="17" width="30" height="30" rx="3" fill="#E7B95C"/>
+  <g fill="#F5D58E"><circle cx="11" cy="23" r="2.6"/><circle cx="17.5" cy="23" r="2.6"/><circle cx="24" cy="23" r="2.6"/><circle cx="30.5" cy="23" r="2.6"/>
+  <circle cx="11" cy="29.5" r="2.6"/><circle cx="17.5" cy="29.5" r="2.6"/><circle cx="24" cy="29.5" r="2.6"/><circle cx="30.5" cy="29.5" r="2.6"/>
+  <circle cx="11" cy="36" r="2.6"/><circle cx="17.5" cy="36" r="2.6"/><circle cx="24" cy="36" r="2.6"/><circle cx="30.5" cy="36" r="2.6"/>
+  <circle cx="11" cy="42.5" r="2.6"/><circle cx="17.5" cy="42.5" r="2.6"/><circle cx="24" cy="42.5" r="2.6"/><circle cx="30.5" cy="42.5" r="2.6"/></g>
+  <rect x="44.6" y="6" width="1.8" height="52" rx=".9" fill="#A77A26"/>
+  <g fill="#D9A441"><circle cx="45.5" cy="9" r="3.1"/><circle cx="45.5" cy="14.6" r="3.1"/><circle cx="45.5" cy="20.2" r="3.1"/><circle cx="45.5" cy="25.8" r="3.1"/><circle cx="45.5" cy="31.4" r="3.1"/>
+  <circle cx="45.5" cy="37" r="3.1"/><circle cx="45.5" cy="42.6" r="3.1"/><circle cx="45.5" cy="48.2" r="3.1"/><circle cx="45.5" cy="53.8" r="3.1"/></g>
+  <g fill="#F5D58E"><circle cx="44.4" cy="8" r="1"/><circle cx="44.4" cy="19.2" r="1"/><circle cx="44.4" cy="30.4" r="1"/><circle cx="44.4" cy="41.6" r="1"/><circle cx="44.4" cy="52.8" r="1"/></g>
+  <circle cx="56.5" cy="53.5" r="3.6" fill="#D9A441"/><circle cx="55.3" cy="52.3" r="1.1" fill="#F5D58E"/>
+</symbol>
+
+<!-- Zımpara harf: mavi tahta (sesli harf) üzerinde kum dokulu "a" -->
+<symbol id="m-zimpara-harf" viewBox="0 0 64 64">
+  <rect x="10" y="6" width="44" height="52" rx="4" fill="#4A90C4"/>
+  <rect x="10" y="6" width="44" height="4" rx="2" fill="#FFFFFF" opacity=".18"/>
+  <g fill="none" stroke="#EDE3CC" stroke-width="5.4" stroke-linecap="round">
+    <circle cx="30" cy="35" r="9"/><path d="M39 26v18"/>
+  </g>
+  <g fill="none" stroke="#C9B994" stroke-width="5.4" stroke-linecap="round" stroke-dasharray="0.1 2.6" opacity=".75">
+    <circle cx="30" cy="35" r="9"/><path d="M39 26v18"/>
+  </g>
+</symbol>
+
+<!-- Ses kutuları: kırmızı ve mavi kapaklı silindirler -->
+<symbol id="m-ses-kutusu" viewBox="0 0 64 64">
+  <rect x="10" y="18" width="16" height="36" rx="3" fill="#E2B886"/><rect x="10" y="14" width="16" height="7" rx="2.5" fill="#E2574C"/>
+  <rect x="31" y="18" width="16" height="36" rx="3" fill="#E2B886"/><rect x="31" y="14" width="16" height="7" rx="2.5" fill="#4A90C4"/>
+  <rect x="22" y="22" width="3" height="30" rx="1.5" fill="#C99A63"/><rect x="43" y="22" width="3" height="30" rx="1.5" fill="#C99A63"/>
+  <g fill="none" stroke="#22223A" stroke-width="2.6" stroke-linecap="round" opacity=".55">
+    <path d="M52 26a10 10 0 0 1 0 14"/><path d="M56.5 21.5a16 16 0 0 1 0 23"/>
+  </g>
+</symbol>
+
+<!-- Renk tabletleri: ahşap uçlu, ortası renkli tabletler -->
+<symbol id="m-renk-tableti" viewBox="0 0 64 64">
+  <g transform="rotate(-14 32 32)">
+    <rect x="8" y="10" width="48" height="12" rx="2.4" fill="#E9C08A"/><rect x="16" y="10" width="32" height="12" fill="#E2574C"/>
+  </g>
+  <g transform="rotate(-3 32 32)">
+    <rect x="8" y="26" width="48" height="12" rx="2.4" fill="#E9C08A"/><rect x="16" y="26" width="32" height="12" fill="#F2C744"/>
+  </g>
+  <g transform="rotate(8 32 32)">
+    <rect x="8" y="42" width="48" height="12" rx="2.4" fill="#E9C08A"/><rect x="16" y="42" width="32" height="12" fill="#4A90C4"/>
+  </g>
+</symbol>
+
+<!-- Silindir blokları: düğmeli silindirler -->
+<symbol id="m-silindir-blok" viewBox="0 0 64 64">
+  <rect x="4" y="42" width="56" height="14" rx="3" fill="#D7A86E"/>
+  <rect x="4" y="42" width="56" height="3" rx="1.5" fill="#E9C08A"/>
+  <g fill="#E9C08A"><rect x="8" y="30" width="12" height="13" rx="2"/><rect x="24" y="32" width="10" height="11" rx="2"/><rect x="38" y="34" width="8" height="9" rx="1.8"/><rect x="50" y="36" width="6" height="7" rx="1.5"/></g>
+  <g fill="#8C5A2B"><rect x="13" y="23" width="2" height="8"/><rect x="28" y="25" width="2" height="8"/><rect x="41" y="27" width="2" height="8"/><rect x="52" y="29" width="2" height="8"/></g>
+  <g fill="#8C5A2B"><circle cx="14" cy="22" r="3.2"/><circle cx="29" cy="24" r="3.2"/><circle cx="42" cy="26" r="3.2"/><circle cx="53" cy="28" r="3.2"/></g>
+</symbol>
+
+<!-- Kırmızı-mavi sayı çubukları -->
+<symbol id="m-sayi-cubugu" viewBox="0 0 64 64">
+  <rect x="6" y="9" width="12" height="7" rx="1.4" fill="#E2574C"/>
+  <rect x="6" y="20" width="12" height="7" rx="1.4" fill="#E2574C"/><rect x="18" y="20" width="12" height="7" rx="1.4" fill="#4A90C4"/>
+  <rect x="6" y="31" width="12" height="7" rx="1.4" fill="#E2574C"/><rect x="18" y="31" width="12" height="7" fill="#4A90C4"/><rect x="30" y="31" width="12" height="7" rx="1.4" fill="#E2574C"/>
+  <rect x="6" y="42" width="12" height="7" rx="1.4" fill="#E2574C"/><rect x="18" y="42" width="12" height="7" fill="#4A90C4"/><rect x="30" y="42" width="12" height="7" fill="#E2574C"/><rect x="42" y="42" width="12" height="7" rx="1.4" fill="#4A90C4"/>
+  <rect x="6" y="53" width="52" height="2.4" rx="1.2" fill="#22223A" opacity=".18"/>
+</symbol>
+
+<!-- Dökme etkinliği: sürahi ve bardak (pratik yaşam) -->
+<symbol id="m-dokme" viewBox="0 0 64 64">
+  <g transform="rotate(-28 22 32)">
+    <path d="M10 18h22l-2 30a4 4 0 0 1-4 3.6H16a4 4 0 0 1-4-3.6z" fill="#F4857A"/>
+    <path d="M32 21c5 0 6.5 4 6.5 8s-2 8-6.8 8" fill="none" stroke="#D9655A" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M10 18h22v4H10z" fill="#D9655A"/><path d="M8 18l4-4 2 4z" fill="#D9655A"/>
+  </g>
+  <path d="M40 34h16l-1.8 20a3 3 0 0 1-3 2.7h-6.4a3 3 0 0 1-3-2.7z" fill="#D9EAF7" stroke="#4A90C4" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M41.6 44h12.8l-1 10.4a2 2 0 0 1-2 1.8h-6.8a2 2 0 0 1-2-1.8z" fill="#7FB3DB"/>
+  <g fill="#4A90C4"><circle cx="40" cy="25" r="1.8"/><circle cx="44" cy="30" r="1.6"/><circle cx="47" cy="22" r="1.4"/></g>
+</symbol>
+
+<!-- Zımpara küre: kara ve deniz -->
+<symbol id="m-kure" viewBox="0 0 64 64">
+  <rect x="22" y="56" width="20" height="4" rx="2" fill="#8C5A2B"/><rect x="30.6" y="50" width="2.8" height="7" fill="#8C5A2B"/>
+  <path d="M14 30a18 18 0 0 0 36 0" fill="none" stroke="#8C5A2B" stroke-width="2.6" stroke-linecap="round"/>
+  <circle cx="32" cy="28" r="17" fill="#4A90C4"/>
+  <g fill="#E3D3AE"><path d="M21 20c3-3 8-3 9 1s-3 5-1 8-2 6-6 4-5-9-2-13z"/><path d="M36 15c4 0 9 3 10 8s-3 5-5 3-3 2-6 1-2-4-1-6-2-6 2-6z"/><path d="M37 34c3-1 7 0 7 3s-4 6-7 6-3-2-2-4-1-4 2-5z"/></g>
+  <g fill="#C9B994" opacity=".7"><circle cx="24" cy="23" r=".8"/><circle cx="26" cy="27" r=".8"/><circle cx="40" cy="19" r=".8"/><circle cx="43" cy="22" r=".8"/><circle cx="39" cy="37" r=".8"/></g>
+  <path d="M22 16a17 17 0 0 1 10-5" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+</symbol>
+
+<!-- Botanik kalıbı: ahşap çerçevede düğmeli yaprak -->
+<symbol id="m-yaprak" viewBox="0 0 64 64">
+  <rect x="6" y="6" width="52" height="52" rx="5" fill="#E9C08A"/>
+  <rect x="11" y="11" width="42" height="42" rx="3" fill="#D7A86E" opacity=".55"/>
+  <path d="M32 13c11 6 15 16 12 27-2 7-7 11-12 12-5-1-10-5-12-12-3-11 1-21 12-27z" fill="#5C8A5E"/>
+  <path d="M32 18v34M32 28l-6-5M32 35l7-6M32 42l-7-5" fill="none" stroke="#3F6B44" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="32" cy="33" r="3.6" fill="#8C5A2B"/><circle cx="31" cy="32" r="1.1" fill="#B9834B"/>
+</symbol>
+
+<!-- Giyinme çerçevesi: düğmeli kumaş -->
+<symbol id="m-giyinme" viewBox="0 0 64 64">
+  <rect x="6" y="6" width="52" height="52" rx="4" fill="#E9C08A"/>
+  <rect x="12" y="12" width="20" height="40" fill="#FBDAD5"/><rect x="32" y="12" width="20" height="40" fill="#F6C9C2"/>
+  <path d="M32 12v40" stroke="#D9655A" stroke-width="1.6"/>
+  <g fill="#22223A"><circle cx="29" cy="20" r="3"/><circle cx="29" cy="32" r="3"/><circle cx="29" cy="44" r="3"/></g>
+  <g fill="#FBDAD5"><circle cx="28.2" cy="19.2" r=".7"/><circle cx="29.8" cy="20.8" r=".7"/><circle cx="28.2" cy="31.2" r=".7"/><circle cx="29.8" cy="32.8" r=".7"/><circle cx="28.2" cy="43.2" r=".7"/><circle cx="29.8" cy="44.8" r=".7"/></g>
+  <g fill="none" stroke="#D9655A" stroke-width="2" stroke-linecap="round"><path d="M33 20h6M33 32h6M33 44h6"/></g>
+</symbol>
+
+<!-- Geometrik kalıp: çerçevede düğmeli üçgen -->
+<symbol id="m-geometrik" viewBox="0 0 64 64">
+  <rect x="6" y="6" width="52" height="52" rx="4" fill="#E9C08A"/>
+  <rect x="11" y="11" width="42" height="42" rx="3" fill="#D7A86E" opacity=".55"/>
+  <path d="M32 15 50 47H14z" fill="#4A90C4" stroke="#2E6FA0" stroke-width="1.6" stroke-linejoin="round"/>
+  <circle cx="32" cy="36" r="3.6" fill="#8C5A2B"/><circle cx="31" cy="35" r="1.1" fill="#B9834B"/>
+</symbol>
+
+<!-- Kahverengi merdiven: kalınlaşan prizmalar -->
+<symbol id="m-merdiven" viewBox="0 0 64 64">
+  <g fill="#9A6635"><rect x="4" y="46" width="8" height="12" rx="1"/><rect x="13" y="40" width="8" height="18" rx="1"/><rect x="22" y="34" width="8" height="24" rx="1"/>
+  <rect x="31" y="27" width="9" height="31" rx="1"/><rect x="41" y="19" width="9" height="39" rx="1"/><rect x="51" y="10" width="9" height="48" rx="1"/></g>
+  <g fill="#B9834B"><rect x="4" y="46" width="8" height="2.2"/><rect x="13" y="40" width="8" height="2.2"/><rect x="22" y="34" width="8" height="2.2"/><rect x="31" y="27" width="9" height="2.2"/><rect x="41" y="19" width="9" height="2.2"/><rect x="51" y="10" width="9" height="2.2"/></g>
+</symbol>
+
+<!-- Hareketli alfabe karoları (topluluk / sohbet) -->
+<symbol id="m-alfabe" viewBox="0 0 64 64">
+  <rect x="4" y="18" width="18" height="22" rx="3" fill="#F4857A"/><rect x="23" y="24" width="18" height="22" rx="3" fill="#4A90C4"/><rect x="42" y="18" width="18" height="22" rx="3" fill="#F4857A"/>
+  <g fill="#FFFFFF" font-family="Georgia, serif" font-weight="700" font-size="15" text-anchor="middle">
+    <text x="13" y="34">m</text><text x="32" y="40">o</text><text x="51" y="34">c</text>
+  </g>
+</symbol>
+
+</defs>
+</svg>

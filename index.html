@@ -362,6 +362,15 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
   .ust-eylem .dugme-kucuk{padding:8px 10px;font-size:12px}
   .marka-ust{font-size:12px}
 }
+
+/* ═══════════ MATERYAL İKONLARI (materyal-ikonlar.svg) ═══════════ */
+.mi{display:inline-block;flex-shrink:0;width:64px;height:64px}
+.kitap-gorsel .kg-ikon .mi{width:92px;height:92px}
+.kitap-gorsel .kg-ikon{display:flex;filter:drop-shadow(0 6px 10px rgba(34,34,58,.12));transition:transform .25s}
+.kitap:hover .kg-ikon{transform:translateY(-3px) rotate(-2deg)}
+.mi-sekme{width:24px;height:24px;vertical-align:-6px;margin-right:7px}
+.mi-rozet{width:18px;height:18px}
+.mi-art{width:52px;height:52px}
 </style>
 </head>
 <body>
@@ -488,52 +497,52 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
     </div>
 
     <div class="kitaplik-sekmeler" role="tablist" aria-label="İçerik türü">
-      <button class="sekme aktif" role="tab" aria-selected="true" onclick="sekmeSec(this,'blog')">📝 Blog</button>
-      <button class="sekme" role="tab" aria-selected="false" onclick="sekmeSec(this,'podcast')">🎙 Podcast</button>
-      <button class="sekme" role="tab" aria-selected="false" onclick="sekmeSec(this,'video')">🎬 Video</button>
+      <button class="sekme aktif" role="tab" aria-selected="true" onclick="sekmeSec(this,'blog')"><svg class="mi mi-sekme" aria-hidden="true"><use href="materyal-ikonlar.svg#m-zimpara-harf"/></svg>Blog</button>
+      <button class="sekme" role="tab" aria-selected="false" onclick="sekmeSec(this,'podcast')"><svg class="mi mi-sekme" aria-hidden="true"><use href="materyal-ikonlar.svg#m-ses-kutusu"/></svg>Podcast</button>
+      <button class="sekme" role="tab" aria-selected="false" onclick="sekmeSec(this,'video')"><svg class="mi mi-sekme" aria-hidden="true"><use href="materyal-ikonlar.svg#m-renk-tableti"/></svg>Video</button>
     </div>
 
     <div class="kitap-izgara" id="panel-blog" role="tabpanel">
-      <article class="kitap"><div class="kitap-gorsel kg-3"><span>🌲</span><span class="kitap-tur">Blog</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-3"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-yaprak"/></svg></span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Orman Okulu</div><div class="kitap-ad">Orman Okulu Nedir? Doğanın İçinde Büyümek</div>
         <div class="kitap-meta"><span>6 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-1"><span>🧒</span><span class="kitap-tur">Blog</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-1"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-giyinme"/></svg></span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Ebeveyn Rehberi</div><div class="kitap-ad">Bağımsızlık Nasıl Kazanılır? "Yapıyorum!" Diyen Çocuk</div>
         <div class="kitap-meta"><span>6 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-2"><span>🌱</span><span class="kitap-tur">Blog</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-2"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-silindir-blok"/></svg></span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Çocuk Gelişimi</div><div class="kitap-ad">Hassas Dönemler: Çocuğunuzun Öğrenme Pencereleri</div>
         <div class="kitap-meta"><span>7 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-4"><span>📐</span><span class="kitap-tur">Blog</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-4"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-altin-boncuk"/></svg></span><span class="kitap-tur">Blog</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Öğretmen Kaynakları</div><div class="kitap-ad">Montessori Matematikle Arkadaş Olur</div>
         <div class="kitap-meta"><span>8 dk okuma</span><b class="yakinda">Yakında</b></div></div></article>
     </div>
 
     <div class="kitap-izgara" id="panel-podcast" role="tabpanel" style="display:none">
-      <article class="kitap"><div class="kitap-gorsel kg-4"><span>🎙</span><span class="kitap-tur">Bölüm 4</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-4"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-sayi-cubugu"/></svg></span><span class="kitap-tur">Bölüm 4</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Pedagoji</div><div class="kitap-ad">Motivasyonun Kaynağı: İçsel mi, Dışsal mı?</div>
         <div class="kitap-meta"><span>20 dk</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-2"><span>🎙</span><span class="kitap-tur">Bölüm 3</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-2"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-merdiven"/></svg></span><span class="kitap-tur">Bölüm 3</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Gelişim</div><div class="kitap-ad">Hassas Dönemler: Pencereleri Yakalamak</div>
         <div class="kitap-meta"><span>25 dk</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-1"><span>🎙</span><span class="kitap-tur">Bölüm 2</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-1"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-geometrik"/></svg></span><span class="kitap-tur">Bölüm 2</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Gelişim</div><div class="kitap-ad">Hazırlanmış Ortam: Beyin ve Mekân Arasındaki Bağ</div>
         <div class="kitap-meta"><span>22 dk</span><b class="yakinda">Yakında</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-3"><span>🎙</span><span class="kitap-tur">Bölüm 1</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-3"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-alfabe"/></svg></span><span class="kitap-tur">Bölüm 1</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Giriş</div><div class="kitap-ad">Montessori Hakkında En Sık Sorulan 10 Soru</div>
         <div class="kitap-meta"><span>18 dk</span><b class="yakinda">Yakında</b></div></div></article>
     </div>
 
     <div class="kitap-izgara" id="panel-video" role="tabpanel" style="display:none">
-      <article class="kitap"><div class="kitap-gorsel kg-1"><span>🏠</span><span class="kitap-tur">Video</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-1"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-pembe-kule"/></svg></span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Ebeveyn</div><div class="kitap-ad">Evde Hazırlanmış Ortam Nasıl Kurulur?</div>
         <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-2"><span>🎨</span><span class="kitap-tur">Video</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-2"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-renk-tableti"/></svg></span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Öğretmen</div><div class="kitap-ad">Sınıf Ortamı: Raf Organizasyonu İpuçları</div>
         <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-3"><span>🍳</span><span class="kitap-tur">Video</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-3"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-dokme"/></svg></span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Günlük Yaşam</div><div class="kitap-ad">Çocuğunuzu Mutfağa Dahil Edin</div>
         <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
-      <article class="kitap"><div class="kitap-gorsel kg-4"><span>🌱</span><span class="kitap-tur">Video</span></div>
+      <article class="kitap"><div class="kitap-gorsel kg-4"><span class="kg-ikon"><svg class="mi" aria-hidden="true"><use href="materyal-ikonlar.svg#m-kure"/></svg></span><span class="kitap-tur">Video</span></div>
         <div class="kitap-ic"><div class="kitap-kat">Başlangıç</div><div class="kitap-ad">Montessori Nedir? 5 Dakikada Temel Kavramlar</div>
         <div class="kitap-meta"><span>Video</span><b class="yakinda">Hazırlanıyor</b></div></div></article>
     </div>
@@ -582,7 +591,7 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
   <div class="icerik">
     <div class="okul-izgara">
       <div>
-        <div class="okul-rozet">🌱 MEB ruhsatlı anaokulu · Tuzla</div>
+        <div class="okul-rozet"><svg class="mi mi-rozet" aria-hidden="true"><use href="materyal-ikonlar.svg#m-yaprak"/></svg> MEB ruhsatlı anaokulu · Tuzla</div>
         <h2 class="baslik-2">Anlattıklarımızın her gün yaşandığı okul:<br>Bir Çiçek Koleji Anaokulu</h2>
         <p class="okul-metin">Montessori Okulu, İstanbul Tuzla'daki Bir Çiçek Koleji Anaokulu'nun 2018'den bu yana biriken deneyiminden doğdu. Burada paylaştığımız her şeyi önce sınıfta, çocuklarla birlikte yaşıyoruz.</p>
         <ul class="okul-maddeler">
@@ -615,10 +624,10 @@ footer{background:#15152A;color:#fff;padding:52px 0 26px}
         <a class="dugme dugme-somon" href="https://www.instagram.com/evdemontessoricom/" target="_blank" rel="noopener">@evdemontessoricom'u takip et →</a>
       </div>
       <div class="magaza-kartlar">
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🏡</div><div class="magaza-kart-ad">Yaşa Göre Ev Rehberleri</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">🪴</div><div class="magaza-kart-ad">Oda Oda Hazırlanmış Ortam</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">📋</div><div class="magaza-kart-ad">İndirilebilir Listeler</div></div>
-        <div class="magaza-kart"><div class="magaza-kart-ikon">💬</div><div class="magaza-kart-ad">Ev Danışmanlığı</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon"><svg class="mi mi-art" aria-hidden="true"><use href="materyal-ikonlar.svg#m-merdiven"/></svg></div><div class="magaza-kart-ad">Yaşa Göre Ev Rehberleri</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon"><svg class="mi mi-art" aria-hidden="true"><use href="materyal-ikonlar.svg#m-pembe-kule"/></svg></div><div class="magaza-kart-ad">Oda Oda Hazırlanmış Ortam</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon"><svg class="mi mi-art" aria-hidden="true"><use href="materyal-ikonlar.svg#m-sayi-cubugu"/></svg></div><div class="magaza-kart-ad">İndirilebilir Listeler</div></div>
+        <div class="magaza-kart"><div class="magaza-kart-ikon"><svg class="mi mi-art" aria-hidden="true"><use href="materyal-ikonlar.svg#m-dokme"/></svg></div><div class="magaza-kart-ad">Ev Danışmanlığı</div></div>
       </div>
     </div>
   </div>
