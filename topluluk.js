@@ -43,7 +43,7 @@ function kartHtml(o) {
   const cevap = o.tur === 'soru'
     ? (o.cevap_sayisi > 0 ? `<span class="g-cevap var">${ik('sohbet', 'ik')} ${o.cevap_sayisi} cevap</span>` : `<span class="g-cevap">${ik('sohbet', 'ik')} Henüz cevap yok</span>`)
     : (o.cevap_sayisi > 0 ? `<span class="g-cevap var">${ik('sohbet', 'ik')} ${o.cevap_sayisi} yorum</span>` : '');
-  return `<button class="g-kart" data-ac="${kacis(o.id)}">
+  return `<a class="g-kart" href="topluluk?g=${encodeURIComponent(o.id)}" data-ac="${kacis(o.id)}">
     <div class="g-ikon gi-${o.tur}">${mi(t.mi)}</div>
     <div class="g-bilgi">
       <div class="g-ust"><span class="g-rozet gr-${o.tur}">${t.ad}</span>
@@ -52,7 +52,7 @@ function kartHtml(o) {
       <div class="g-baslik">${kacis(o.baslik)}</div>
       <div class="g-ozet">${kacis(ozet)}</div>
       <div class="g-alt">${yazarHtml(o)}<span>${tarihYazi(o.olusturma)}</span>${cevap}</div>
-    </div></button>`;
+    </div></a>`;
 }
 
 function filtrelenmis() {
@@ -112,6 +112,7 @@ function listeCiz() {
   const ara = $('#fAra');
   ara.oninput = () => { filtre.ara = ara.value; $('#gListe').innerHTML = (filtrelenmis().map(kartHtml).join('') || bosDurumHtml()); };
   document.title = 'Topluluk — Sorular, Deneyimler ve Üye Rehberleri · Montessori Okulu';
+  seoAyarla({ kanonik: `${SITE}/topluluk${filtre.tur ? '?tur=' + filtre.tur : ''}`, aciklama: LISTE_ACIKLAMA, ld: null });
 }
 
 async function listeYukle() {
@@ -121,6 +122,39 @@ async function listeYukle() {
     try { benimBekleyenlerim = (await benimGonderilerim(kullanici.uid)).filter(o => o.durum === 'beklemede'); }
     catch (e) { benimBekleyenlerim = []; }
   }
+}
+
+// ── SEO: sayfaya özel adres ve yapısal veri ──
+const SITE = 'https://montessoriokulu.com';
+const LISTE_ACIKLAMA = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+function seoAyarla({ kanonik, aciklama, ld }) {
+  const ayarla = (secici, nitelik, deger) => { const el = document.querySelector(secici); if (el) el.setAttribute(nitelik, deger); };
+  ayarla('link[rel="canonical"]', 'href', kanonik);
+  ayarla('meta[property="og:url"]', 'content', kanonik);
+  ayarla('meta[name="description"]', 'content', aciklama);
+  ayarla('meta[property="og:description"]', 'content', aciklama);
+  document.getElementById('sayfaLd')?.remove();
+  if (ld) {
+    const s = document.createElement('script');
+    s.type = 'application/ld+json'; s.id = 'sayfaLd'; s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  }
+}
+const isoTarih = (v) => { const t = v?.toDate ? v.toDate() : null; return t ? t.toISOString() : undefined; };
+function yapisalVeri(o, cevaplar, adres) {
+  const yazar = (x) => ({ '@type': 'Person', name: x.yazar_ad });
+  const yayinda = cevaplar.filter(c => c.durum === 'yayinda');
+  if (o.tur === 'soru') {
+    return { '@context': 'https://schema.org', '@type': 'QAPage', url: adres, inLanguage: 'tr-TR',
+      mainEntity: { '@type': 'Question', name: o.baslik, text: o.metin, answerCount: yayinda.length,
+        dateCreated: isoTarih(o.olusturma), author: yazar(o),
+        suggestedAnswer: yayinda.map(c => ({ '@type': 'Answer', text: c.metin, dateCreated: isoTarih(c.olusturma),
+          author: c.uzman ? { '@type': 'Organization', '@id': SITE + '/#org', name: 'Montessori Okulu' } : yazar(c), url: adres })) } };
+  }
+  return { '@context': 'https://schema.org', '@type': 'DiscussionForumPosting', url: adres, inLanguage: 'tr-TR',
+    headline: o.baslik, text: o.metin, datePublished: isoTarih(o.olusturma), author: yazar(o),
+    commentCount: yayinda.length,
+    comment: yayinda.map(c => ({ '@type': 'Comment', text: c.metin, dateCreated: isoTarih(c.olusturma), author: yazar(c) })) };
 }
 
 // ── DETAY ──
@@ -165,8 +199,9 @@ async function detayCiz(id) {
       <div class="c-form" id="cevapForm">${cevapFormHtml(yaz, yazGiris)}</div>` : ''}`;
 
   document.title = o.baslik + ' — Montessori Okulu Topluluğu';
-  const aciklama = document.querySelector('meta[name="description"]');
-  if (aciklama) aciklama.setAttribute('content', String(o.metin).replace(/\s+/g, ' ').slice(0, 155));
+  const adres = `${SITE}/topluluk?g=${encodeURIComponent(o.id)}`;
+  seoAyarla({ kanonik: adres, aciklama: String(o.metin).replace(/\s+/g, ' ').slice(0, 155),
+    ld: o.durum === 'yayinda' ? yapisalVeri(o, cevaplar, adres) : null });
   cevapFormBagla(o);
   window.scrollTo(0, 0);
 }

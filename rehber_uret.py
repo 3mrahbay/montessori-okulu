@@ -119,7 +119,7 @@ try {{
 </script>'''
 
 
-def bas(baslik, aciklama, kanonik, kok, ek=""):
+def bas(baslik, aciklama, kanonik, kok, ek="", tur="article"):
     return f'''<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -128,12 +128,17 @@ def bas(baslik, aciklama, kanonik, kok, ek=""):
 <title>{e(baslik)}</title>
 <meta name="description" content="{e(aciklama)}">
 <link rel="canonical" href="{kanonik}">
-<meta property="og:type" content="article">
+<meta property="og:type" content="{tur}">
+<meta property="og:site_name" content="Montessori Okulu">
+<meta property="og:locale" content="tr_TR">
 <meta property="og:title" content="{e(baslik)}">
 <meta property="og:description" content="{e(aciklama)}">
 <meta property="og:url" content="{kanonik}">
 <meta property="og:image" content="{SITE}/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="{kok}favicon-32.png">
+<link rel="apple-touch-icon" href="{kok}apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C31">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{kok}site.css">
@@ -155,8 +160,8 @@ def yazi_sayfasi(rehber, d, kardesler):
         "@context": "https://schema.org", "@type": "Article", "headline": d["baslik"],
         "description": d["ozet"], "inLanguage": "tr", "mainEntityOfPage": adres,
         "datePublished": d.get("tarih", BUGUN), "dateModified": BUGUN,
-        "author": {"@type": "Organization", "name": "Montessori Okulu"},
-        "publisher": {"@type": "Organization", "name": "Montessori Okulu", "url": SITE,
+        "author": {"@type": "Organization", "@id": f"{SITE}/#org", "name": "Montessori Okulu", "url": SITE},
+        "publisher": {"@type": "Organization", "@id": f"{SITE}/#org", "name": "Montessori Okulu", "url": SITE,
                       "logo": {"@type": "ImageObject", "url": f"{SITE}/logo-moc.png"}},
         "image": f"{SITE}/og-image.png", "keywords": ", ".join(d.get("anahtar") or []),
         "citation": [k["url"] for k in kaynaklar],
@@ -229,7 +234,7 @@ def dizin_sayfasi(yazilar):
                       for r, liste in yazilar.items() for d in liste]}
     sayfa = bas("Montessori Rehberleri — Anne Rehberi ve Öğretmen Rehberi · Montessori Okulu",
                 "Evde ve sınıfta Montessori için kaynaklı Türkçe rehberler: Anne Rehberi, Öğretmen Rehberi ve topluluk üyelerinin hazırladığı rehberler.",
-                f"{SITE}/rehber", kok, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>')
+                f"{SITE}/rehber", kok, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', tur="website")
     sayfa += ust_bar(kok)
     bolumler = ""
     for rehber, liste in yazilar.items():

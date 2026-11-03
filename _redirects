@@ -1,0 +1,8 @@
+# Cloudflare Pages yönlendirmeleri
+# Sitenin parçası olmayan iç dosyalar ziyaretçilere ve arama motorlarına açılmasın
+/rehber-kaynak/*  /rehber  301
+/MIMARI.md        /  301
+/rehber_uret.py   /  301
+/firestore.rules  /  301
+/firebase.json    /  301
+/README.md        /  301

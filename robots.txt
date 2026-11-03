@@ -1,6 +1,23 @@
+# montessoriokulu.com
+# Arama motorları ve yapay zekâ aramaları/asistanları (GEO) herkese açık içerikleri okuyabilir.
 User-agent: *
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
 Allow: /
 Disallow: /admin
 Disallow: /profil
+Disallow: /rehber-kaynak/
 
-Sitemap: https://www.montessoriokulu.com/sitemap.xml
+Sitemap: https://montessoriokulu.com/sitemap.xml
+Sitemap: https://montessoriokulu.com/sitemap-topluluk.xml

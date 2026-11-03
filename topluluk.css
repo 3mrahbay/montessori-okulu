@@ -47,6 +47,7 @@ body.detay .t-giris{display:none}
 
 /* Gönderi kartı */
 .g-liste{display:flex;flex-direction:column;gap:12px}
+a.g-kart{text-decoration:none}
 .g-kart{display:flex;gap:16px;background:var(--beyaz);border:1.5px solid var(--cizgi);border-radius:var(--r);padding:18px 20px;transition:transform .2s, box-shadow .2s, border-color .2s;cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit}
 .g-kart:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(34,34,58,.08);border-color:rgba(34,34,58,.2)}
 .g-ikon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
