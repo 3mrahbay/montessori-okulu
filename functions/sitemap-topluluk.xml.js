@@ -27,7 +27,10 @@ export async function onRequestGet() {
         const tarih = (r.document.fields?.olusturma?.timestampValue || r.document.updateTime || '').slice(0, 10);
         return `  <url><loc>${SITE}/topluluk?g=${encodeURIComponent(id)}</loc>${tarih ? `<lastmod>${tarih}</lastmod>` : ''}</url>`;
       }).join('\n');
-  } catch (e) { /* veri alınamazsa boş harita döner */ }
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${satirlar}\n</urlset>\n`;
+  } catch (e) { /* veri alınamazsa yalnızca topluluk ana sayfası listelenir */ }
+  // Harita hiçbir zaman boş kalmasın (Google boş haritayı hata sayar): topluluk ana sayfası her zaman ilk satır.
+  const bugun = new Date().toISOString().slice(0, 10);
+  const ana = `  <url><loc>${SITE}/topluluk</loc><lastmod>${bugun}</lastmod></url>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ana}${satirlar ? '\n' + satirlar : ''}\n</urlset>\n`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } });
 }
