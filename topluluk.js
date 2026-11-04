@@ -5,6 +5,7 @@ import {
   yayindakiGonderiler, gonderiGetir, cevaplariGetir, benimGonderilerim, gonderiOlustur,
   cevapEkle, bildir, kendiIceriginiSil
 } from './topluluk-veri.js';
+import './yazar-karti.js';
 
 // ── Yardımcılar ──
 const $ = (s, k = document) => k.querySelector(s);
@@ -12,9 +13,13 @@ const kacis = (m) => String(m ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '
 const mi = (ad, sinif = 'mi') => `<svg class="${sinif}" aria-hidden="true"><use href="materyal-ikonlar.svg#m-${ad}"/></svg>`;
 const ik = (ad, sinif = 'ik') => `<svg class="${sinif}" aria-hidden="true"><use href="ikonlar.svg#ik-${ad}"/></svg>`;
 const TIP_KARO = { ebeveyn: ['E', 'karo-s'], ogretmen: ['Ö', 'karo-g'], merakli: ['M', 'karo-y'] };
-const yazarHtml = (o) => {
+// tiklanir: öğretmen adları açılır öğretmen kartını açar (bağlantı içindeki liste kartlarında kapalı)
+const yazarHtml = (o, tiklanir = false) => {
   const [harf, renk] = TIP_KARO[o.yazar_tip] || TIP_KARO.merakli;
-  return `<span class="g-yazar"><span class="karo ${renk}" title="${TIP_ETIKET[o.yazar_tip] || 'Üye'}">${harf}</span>${kacis(o.yazar_ad)}</span>`;
+  const ad = tiklanir && o.yazar_tip === 'ogretmen' && o.yazar_uid && !o.uzman
+    ? `<button type="button" class="yazar-tik" data-ogretmen="${kacis(o.yazar_uid)}" data-ad="${kacis(o.yazar_ad)}">${kacis(o.yazar_ad)}</button>`
+    : kacis(o.yazar_ad);
+  return `<span class="g-yazar"><span class="karo ${renk}" title="${TIP_ETIKET[o.yazar_tip] || 'Üye'}">${harf}</span>${ad}</span>`;
 };
 function bildirimGoster(m) {
   const b = $('#bildirimK'); b.textContent = m; b.classList.add('goster');
@@ -185,7 +190,7 @@ async function detayCiz(id) {
       <h1 class="g-baslik">${kacis(o.baslik)}</h1>
       <div class="d-metin">${kacis(o.metin)}</div>
       <div class="d-alt">
-        <span style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">${yazarHtml(o)}<span>${tarihYazi(o.olusturma)}</span></span>
+        <span style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">${yazarHtml(o, true)}<span>${tarihYazi(o.olusturma)}</span></span>
         <span style="display:flex;gap:16px">
           ${benim ? `<button class="link-dugme" data-sil="gonderi" data-id="${kacis(o.id)}">${ik('sil')} Sil</button>`
             : `<button class="link-dugme" data-bildir="gonderi" data-id="${kacis(o.id)}" data-gonderi="${kacis(o.id)}">${ik('bilgi')} Bildir</button>`}
@@ -209,7 +214,7 @@ async function detayCiz(id) {
 function cevapHtml(c, gonderiId) {
   const benim = kullanici && kullanici.uid === c.yazar_uid;
   return `<div class="c-kart ${c.uzman ? 'uzman' : ''}">
-    <div class="c-ust"><span style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${yazarHtml(c)}
+    <div class="c-ust"><span style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${yazarHtml(c, true)}
       ${c.uzman ? `<span class="uzman-rozet">${ik('onay', 'ik')} Uzman cevabı</span>` : ''}
       ${c.durum !== 'yayinda' ? '<span class="g-bekliyor">İncelemede</span>' : ''}<span>${tarihYazi(c.olusturma)}</span></span>
       ${benim ? `<button class="link-dugme" data-sil="cevap" data-id="${kacis(c.id)}">${ik('sil')} Sil</button>`

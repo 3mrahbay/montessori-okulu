@@ -1,0 +1,27 @@
+rules_version = '2';
+// montessoriokulu.com — Firebase Storage güvenlik kuralları
+// belgeler/{uid}/…: öğretmenlerin doğrulama için yüklediği diploma ve sertifikalar.
+//   Yalnızca belgenin sahibi ve yönetici açabilir. Hiçbir zaman herkese açık değildir.
+// Başka hiçbir yola okuma ya da yazma yok.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function yonetici() {
+      return request.auth != null && request.auth.token.email_verified == true
+        && request.auth.token.email in ['emrahby@gmail.com', 'eposta@bircicekkoleji.com'];
+    }
+
+    match /belgeler/{uid}/{dosya} {
+      allow read: if (request.auth != null && request.auth.uid == uid) || yonetici();
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 10 * 1024 * 1024
+        && (request.resource.contentType == 'application/pdf'
+            || request.resource.contentType.matches('image/(jpeg|png|webp|heic)'));
+      allow update: if false;
+      allow delete: if (request.auth != null && request.auth.uid == uid) || yonetici();
+    }
+
+    match /{yol=**} {
+      allow read, write: if false;
+    }
+  }
+}

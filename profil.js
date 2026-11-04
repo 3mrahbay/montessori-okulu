@@ -5,6 +5,11 @@ import {
   sifreSifirlamaGonder, dogrulamaTekrarGonder, hataMetni, GOREVLER, ILGI_ALANLARI
 } from './oturum.js';
 import { benimGonderilerim, benimCevaplarim, TURLER as T_TURLER, tarihYazi } from './topluluk-veri.js';
+import {
+  ogretmenKartiGetir, ogretmenKartiKaydet, benimBasvurularim, dogrulamaIste, dogrulandiMi, kalemYazi,
+  yeniId, SINIR, BELGE_YUKLEME_ACIK, BELGE_EPOSTA, BELGE_AZAMI_MB
+} from './ogretmen-veri.js';
+import { kartGovdeHtml } from './yazar-karti.js';
 
 // Önizleme yetkisi olan yönetici hesapları (admin.html ile aynı)
 const YONETICILER = ['emrahby@gmail.com', 'eposta@bircicekkoleji.com'];
@@ -153,6 +158,7 @@ function panelGenel() {
       <div class="k-dugmeler">
         <button class="btn btn-v" data-git="${t.yol[0].id}">${ik(t.yol[0].ik)} ${kacis(t.yol[0].ad)}</button>
         ${oran < 100 ? `<button class="btn btn-acik" data-git="profil">${ik('kalem')} Profilini tamamla</button>` : ''}
+        ${tip === 'ogretmen' ? `<button class="btn btn-acik" data-git="kartim">${ik('onay')} Öğretmen kartını hazırla</button>` : ''}
       </div>
     </section>
 
@@ -375,6 +381,193 @@ function panelHesap() {
       <button class="btn btn-kirmizi" id="hesapCikis">${ik('cikis')} Çıkış yap</button>`)}`;
 }
 
+
+// ── ÖĞRETMEN KARTIM ──
+// Topluluktaki paylaşımlarda adına tıklayanlara açılan kart. Herkese açıklık öğretmenin kendi seçimidir.
+let kartVeri = null;      // kayıtlı kart (Firestore)
+let basvurular = [];      // öğretmenin doğrulama başvuruları
+
+function kalemSatirHtml(tur, k = {}) {
+  const id = kacis(k.id || yeniId());
+  const egitim = tur === 'egitim';
+  return `<div class="kalem-satir" data-kalem="${tur}" data-id="${id}">
+    <div class="form-grup"><label class="form-etiket">${egitim ? 'Bölüm / program' : 'Sertifika adı'}</label>
+      <input class="form-alan" data-alan="${egitim ? 'bolum' : 'ad'}" maxlength="${SINIR.metin}" value="${kacis(egitim ? k.bolum : k.ad)}"
+        placeholder="${egitim ? 'örn: Çocuk Gelişimi ve Eğitimi' : 'örn: Montessori 3–6 Yaş Öğretmen Diploması'}"></div>
+    <div class="form-grup"><label class="form-etiket">${egitim ? 'Üniversite / okul' : 'Veren kurum, akreditasyon'}</label>
+      <input class="form-alan" data-alan="${egitim ? 'okul' : 'kurum'}" maxlength="${SINIR.metin}" value="${kacis(egitim ? k.okul : k.kurum)}"
+        placeholder="${egitim ? 'örn: İstanbul Üniversitesi' : 'örn: MACTE akreditasyonlu program'}"></div>
+    <div class="form-grup kalem-yil"><label class="form-etiket">Yıl</label>
+      <input class="form-alan" data-alan="yil" inputmode="numeric" maxlength="4" value="${kacis(k.yil ?? '')}" placeholder="2018"></div>
+    <button type="button" class="btn btn-hayalet btn-kucuk kalem-sil" data-kalem-sil aria-label="Bu satırı sil">${ik('sil')}</button>
+  </div>`;
+}
+
+function basvuruDurumu(kalem) {
+  if (kartVeri && dogrulandiMi(kartVeri, kalem)) return { etiket: '✓ Doğrulandı', sinif: 'r-hazir', istenebilir: false };
+  const son = basvurular.filter(b => b.kalem_id === kalem.id)
+    .sort((a, b) => (b.olusturma?.toMillis?.() || 0) - (a.olusturma?.toMillis?.() || 0))[0];
+  if (son?.durum === 'bekliyor') return { etiket: 'İncelemede', sinif: 'r-plan', istenebilir: false };
+  if (son?.durum === 'reddedildi') return { etiket: 'Onaylanmadı', sinif: 'r-yakinda', istenebilir: true, not: son.yonetici_notu };
+  return { etiket: 'Beyan', sinif: 'r-yakinda', istenebilir: true };
+}
+
+async function panelKartim() {
+  if (onizleme) return kart('Öğretmen Kartım', 'onay', bosDurum('onay', 'Önizlemede kart düzenlenmez', 'Bu bölümde öğretmen kendi kartını hazırlar.'));
+  try {
+    [kartVeri, basvurular] = await Promise.all([ogretmenKartiGetir(kullanici.uid), benimBasvurularim()]);
+  } catch (e) { console.error(e); kartVeri = null; basvurular = []; }
+  const k = kartVeri || {
+    ad_soyad: profil.ad_soyad || kullanici?.displayName || '', unvan: profil.gorev ? GOREV_ETIKET[profil.gorev] : '',
+    kurum: profil.okul_adi || '', egitim: [], sertifikalar: [], tanitim: '', acik: false
+  };
+  const egitim = (k.egitim?.length ? k.egitim : [{}]).map(e => kalemSatirHtml('egitim', e)).join('');
+  const sert = (k.sertifikalar?.length ? k.sertifikalar : [{}]).map(x => kalemSatirHtml('sertifika', x)).join('');
+
+  const kalemler = [...(kartVeri?.sertifikalar || []).map(x => ['sertifika', x]), ...(kartVeri?.egitim || []).map(x => ['egitim', x])];
+  const dogrulamaHtml = kalemler.length ? kalemler.map(([tur, kalem]) => {
+    const d = basvuruDurumu(kalem);
+    return `<div class="liste-oge" style="align-items:flex-start">
+      <div class="lo-ik ozet-ik ${tur === 'sertifika' ? 'oi-o' : 'oi-b'}">${ik(tur === 'sertifika' ? 'yildiz' : 'okul')}</div>
+      <div class="lo-bilgi"><div class="lo-ust">${tur === 'sertifika' ? 'Sertifika' : 'Eğitim'}</div>
+        <div class="lo-baslik">${kacis(kalemYazi(kalem))}</div>
+        ${d.not ? `<div class="lo-meta">Yönetici notu: ${kacis(d.not)}</div>` : ''}
+        <div class="dogrula-form" data-dogrula-form="${kacis(kalem.id)}" hidden></div></div>
+      <span class="rozet ${d.sinif}">${kacis(d.etiket)}</span>
+      ${d.istenebilir ? `<button type="button" class="btn btn-hayalet btn-kucuk" data-dogrula="${kacis(kalem.id)}" data-tur="${tur}">Doğrulama iste</button>` : ''}
+    </div>`;
+  }).join('') : bosDurum('onay', 'Önce kartını kaydet', 'Eğitim ve sertifikalarını kaydettikten sonra her biri için doğrulama isteyebilirsin.');
+
+  return `
+    <div class="uyari uyari-mavi">${ik('bilgi')}<div><strong>Öğretmen kartın ne işe yarar?</strong>
+      Toplulukta bir soruya cevap verdiğinde ya da deneyim paylaştığında, adına tıklayan ebeveynler eğitimini, sertifikalarını ve deneyimini görür.
+      Belgesini paylaştığın bilgiler, yönetici incelemesinden sonra <b>✓ Doğrulandı</b> rozetiyle görünür.</div></div>
+
+    <form id="kartForm" autocomplete="on">
+      ${kart('Temel bilgiler', 'kisi', `
+        <div class="form-satir">
+          <div class="form-grup"><label class="form-etiket" for="kAd">Ad Soyad</label>
+            <input class="form-alan" id="kAd" maxlength="${SINIR.ad}" required value="${kacis(k.ad_soyad)}">
+            <div class="form-ipucu">Kart herkese açıksa adın tam olarak görünür.</div></div>
+          <div class="form-grup"><label class="form-etiket" for="kUnvan">Unvan</label>
+            <input class="form-alan" id="kUnvan" maxlength="${SINIR.unvan}" value="${kacis(k.unvan)}" placeholder="örn: Montessori Öğretmeni"></div>
+        </div>
+        <div class="form-satir">
+          <div class="form-grup"><label class="form-etiket" for="kKurum">Çalıştığın kurum <small>(isteğe bağlı)</small></label>
+            <input class="form-alan" id="kKurum" maxlength="${SINIR.kurum}" value="${kacis(k.kurum || '')}"></div>
+          <div class="form-grup"><label class="form-etiket" for="kDeneyim">Deneyim (yıl)</label>
+            <input class="form-alan" id="kDeneyim" type="number" min="0" max="60" value="${kacis(k.deneyim_yil ?? '')}"></div>
+        </div>
+        <div class="form-grup" style="margin-bottom:0"><label class="form-etiket" for="kTanitim">Kısa tanıtım</label>
+          <textarea class="form-alan" id="kTanitim" rows="3" maxlength="${SINIR.tanitim}" placeholder="Kendini birkaç cümleyle anlat.">${kacis(k.tanitim || '')}</textarea>
+          <div class="form-ipucu"><span id="kTanitimSay">${(k.tanitim || '').length}</span> / ${SINIR.tanitim}</div></div>`)}
+
+      ${kart('Sertifikalar', 'yildiz', `<div id="sertListe">${sert}</div>
+        <button type="button" class="btn btn-hayalet btn-kucuk" data-kalem-ekle="sertifika">${ik('arti')} Sertifika ekle</button>`)}
+
+      ${kart('Eğitim', 'okul', `<div id="egitimListe">${egitim}</div>
+        <button type="button" class="btn btn-hayalet btn-kucuk" data-kalem-ekle="egitim">${ik('arti')} Eğitim ekle</button>`)}
+
+      ${kart('Görünürlük', 'goz', `
+        <label class="acik-secim"><input type="checkbox" id="kAcik" ${k.acik ? 'checked' : ''}>
+          <span><strong>Kartım herkese açık olsun</strong><br>
+          <span class="form-ipucu">Açık olursa adın, unvanın, kurumun, deneyim yılın, kısa tanıtımın, eğitimin ve sertifikaların
+          toplulukta ve <b>montessoriokulu.com/ogretmen</b> sayfasında herkese görünür. E-posta adresin ve iletişim bilgilerin hiçbir zaman gösterilmez.
+          İstediğin zaman kapatabilirsin.</span></span></label>`)}
+
+      <div class="form-alt">
+        <button type="submit" class="btn btn-v" id="kartKaydet">${ik('onay')} Kartı kaydet</button>
+        <span class="form-ipucu" id="kartDurum"></span>
+      </div>
+    </form>
+
+    ${kart('Doğrulama', 'onay', `<div class="lo-meta" style="margin-bottom:12px">
+      ${BELGE_YUKLEME_ACIK ? `Belgeni (PDF ya da fotoğraf, en fazla ${BELGE_AZAMI_MB} MB) yükle. Belgeyi yalnızca yönetici görür; hiçbir zaman herkese açık olmaz.`
+        : `Doğrulama istediğinde, belgenin bir kopyasını <b>${kacis(BELGE_EPOSTA)}</b> adresine konu satırına adını yazarak gönder. Belgeyi yalnızca yönetici görür.`}
+      Onaylanan bilgiyi sonradan değiştirirsen rozet kalkar ve yeniden doğrulama gerekir.</div>${dogrulamaHtml}`)}
+
+    ${kartVeri ? kart('Kartın böyle görünüyor', 'goz', `<div class="kart-onizleme">${kartGovdeHtml({ uid: kullanici.uid, ...kartVeri }, { sayfaBaglantisi: false })}</div>
+      ${kartVeri.acik ? `<a class="btn btn-hayalet btn-kucuk" style="margin-top:14px" href="ogretmen?u=${encodeURIComponent(kullanici.uid)}" target="_blank" rel="noopener">Herkese açık sayfamı aç ${ik('ok-sag', 'ik ik-sm')}</a>`
+        : '<div class="form-ipucu" style="margin-top:10px">Kartın şu an yalnızca sana görünüyor.</div>'}`) : ''}`;
+}
+
+function kalemleriTopla(tur) {
+  return [...document.querySelectorAll(`.kalem-satir[data-kalem="${tur}"]`)].map(s => {
+    const v = (a) => s.querySelector(`[data-alan="${a}"]`)?.value || '';
+    return tur === 'egitim' ? { id: s.dataset.id, bolum: v('bolum'), okul: v('okul'), yil: v('yil') }
+      : { id: s.dataset.id, ad: v('ad'), kurum: v('kurum'), yil: v('yil') };
+  });
+}
+
+function kartimBagla() {
+  const form = $('#kartForm');
+  if (!form) return;
+  $('#kTanitim')?.addEventListener('input', (e) => { $('#kTanitimSay').textContent = e.target.value.length; });
+  form.addEventListener('click', (e) => {
+    const ekle = e.target.closest('[data-kalem-ekle]');
+    if (ekle) {
+      const tur = ekle.dataset.kalemEkle;
+      const liste = $(tur === 'egitim' ? '#egitimListe' : '#sertListe');
+      const azami = tur === 'egitim' ? SINIR.egitim : SINIR.sertifika;
+      if (liste.children.length >= azami) { bildir(`En fazla ${azami} satır ekleyebilirsin.`, 'hata'); return; }
+      liste.insertAdjacentHTML('beforeend', kalemSatirHtml(tur));
+      liste.lastElementChild.querySelector('input')?.focus();
+    }
+    const sil = e.target.closest('[data-kalem-sil]');
+    if (sil) sil.closest('.kalem-satir').remove();
+  });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const dugme = $('#kartKaydet');
+    dugme.disabled = true;
+    $('#kartDurum').textContent = 'Kaydediliyor…';
+    try {
+      await ogretmenKartiKaydet({
+        ad_soyad: $('#kAd').value, unvan: $('#kUnvan').value, kurum: $('#kKurum').value,
+        deneyim_yil: $('#kDeneyim').value, tanitim: $('#kTanitim').value, acik: $('#kAcik').checked,
+        egitim: kalemleriTopla('egitim'), sertifikalar: kalemleriTopla('sertifika')
+      });
+      bildir($('#kAcik').checked ? 'Kartın kaydedildi ve herkese açık.' : 'Kartın kaydedildi. Şu an yalnızca sana görünüyor.');
+      panelGoster('kartim');
+    } catch (err) {
+      console.error('Kart kaydı hatası:', err);
+      bildir('Kaydedilemedi: ' + (err.code === 'gecersiz' ? err.message : hataMetni(err)), 'hata');
+      dugme.disabled = false;
+      $('#kartDurum').textContent = '';
+    }
+  });
+
+  document.querySelectorAll('[data-dogrula]').forEach(d => d.addEventListener('click', () => {
+    const id = d.dataset.dogrula;
+    const alan = document.querySelector(`[data-dogrula-form="${CSS.escape(id)}"]`);
+    alan.hidden = false;
+    d.hidden = true;
+    alan.innerHTML = `
+      ${BELGE_YUKLEME_ACIK ? `<div class="form-grup"><label class="form-etiket">Belge</label>
+        <input class="form-alan" type="file" accept="application/pdf,image/*" data-dosya></div>` : ''}
+      <div class="form-grup"><label class="form-etiket">Not <small>(isteğe bağlı)</small></label>
+        <input class="form-alan" maxlength="${SINIR.not}" data-not placeholder="örn: Diploma no, mezuniyet tarihi"></div>
+      <button type="button" class="btn btn-v btn-kucuk" data-gonder>${ik('onay')} Doğrulama iste</button>`;
+    alan.querySelector('[data-gonder]').addEventListener('click', async (ev) => {
+      const tus = ev.currentTarget; tus.disabled = true;
+      const tur = d.dataset.tur;
+      const kalem = (tur === 'egitim' ? kartVeri.egitim : kartVeri.sertifikalar).find(x => x.id === id);
+      const dosya = alan.querySelector('[data-dosya]')?.files?.[0] || null;
+      if (BELGE_YUKLEME_ACIK && !dosya) { bildir('Lütfen belgeni seç.', 'hata'); tus.disabled = false; return; }
+      try {
+        await dogrulamaIste({ kalem, kalemTur: tur, dosya, not: alan.querySelector('[data-not]').value });
+        bildir(BELGE_YUKLEME_ACIK ? 'Başvurun alındı. Yönetici inceleyince rozet görünecek.'
+          : `Başvurun alındı. Belgeni ${BELGE_EPOSTA} adresine göndermeyi unutma.`);
+        panelGoster('kartim');
+      } catch (err) {
+        console.error(err);
+        bildir('Gönderilemedi: ' + (err.message || hataMetni(err)), 'hata');
+        tus.disabled = false;
+      }
+    });
+  }));
+}
+
 // ── Menü ve panel çizimi ──
 function menuKur() {
   const t = TIPLER[tip];
@@ -392,17 +585,18 @@ function menuKur() {
     ${link('kaydedilen', 'Kaydettiklerim', 'isaret')}
     <div class="yan-bolum">Hesabım</div>
     ${link('profil', 'Profil Bilgilerim', 'kisi', tamamlanma() < 100 ? '%' + tamamlanma() : '')}
+    ${tip === 'ogretmen' ? link('kartim', 'Öğretmen Kartım', 'onay') : ''}
     ${link('hesap', 'Hesap ve Güvenlik', 'kilit')}`;
 }
 
 function panelBasligi(id) {
   const yol = TIPLER[tip].yol.find(y => y.id === id);
   if (yol) return yol.ad;
-  return { genel: 'Genel Bakış', paylasimlar: 'Paylaşımlarım', seminer: 'Seminerler', kaydedilen: 'Kaydettiklerim', profil: 'Profil Bilgilerim', hesap: 'Hesap ve Güvenlik' }[id] || 'Genel Bakış';
+  return { kartim: 'Öğretmen Kartım', genel: 'Genel Bakış', paylasimlar: 'Paylaşımlarım', seminer: 'Seminerler', kaydedilen: 'Kaydettiklerim', profil: 'Profil Bilgilerim', hesap: 'Hesap ve Güvenlik' }[id] || 'Genel Bakış';
 }
 
 function panelGoster(id) {
-  const gecerli = ['genel', 'paylasimlar', 'seminer', 'kaydedilen', 'profil', 'hesap', ...TIPLER[tip].yol.map(y => y.id)];
+  const gecerli = ['genel', 'paylasimlar', 'seminer', 'kaydedilen', 'profil', 'hesap', ...(tip === 'ogretmen' ? ['kartim'] : []), ...TIPLER[tip].yol.map(y => y.id)];
   if (!gecerli.includes(id)) id = 'genel';
   if (id === 'seminer' && tip === 'ogretmen') id = 'gelisim';
   aktifPanel = id;
@@ -410,7 +604,11 @@ function panelGoster(id) {
     $('#icerik').innerHTML = '<div class="panel aktif"><div class="bos"><div class="bos-metin">Yükleniyor…</div></div></div>';
     panelPaylasimlar().then(h => { if (aktifPanel === 'paylasimlar') $('#icerik').innerHTML = `<div class="panel aktif">${h}</div>`; });
   }
-  const html = id === 'paylasimlar' ? null : id === 'genel' ? panelGenel() : id === 'seminer' ? panelSeminer() : id === 'kaydedilen' ? panelKaydedilenler()
+  if (id === 'kartim') {
+    $('#icerik').innerHTML = '<div class="panel aktif"><div class="bos"><div class="bos-metin">Kartın yükleniyor…</div></div></div>';
+    panelKartim().then(h => { if (aktifPanel === 'kartim') { $('#icerik').innerHTML = `<div class="panel aktif">${h}</div>`; kartimBagla(); } });
+  }
+  const html = (id === 'paylasimlar' || id === 'kartim') ? null : id === 'genel' ? panelGenel() : id === 'seminer' ? panelSeminer() : id === 'kaydedilen' ? panelKaydedilenler()
     : id === 'profil' ? panelProfil() : id === 'hesap' ? panelHesap() : panelYol(id);
   if (html !== null) $('#icerik').innerHTML = `<div class="panel aktif">${html}</div>`;
   $('#ustBaslik').textContent = panelBasligi(id);

@@ -69,3 +69,23 @@ Ana sayfa v9, üyelik (Google + e-posta), Firestore kuralları, admin paneli, do
 - Cloudflare CDN: sınırsız statik trafik, ücretsiz.
 - Firebase ücretsiz plan (Spark): günlük okuma/yazma kotası küçük topluluk için yeterli.
 - Video/görsel trafiği sitede değil (YouTube + Cloudinary) → site her zaman hızlı.
+
+## Öğretmen kartı ve doğrulama (Kasım 2026)
+
+Toplulukta öğretmen üyelerin adına tıklanınca açılan kart ve `/ogretmen?u=<uid>` profil sayfası.
+
+| Parça | Dosya |
+|---|---|
+| Veri katmanı | `ogretmen-veri.js` |
+| Açılır kart (topluluk, profil önizlemesi) | `yazar-karti.js`, `yazar-karti.css` |
+| Herkese açık profil sayfası | `ogretmen.html`, `ogretmen.js` |
+| Öğretmenin düzenleme ekranı | `profil.js` → "Öğretmen Kartım" bölümü |
+| Yönetici doğrulama kuyruğu | `ogretmen-yonetim.js` → admin "Öğretmen Doğrulama" |
+| Kurallar | `firestore.rules` (`ogretmenler`, `belge_basvurulari`), `storage.rules` (`belgeler/`) |
+| Kural testleri | `testler/` → `npm install && npm test` (emülatörde) |
+
+- `ogretmenler/{uid}`: kart. `acik: true` ise herkes okur, değilse yalnızca sahibi ve yönetici. E-posta/iletişim alanı yoktur.
+- `dogrulamalar` alanını yalnızca yönetici yazar. Onay anındaki bilgi kopyalanır; öğretmen bilgiyi değiştirirse rozet kendiliğinden düşer.
+- `belge_basvurulari`: öğretmenin doğrulama isteği; sahibi ve yönetici okur, kararı yönetici verir.
+- Belge yükleme (`ogretmen-veri.js` → `BELGE_YUKLEME_ACIK`) Firebase Storage açılana kadar kapalı; o sürede belge e-postayla istenir.
+

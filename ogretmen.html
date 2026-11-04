@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex" id="robotlar">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Öğretmen profili · Montessori Okulu</title>
+<meta name="description" content="Montessori Okulu topluluğundaki öğretmenin eğitimi, sertifikaları ve paylaşımları.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Montessori Okulu">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Öğretmen profili · Montessori Okulu">
+<meta property="og:description" content="Montessori Okulu topluluğundaki öğretmenin eğitimi, sertifikaları ve paylaşımları.">
+<meta property="og:image" content="https://montessoriokulu.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C31">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="topluluk.css">
+<link rel="stylesheet" href="yazar-karti.css">
+</head>
+<body>
+
+<header class="ust-bar">
+  <div class="ust-bar-ic">
+    <a href="index.html" class="marka" aria-label="Montessori Okulu ana sayfa">
+      <span class="marka-karolar" aria-hidden="true">
+        <span class="karo karo-s">M</span><span class="karo karo-g">O</span><span class="karo karo-s">C</span>
+      </span>
+      <span class="marka-yazi">
+        <span class="marka-ust">MONTESSORİ</span>
+        <span class="marka-alt">OKULU<b>•</b>COM</span>
+      </span>
+    </a>
+    <nav aria-label="Ana menü" style="display:contents">
+      <ul class="ust-linkler">
+        <li><a href="topluluk.html">Topluluk</a></li>
+        <li><a href="rehber.html">Rehberler</a></li>
+        <li><a href="index.html#kitaplik">Kitaplık</a></li>
+        <li><a href="index.html#seminerler">Seminerler</a></li>
+        <li><a href="index.html#okul">Bir Çiçek Koleji</a></li>
+      </ul>
+    </nav>
+    <div class="ust-eylem">
+      <a class="dugme dugme-hayalet dugme-kucuk" href="uyelik.html?donus=ogretmen" id="girisDugme">Giriş Yap</a>
+      <a class="dugme dugme-somon dugme-kucuk" href="uyelik.html?donus=ogretmen" id="uyeDugme">Üye Ol — Ücretsiz</a>
+      <button class="hamburger" id="hamburger" aria-label="Menüyü aç"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobil-menu" id="mobilMenu">
+  <a href="topluluk.html">Topluluk</a>
+  <a href="rehber.html">Rehberler</a>
+  <a href="index.html#kitaplik">Kitaplık</a>
+  <a href="index.html#seminerler">Seminerler</a>
+  <a href="index.html#okul">Bir Çiçek Koleji</a>
+  <div class="mobil-eylem">
+    <a class="dugme dugme-hayalet" style="flex:1" href="uyelik.html?donus=ogretmen">Giriş Yap</a>
+    <a class="dugme dugme-somon" style="flex:1" href="uyelik.html?donus=ogretmen">Üye Ol</a>
+  </div>
+</div>
+
+<main id="ana" class="og-sayfa">
+  <p class="og-not" id="ogDurum">Profil yükleniyor…</p>
+  <div id="ogIcerik"></div>
+</main>
+
+<footer>
+  <div class="icerik">
+    <div class="alt-taban" style="border-top:none;padding-top:0">
+      <span class="alt-telif">© 2026 montessoriokulu.com — Bir Çiçek Koleji Anaokulu ailesinden</span>
+      <div class="alt-kardes">
+        <a href="index.html">Ana sayfa</a> ·
+        <a href="rehber.html">Rehberler</a> ·
+        <a href="https://www.instagram.com/montessoriokulucom/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="ogretmen.js"></script>
+</body>
+</html>
