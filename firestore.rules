@@ -123,6 +123,69 @@ service cloud.firestore {
       allow update: if false;
     }
 
+    // ── ÖĞRETMEN KARTLARI ──
+    // "acik" true ise herkes okur (e-posta gibi iletişim bilgisi bu belgede hiç tutulmaz).
+    // Öğretmen kendi kartını yazar; "dogrulamalar" alanını yalnızca yönetici yazar.
+    match /ogretmenler/{uid} {
+      function kendisi() { return girisli() && request.auth.uid == uid; }
+      function ogretmenUye() {
+        return exists(/databases/$(database)/documents/profiller/$(request.auth.uid))
+          && get(/databases/$(database)/documents/profiller/$(request.auth.uid)).data.get('uyelik_tipi', '') == 'ogretmen';
+      }
+      function metin(d, alan, azami) {
+        return !(alan in d) || d[alan] == null || (d[alan] is string && d[alan].size() <= azami);
+      }
+      function gecerliKart() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['ad_soyad', 'unvan', 'kurum', 'deneyim_yil', 'egitim', 'sertifikalar',
+                                 'tanitim', 'acik', 'guncelleme', 'dogrulamalar'])
+          && d.ad_soyad is string && d.ad_soyad.size() >= 2 && d.ad_soyad.size() <= 80
+          && metin(d, 'unvan', 80) && metin(d, 'kurum', 120) && metin(d, 'tanitim', 400)
+          && (!('deneyim_yil' in d) || d.deneyim_yil == null
+              || (d.deneyim_yil is int && d.deneyim_yil >= 0 && d.deneyim_yil <= 60))
+          && (!('egitim' in d) || (d.egitim is list && d.egitim.size() <= 5))
+          && (!('sertifikalar' in d) || (d.sertifikalar is list && d.sertifikalar.size() <= 8))
+          && d.acik is bool
+          && d.guncelleme == request.time;
+      }
+      function dogrulamaDegismedi() {
+        return request.resource.data.get('dogrulamalar', null) == resource.data.get('dogrulamalar', null);
+      }
+
+      allow read: if resource.data.acik == true || kendisi() || yonetici();
+      allow create: if kendisi() && ogretmenUye() && gecerliKart() && !('dogrulamalar' in request.resource.data);
+      allow update: if (kendisi() && gecerliKart() && dogrulamaDegismedi())
+        || (yonetici() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['dogrulamalar'])
+            && request.resource.data.dogrulamalar is map);
+      allow delete: if kendisi() || yonetici();
+    }
+
+    // ── BELGE BAŞVURULARI (öğretmenin doğrulama isteği) ──
+    // Yalnızca sahibi ve yönetici okur. Kararı yalnızca yönetici verir.
+    match /belge_basvurulari/{bid} {
+      function gecerliBasvuru() {
+        let d = request.resource.data;
+        return d.keys().hasOnly(['uid', 'kalem_id', 'kalem_tur', 'kalem_ad', 'dosya_yolu', 'not', 'durum', 'olusturma'])
+          && d.keys().hasAll(['uid', 'kalem_id', 'kalem_tur', 'kalem_ad', 'durum', 'olusturma'])
+          && d.uid == request.auth.uid
+          && d.kalem_id is string && d.kalem_id.size() >= 1 && d.kalem_id.size() <= 24
+          && d.kalem_tur in ['egitim', 'sertifika']
+          && d.kalem_ad is string && d.kalem_ad.size() <= 260
+          && (!('dosya_yolu' in d) || d.dosya_yolu == null
+              || (d.dosya_yolu is string && d.dosya_yolu.matches('belgeler/' + request.auth.uid + '/[^/]+')))
+          && (!('not' in d) || d.not == null || (d.not is string && d.not.size() <= 300))
+          && d.durum == 'bekliyor'
+          && d.olusturma == request.time;
+      }
+      allow create: if girisli() && gecerliBasvuru();
+      allow read: if (girisli() && resource.data.uid == request.auth.uid) || yonetici();
+      allow update: if yonetici()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['durum', 'karar_tarihi', 'yonetici_notu'])
+        && request.resource.data.durum in ['onaylandi', 'reddedildi'];
+      allow delete: if yonetici()
+        || (girisli() && resource.data.uid == request.auth.uid && resource.data.durum == 'bekliyor');
+    }
+
     // Başka hiçbir koleksiyona erişim yok
     match /{belge=**} {
       allow read, write: if false;

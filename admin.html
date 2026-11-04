@@ -421,6 +421,10 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
         <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-sohbet"/></svg></span> Topluluk Moderasyonu
         <span class="sb-badge" id="modCount" style="display:none">0</span>
       </div>
+      <div class="sb-link" onclick="showPanel('ogretmenler')">
+        <span class="icon"><svg class="ik" aria-hidden="true"><use href="ikonlar.svg#ik-onay"/></svg></span> Öğretmen Doğrulama
+        <span class="sb-badge" id="ogDogrulamaSay" style="display:none">0</span>
+      </div>
 
       <div class="sb-section">Site</div>
       <div class="sb-link" onclick="showPanel('ayarlar')">
@@ -714,6 +718,11 @@ button{font-family:'Nunito',sans-serif;cursor:pointer;}
       <!-- YORUMLAR -->
       <div class="panel" id="panel-yorumlar">
         <div id="modAlan"></div>
+      </div>
+
+      <!-- ÖĞRETMEN DOĞRULAMA -->
+      <div class="panel" id="panel-ogretmenler">
+        <div id="ogDogrulamaAlan"><div class="card"><div class="card-body">Yükleniyor…</div></div></div>
       </div>
 
       <!-- AYARLAR -->
@@ -1122,7 +1131,7 @@ function logout() {
 const panelNames = {
   dashboard:'Dashboard', blog:'Blog Yazıları', podcast:'Podcast Bölümleri',
   video:'Videolar', media:'Medya / Görseller', seminer:'Seminerler',
-  uyeler:'Üyeler', yorumlar:'Topluluk Moderasyonu', ayarlar:'Site Ayarları'
+  uyeler:'Üyeler', yorumlar:'Topluluk Moderasyonu', ogretmenler:'Öğretmen Doğrulama', ayarlar:'Site Ayarları'
 };
 const panelActions = {
   dashboard:['+ Yeni Yazı','openNewPost'],
@@ -1546,5 +1555,6 @@ window.logout = async function () {
 };
 </script>
 <script type="module" src="topluluk-yonetim.js"></script>
+<script type="module" src="ogretmen-yonetim.js"></script>
 </body>
 </html>

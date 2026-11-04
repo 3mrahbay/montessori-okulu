@@ -1,0 +1,63 @@
+/* Açılır öğretmen kartı ve öğretmen profil sayfası */
+.yazar-tik{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;
+  border-bottom:1.5px dotted var(--gok);text-align:left}
+.yazar-tik:hover,.yazar-tik:focus-visible{color:var(--gok-k);border-bottom-style:solid}
+
+.yk-dialog{margin:auto;border:none;padding:0;background:transparent;width:100%;max-width:min(460px,calc(100vw - 32px))}
+.yk-dialog::backdrop{background:rgba(28,28,49,.5)}
+.yk-kart{position:relative;background:var(--kagit,#FAF6EF);color:var(--murekkep,#22223A);border-radius:22px;
+  padding:26px 24px 22px;box-shadow:0 24px 60px -20px rgba(28,28,49,.5);font-family:var(--g,'Manrope',sans-serif);
+  max-height:calc(100vh - 48px);overflow:auto}
+.yk-kapat{position:absolute;top:10px;right:12px;width:36px;height:36px;border:none;background:transparent;
+  font-size:26px;line-height:1;color:var(--murekkep-s,#8A8AA3);cursor:pointer;border-radius:50%}
+.yk-kapat:hover,.yk-kapat:focus-visible{background:rgba(34,34,58,.06)}
+.yk-ust{display:flex;gap:16px;align-items:center;margin-bottom:14px;padding-right:30px}
+.yk-av{flex:none;display:inline-grid;place-items:center;border-radius:16px;background:var(--gok,#4A90C4);color:#fff;
+  font-family:var(--d,'Fraunces',serif);font-weight:600;transform:rotate(-3deg)}
+.yk-ad{font-family:var(--d,'Fraunces',serif);font-weight:600;font-size:24px;line-height:1.15;margin:0 0 2px}
+.yk-unvan{margin:0;font-weight:700;font-size:14.5px;color:var(--gok-k,#2E6FA0)}
+.yk-alt{margin:2px 0 0;font-size:14px;color:var(--murekkep-o,#4A4A66)}
+.yk-tanitim{margin:0 0 14px;font-size:15px;line-height:1.6;color:var(--murekkep-o,#4A4A66)}
+.yk-bas{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--murekkep-s,#8A8AA3);margin:14px 0 6px}
+.yk-kalemler{list-style:none;margin:0;padding:0}
+.yk-kalemler li{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--cizgi,rgba(34,34,58,.12));font-size:14.5px;line-height:1.45}
+.yk-rozet{flex:none;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.yk-dogru{background:var(--yaprak-a,#DEEBDE);color:#2F5A31}
+.yk-beyan{background:rgba(34,34,58,.06);color:var(--murekkep-s,#8A8AA3);font-weight:700}
+.yk-git{display:inline-block;margin-top:16px;font-weight:800;color:var(--gok-k,#2E6FA0);text-decoration:none}
+.yk-git:hover{text-decoration:underline}
+
+/* Öğretmen profil sayfası */
+.og-sayfa{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.og-kart{background:var(--beyaz,#fff);border:1px solid var(--cizgi);border-radius:var(--r-b,22px);padding:28px 26px}
+.og-kart .yk-ad{font-size:clamp(28px,5vw,38px)}
+.og-kart .yk-ust{padding-right:0}
+.og-paylasimlar{margin-top:32px}
+.og-paylasimlar h2{font-family:var(--d);font-weight:600;font-size:26px;margin:0 0 12px}
+.og-pay{display:block;text-decoration:none;color:inherit;background:var(--beyaz,#fff);border:1px solid var(--cizgi);
+  border-radius:var(--r,14px);padding:14px 16px;margin-bottom:10px}
+.og-pay:hover{border-color:var(--gok)}
+.og-pay small{display:block;color:var(--murekkep-s);font-size:12.5px;font-weight:700;margin-bottom:2px}
+.og-pay b{font-size:16px}
+.og-not{color:var(--murekkep-o);background:var(--beyaz,#fff);border:1px dashed var(--cizgi);border-radius:var(--r,14px);padding:16px}
+.og-aciklama{font-size:13px;color:var(--murekkep-s);margin-top:18px;line-height:1.6}
+@media (max-width:480px){
+  .yk-kalemler li{flex-direction:column;gap:4px}
+  .og-kart{padding:22px 18px}
+}
+
+/* Profil > Öğretmen Kartım */
+.kalem-satir{display:grid;grid-template-columns:1.3fr 1.3fr 90px auto;gap:10px;align-items:end;
+  padding-bottom:12px;margin-bottom:12px;border-bottom:1px dashed rgba(34,34,58,.15)}
+.kalem-satir .form-grup{margin-bottom:0}
+.kalem-sil{height:42px}
+.acik-secim{display:flex;gap:12px;align-items:flex-start;cursor:pointer;line-height:1.5}
+.acik-secim input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:#2E6FA0}
+.kart-onizleme{background:#FAF6EF;border-radius:18px;padding:20px;max-width:460px}
+#kTanitim{font-family:inherit;line-height:1.55}
+.dogrula-form{margin-top:12px;padding:12px;background:rgba(74,144,196,.07);border-radius:12px}
+@media (max-width:640px){
+  .kalem-satir{grid-template-columns:1fr 56px;}
+  .kalem-satir .form-grup:nth-child(1),.kalem-satir .form-grup:nth-child(2){grid-column:1 / -1}
+}
